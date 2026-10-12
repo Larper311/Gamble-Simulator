@@ -3,289 +3,151 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pencil Factory — Cosmic Edition</title>
+<title>Pencil Factory</title>
 <style>
 :root{
-  --bg:#f0e6d0; --bg2:#e8dcc0; --card:#faf4e6; --ink:#1e1810;
-  --muted:#6b5c48; --accent:#c9920a; --accent2:#e8b84a; --pink:#c45a62;
-  --good:#2a7a4a; --bad:#a33; --shadow:rgba(30,24,16,.35);
-  --glow:transparent; --panel-border:#1e1810;
-  --font:Georgia,"Palatino Linotype",serif;
+  --bg:#efe6d2;--card:#faf6eb;--ink:#1c1610;--muted:#6a5c48;
+  --acc:#c9920a;--acc2:#e0b040;--good:#2a7a4a;--bad:#b33;--pink:#c45a62;
+  --border:#1c1610;--shadow:rgba(28,22,16,.3);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
 body{
-  min-height:100vh;color:var(--ink);font-family:var(--font);
+  min-height:100vh;font-family:Georgia,"Palatino Linotype",serif;color:var(--ink);
   background:var(--bg);
-  background-image:
-    linear-gradient(rgba(180,160,120,.25) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(180,160,120,.25) 1px,transparent 1px);
-  background-size:32px 32px;
-  transition:background 1.8s,color 1.2s;
-  overflow-x:hidden;
+  background-image:linear-gradient(rgba(170,150,110,.22) 1px,transparent 1px),linear-gradient(90deg,rgba(170,150,110,.22) 1px,transparent 1px);
+  background-size:30px 30px;transition:background 1.5s,color 1s;
 }
-/* ===== THEMES ===== */
-body.t-space{
-  --bg:#0c0a1a; --bg2:#14122a; --card:rgba(22,20,45,.94); --ink:#e6e0f5;
-  --muted:#9a90b8; --accent:#7a9cff; --accent2:#a8c0ff; --pink:#e070a0;
-  --good:#5dcea0; --bad:#f66; --shadow:rgba(0,0,20,.6); --panel-border:#5a5088;
-  --glow:0 0 24px rgba(100,120,255,.2);
-  background-image:
-    radial-gradient(ellipse 80% 50% at 20% 20%,rgba(80,60,160,.4),transparent),
-    radial-gradient(ellipse 60% 40% at 80% 70%,rgba(40,80,180,.3),transparent),
-    radial-gradient(1.5px 1.5px at 15% 25%,#fff,transparent),
-    radial-gradient(1px 1px at 55% 15%,#cdf,transparent),
-    radial-gradient(2px 2px at 85% 55%,#fff,transparent),
-    radial-gradient(1px 1px at 35% 75%,#eef,transparent),
-    linear-gradient(180deg,#08061a,#12102a 50%,#0a1020);
-  background-size:auto;
+body.space{
+  --bg:#0b0a18;--card:rgba(20,18,40,.95);--ink:#e4def0;--muted:#958db0;
+  --acc:#7b9cff;--acc2:#a8c0ff;--good:#5dcea0;--bad:#f66;--pink:#e070a0;
+  --border:#5a5088;--shadow:rgba(0,0,20,.55);
+  background-image:radial-gradient(ellipse at 20% 25%,rgba(80,60,150,.35),transparent 50%),
+    radial-gradient(ellipse at 80% 70%,rgba(40,70,160,.25),transparent 45%),
+    radial-gradient(1.5px 1.5px at 12% 20%,#fff,transparent),
+    radial-gradient(1px 1px at 70% 40%,#cde,transparent),
+    linear-gradient(180deg,#080616,#12102a 60%,#0a1020);
 }
-body.t-quantum{
-  --bg:#050812; --bg2:#0a1420; --card:rgba(8,18,32,.95); --ink:#c8f0f0;
-  --muted:#70a8a8; --accent:#00d4c8; --accent2:#60fff0; --pink:#d060e0;
-  --good:#40e0a0; --bad:#f55; --shadow:rgba(0,20,30,.7); --panel-border:#0a8a80;
-  --glow:0 0 28px rgba(0,220,200,.18);
-  background-image:
-    radial-gradient(ellipse 70% 50% at 50% 40%,rgba(0,180,160,.15),transparent),
-    radial-gradient(ellipse 50% 40% at 20% 80%,rgba(160,40,200,.12),transparent),
-    radial-gradient(1px 1px at 20% 30%,#0ff,transparent),
-    radial-gradient(1.5px 1.5px at 70% 20%,#f0f,transparent),
-    radial-gradient(1px 1px at 40% 70%,#0ff,transparent),
+body.quantum{
+  --bg:#050810;--card:rgba(8,16,28,.96);--ink:#c8f0f0;--muted:#70a8a8;
+  --acc:#00d0c4;--acc2:#50f0e0;--good:#40e0a0;--bad:#f55;--pink:#d060e0;
+  --border:#0a8a80;--shadow:rgba(0,20,30,.6);
+  background-image:radial-gradient(ellipse at 50% 40%,rgba(0,180,160,.12),transparent 55%),
+    radial-gradient(1px 1px at 25% 30%,#0ff,transparent),
+    radial-gradient(1.5px 1.5px at 75% 20%,#f0f,transparent),
     linear-gradient(160deg,#030510,#0a1525 60%,#0c0818);
 }
-body.t-cosmic{
-  --bg:#0a0610; --bg2:#140a18; --card:rgba(20,12,22,.95); --ink:#f5e6c8;
-  --muted:#c0a070; --accent:#f0a020; --accent2:#ffd070; --pink:#e07050;
-  --good:#80d060; --bad:#f55; --shadow:rgba(20,8,10,.7); --panel-border:#a06020;
-  --glow:0 0 32px rgba(255,150,40,.15);
-  background-image:
-    radial-gradient(ellipse 60% 40% at 30% 15%,rgba(255,160,40,.22),transparent),
-    radial-gradient(ellipse 50% 50% at 75% 65%,rgba(120,40,180,.2),transparent),
-    radial-gradient(2px 2px at 12% 22%,#fff,transparent),
-    radial-gradient(1px 1px at 88% 18%,#ffd,transparent),
-    radial-gradient(1.5px 1.5px at 50% 50%,#fff,transparent),
+body.cosmic{
+  --bg:#0a0610;--card:rgba(18,10,20,.96);--ink:#f5e6c8;--muted:#c0a070;
+  --acc:#f0a020;--acc2:#ffd070;--good:#80d060;--bad:#f55;--pink:#e07050;
+  --border:#a06020;--shadow:rgba(20,8,10,.6);
+  background-image:radial-gradient(ellipse at 30% 15%,rgba(255,150,40,.2),transparent 40%),
+    radial-gradient(ellipse at 70% 65%,rgba(120,40,180,.18),transparent 45%),
+    radial-gradient(2px 2px at 15% 25%,#fff,transparent),
     linear-gradient(180deg,#08040e,#160a1a 50%,#100818);
 }
-/* ===== LAYOUT ===== */
-header{
-  max-width:1320px;margin:0 auto;padding:16px 14px 0;
-  border-bottom:3px double var(--panel-border);
-  transition:border-color 1s;
-}
-h1{
-  font-size:clamp(22px,4vw,32px);font-weight:normal;letter-spacing:2px;
-  text-transform:uppercase;color:var(--ink);
-}
-h1 span{color:var(--accent);font-size:.7em;letter-spacing:1px;display:block;margin-top:2px}
-#ticker{
-  margin:10px 0 0;padding:8px 12px;background:var(--ink);color:var(--bg);
-  border:1px solid var(--accent);font-size:13.5px;font-style:italic;min-height:36px;
-  transition:all .8s;
-}
-body.t-space #ticker,body.t-quantum #ticker,body.t-cosmic #ticker{background:rgba(0,0,0,.55);color:var(--ink)}
-.wrap{
-  max-width:1320px;margin:0 auto;padding:14px;
-  display:grid;gap:14px;
-  grid-template-columns:minmax(260px,1fr) minmax(280px,1.2fr) minmax(280px,1fr);
-  align-items:start;
-}
-@media(max-width:1000px){.wrap{grid-template-columns:1fr}}
-.panel{
-  background:var(--card);border:3px solid var(--panel-border);
-  border-radius:3px;padding:12px 14px;
-  box-shadow:5px 5px 0 var(--shadow),var(--glow);
-  position:relative;transition:all 1s;
-}
-.panel::before{
-  content:"";position:absolute;inset:5px;border:1px solid color-mix(in srgb,var(--panel-border) 30%,transparent);
-  pointer-events:none;border-radius:1px;
-}
-.panel h2{
-  font-size:15px;letter-spacing:1.5px;text-transform:uppercase;font-weight:normal;
-  border-bottom:2px solid var(--accent);display:inline-block;padding-bottom:2px;margin-bottom:10px;
-}
-.scroll{max-height:62vh;overflow-y:auto;padding-right:4px}
-@media(max-width:1000px){.scroll{max-height:none}}
-/* stats */
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px}
-.stat small{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
-.stat b{font-size:24px;font-weight:normal;line-height:1.15}
-.stat.big b{font-size:28px}
-.rates{font-size:12px;color:var(--muted);border-top:1px solid color-mix(in srgb,var(--panel-border) 40%,transparent);padding-top:6px;margin:4px 0 8px}
-/* make button */
-.make{
-  display:block;width:100%;margin:8px 0;padding:12px 8px 10px;
-  background:color-mix(in srgb,var(--accent) 18%,var(--card));
-  border:3px solid var(--panel-border);border-radius:3px;cursor:pointer;
-  font:inherit;color:inherit;text-align:center;
-  box-shadow:3px 3px 0 var(--shadow);transition:transform .08s,background .15s;
-  user-select:none;-webkit-tap-highlight-color:transparent;
-}
-.make:hover{background:color-mix(in srgb,var(--accent) 30%,var(--card))}
-.make:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shadow)}
-.make svg{width:100%;max-width:280px;height:auto;display:block;margin:0 auto 6px;transition:transform .12s}
-.make span{font-size:16px;letter-spacing:1px;text-transform:uppercase}
-#buffs{min-height:24px;display:flex;flex-wrap:wrap;gap:5px;margin:6px 0}
-.buff{
-  background:var(--accent);color:var(--bg);border:2px solid var(--panel-border);
-  border-radius:2px;padding:2px 8px;font-size:11px;font-weight:bold;
-  animation:buffPulse 1.5s ease-in-out infinite;
-}
-@keyframes buffPulse{50%{filter:brightness(1.2)}}
-.floor{display:flex;flex-wrap:wrap;gap:2px 8px;font-size:18px;min-height:26px;padding:6px 0;border-top:1px solid color-mix(in srgb,var(--panel-border) 35%,transparent)}
-.floor-empty{font-size:12px;color:var(--muted);font-style:italic}
-.goal{
-  margin-top:8px;padding:7px 9px;border:2px dashed var(--panel-border);
-  border-radius:2px;font-size:12px;text-align:center;letter-spacing:.3px;
-}
-/* mode + items */
-.mode{display:flex;gap:5px;margin-bottom:8px;align-items:center;font-size:12px;text-transform:uppercase;letter-spacing:.4px}
-.mode button,.sysbtn,.act{
-  font:inherit;border:2px solid var(--panel-border);background:var(--card);
-  border-radius:2px;padding:4px 11px;cursor:pointer;box-shadow:2px 2px 0 var(--shadow);
-  transition:background .12s,transform .08s;color:inherit;
-}
-.mode button.on,.sysbtn.on{background:var(--accent);color:var(--bg);font-weight:bold}
-.mode button:hover,.sysbtn:hover,.act:hover{filter:brightness(1.12)}
-.item{
-  display:flex;gap:9px;align-items:center;width:100%;text-align:left;font:inherit;color:inherit;
-  border:2px solid var(--panel-border);background:var(--card);padding:7px 9px;margin-bottom:6px;
-  border-radius:2px;cursor:pointer;box-shadow:2px 2px 0 var(--shadow);transition:background .12s;
-}
-.item.afford{background:color-mix(in srgb,var(--accent) 14%,var(--card))}
-.item.afford:hover{background:color-mix(in srgb,var(--accent) 25%,var(--card))}
-.item:not(.afford){opacity:.45;cursor:not-allowed}
-.ico{font-size:22px;width:32px;text-align:center;flex:none}
+header{max-width:1280px;margin:0 auto;padding:14px 12px 0;border-bottom:3px double var(--border)}
+h1{font-size:clamp(20px,3.5vw,30px);font-weight:400;letter-spacing:1.5px;text-transform:uppercase}
+h1 small{display:block;font-size:.65em;color:var(--acc);letter-spacing:1px;margin-top:2px}
+#ticker{margin-top:8px;padding:7px 11px;background:var(--ink);color:var(--bg);border:1px solid var(--acc);font-size:13px;font-style:italic;min-height:34px}
+body.space #ticker,body.quantum #ticker,body.cosmic #ticker{background:rgba(0,0,0,.5);color:var(--ink)}
+.wrap{max-width:1280px;margin:0 auto;padding:12px;display:grid;gap:12px;grid-template-columns:minmax(250px,1fr) minmax(270px,1.15fr) minmax(270px,1fr);align-items:start}
+@media(max-width:960px){.wrap{grid-template-columns:1fr}}
+.panel{background:var(--card);border:3px solid var(--border);border-radius:3px;padding:11px 13px;box-shadow:4px 4px 0 var(--shadow);position:relative}
+.panel::before{content:"";position:absolute;inset:4px;border:1px solid color-mix(in srgb,var(--border) 28%,transparent);pointer-events:none;border-radius:1px}
+.panel h2{font-size:14px;letter-spacing:1.3px;text-transform:uppercase;font-weight:400;border-bottom:2px solid var(--acc);display:inline-block;padding-bottom:2px;margin-bottom:9px}
+.scroll{max-height:58vh;overflow-y:auto;padding-right:3px}
+@media(max-width:960px){.scroll{max-height:none}}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:5px}
+.stat small{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px}
+.stat b{font-size:22px;font-weight:400;line-height:1.15;word-break:break-all}
+.stat.big b{font-size:26px}
+.rates{font-size:11.5px;color:var(--muted);border-top:1px solid color-mix(in srgb,var(--border) 35%,transparent);padding-top:5px;margin:3px 0 7px}
+.make{display:block;width:100%;margin:7px 0;padding:11px 6px 9px;background:color-mix(in srgb,var(--acc) 16%,var(--card));border:3px solid var(--border);border-radius:3px;cursor:pointer;font:inherit;color:inherit;text-align:center;box-shadow:3px 3px 0 var(--shadow);user-select:none;transition:transform .07s,background .12s}
+.make:hover{background:color-mix(in srgb,var(--acc) 28%,var(--card))}
+.make:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--shadow)}
+.make svg{width:100%;max-width:260px;height:auto;display:block;margin:0 auto 5px}
+.make span{font-size:15px;letter-spacing:1px;text-transform:uppercase}
+#buffs{min-height:22px;display:flex;flex-wrap:wrap;gap:4px;margin:5px 0}
+.buff{background:var(--acc);color:var(--bg);border:2px solid var(--border);border-radius:2px;padding:2px 7px;font-size:11px;font-weight:700}
+.floor{display:flex;flex-wrap:wrap;gap:2px 7px;font-size:17px;min-height:24px;padding:5px 0;border-top:1px solid color-mix(in srgb,var(--border) 30%,transparent)}
+.floor-empty{font-size:11.5px;color:var(--muted);font-style:italic}
+.goal{margin-top:7px;padding:6px 8px;border:2px dashed var(--border);border-radius:2px;font-size:11.5px;text-align:center}
+.mode{display:flex;gap:4px;margin-bottom:7px;align-items:center;font-size:11.5px;text-transform:uppercase;letter-spacing:.3px}
+.mode button,.sysbtn,.act{font:inherit;border:2px solid var(--border);background:var(--card);border-radius:2px;padding:3px 10px;cursor:pointer;box-shadow:2px 2px 0 var(--shadow);color:inherit;transition:background .1s}
+.mode button.on,.sysbtn.on{background:var(--acc);color:var(--bg);font-weight:700}
+.mode button:hover,.sysbtn:hover,.act:hover{filter:brightness(1.1)}
+.sysbtn:disabled{opacity:.35;pointer-events:none}
+.item{display:flex;gap:8px;align-items:center;width:100%;text-align:left;font:inherit;color:inherit;border:2px solid var(--border);background:var(--card);padding:6px 8px;margin-bottom:5px;border-radius:2px;cursor:pointer;box-shadow:2px 2px 0 var(--shadow)}
+.item.afford{background:color-mix(in srgb,var(--acc) 13%,var(--card))}
+.item.afford:hover{background:color-mix(in srgb,var(--acc) 24%,var(--card))}
+.item:not(.afford){opacity:.42;cursor:not-allowed}
+.ico{font-size:20px;width:30px;text-align:center;flex:none}
 .mid{flex:1;min-width:0}
-.mid b{display:block;font-size:13.5px;font-weight:normal}
-.mid small{display:block;font-size:11px;color:var(--muted);line-height:1.3;font-style:italic}
+.mid b{display:block;font-size:13px;font-weight:400}
+.mid small{display:block;font-size:10.5px;color:var(--muted);line-height:1.25;font-style:italic}
 .right{text-align:right;flex:none}
-.own{display:block;font-size:18px}
-.cost{font-size:11.5px;font-weight:bold;color:var(--accent)}
-.empty{font-size:12px;color:var(--muted);font-style:italic;padding:6px 0}
-.reset{margin-top:10px;font:inherit;font-size:11px;background:none;border:2px solid var(--panel-border);
-  border-radius:2px;padding:4px 10px;cursor:pointer;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
-.reset:hover{color:var(--ink);background:var(--bg2)}
-/* systems */
-.sysrow{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}
-.sysbtn{padding:7px 4px;font-size:12px;text-align:center}
-.sysbtn:disabled,.sysbtn[disabled]{opacity:.35;pointer-events:none}
-.syspanel{
-  display:none;margin:8px 0;padding:10px;border:2px solid var(--panel-border);
-  border-radius:2px;background:color-mix(in srgb,var(--bg2) 80%,var(--card));font-size:12.5px;
-  animation:panelIn .25s ease;
-}
+.own{display:block;font-size:17px}
+.cost{font-size:11px;font-weight:700;color:var(--acc)}
+.empty{font-size:11.5px;color:var(--muted);font-style:italic;padding:5px 0}
+.reset{margin-top:9px;font:inherit;font-size:10.5px;background:none;border:2px solid var(--border);border-radius:2px;padding:3px 9px;cursor:pointer;text-transform:uppercase;letter-spacing:.8px;color:var(--muted)}
+.reset:hover{color:var(--ink)}
+.sysrow{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:7px}
+.sysbtn{padding:6px 3px;font-size:11.5px;text-align:center}
+.syspanel{display:none;margin:7px 0;padding:9px;border:2px solid var(--border);border-radius:2px;background:color-mix(in srgb,var(--bg) 70%,var(--card));font-size:12px}
 .syspanel.open{display:block}
-@keyframes panelIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
-.syspanel h3{font-size:13px;letter-spacing:1px;text-transform:uppercase;font-weight:normal;margin-bottom:8px;color:var(--accent)}
-.syspanel .row{display:flex;justify-content:space-between;align-items:center;margin:4px 0;gap:6px;flex-wrap:wrap}
-.syspanel .act{padding:3px 9px;font-size:11.5px}
-/* stock chart */
-.stock-list{display:flex;flex-direction:column;gap:6px;margin:8px 0}
-.stock-row{
-  display:grid;grid-template-columns:52px 1fr 64px 70px;gap:6px;align-items:center;
-  padding:5px 6px;border:1px solid color-mix(in srgb,var(--panel-border) 50%,transparent);border-radius:2px;
-  background:color-mix(in srgb,var(--card) 70%,transparent);
-}
-.stock-row .sym{font-weight:bold;letter-spacing:.5px;font-size:12px}
-.stock-row .chg{font-size:11px}
-.stock-row .chg.up{color:var(--good)}
-.stock-row .chg.dn{color:var(--bad)}
-.mini-chart{height:28px;display:flex;align-items:flex-end;gap:1px}
-.mini-chart i{flex:1;background:var(--accent);border-radius:1px 1px 0 0;min-height:2px;transition:height .35s ease;opacity:.85}
-.stock-row.selected{outline:2px solid var(--accent)}
-/* accelerator visual */
-.accel-meter{
-  height:18px;background:rgba(0,0,0,.25);border:2px solid var(--panel-border);border-radius:2px;
-  overflow:hidden;margin:8px 0;position:relative;
-}
-.accel-fill{
-  height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));
-  width:0%;transition:width .2s;box-shadow:0 0 12px var(--accent);
-}
-.accel-fill.hot{background:linear-gradient(90deg,#f50,#ff0);animation:hotPulse .4s infinite}
-@keyframes hotPulse{50%{filter:brightness(1.3)}}
-/* research */
-.lab-opt{
-  display:flex;justify-content:space-between;align-items:center;gap:6px;
-  padding:5px 6px;margin:3px 0;border:1px solid color-mix(in srgb,var(--panel-border) 40%,transparent);
-  border-radius:2px;font-size:11.5px;
-}
-.lab-opt button{flex:none}
-.prog-bar{height:6px;background:rgba(0,0,0,.2);border-radius:2px;margin:4px 0;overflow:hidden}
-.prog-fill{height:100%;background:var(--accent);width:0%;transition:width .3s}
-/* prestige */
-.prestige-box{
-  margin-top:10px;padding:10px;border:2px solid var(--accent);border-radius:3px;
-  background:color-mix(in srgb,var(--accent) 10%,var(--card));text-align:center;
-}
-.prestige-box h3{color:var(--accent);margin-bottom:6px;font-size:13px;letter-spacing:1px}
-/* floating text */
-.fl{
-  position:fixed;pointer-events:none;font-family:var(--font);font-weight:bold;font-size:18px;
-  color:var(--ink);text-shadow:0 0 4px #fff,0 0 6px var(--accent);
-  animation:floatUp 1s ease-out forwards;z-index:80;
-}
-@keyframes floatUp{from{opacity:1;transform:translateY(0) scale(1)}to{opacity:0;transform:translateY(-55px) scale(.9)}}
-.golden{
-  position:fixed;z-index:70;border:none;background:none;cursor:pointer;font-size:48px;line-height:1;
-  filter:drop-shadow(0 0 12px var(--accent)) drop-shadow(0 0 4px #fff);
-  animation:goldPulse 1.1s ease-in-out infinite;
-}
-@keyframes goldPulse{50%{transform:scale(1.2) rotate(10deg)}}
-/* particles */
-.pt{
-  position:fixed;pointer-events:none;border-radius:50%;z-index:2;
-  animation:drift linear forwards;
-}
-@keyframes drift{
-  0%{transform:translateY(0) translateX(0);opacity:.5}
-  100%{transform:translateY(-110vh) translateX(30px);opacity:0}
-}
-/* click particles */
-.spark{
-  position:fixed;pointer-events:none;width:6px;height:6px;border-radius:50%;
-  background:var(--accent);z-index:60;animation:spark .6s ease-out forwards;
-}
-@keyframes spark{to{transform:translate(var(--sx),var(--sy)) scale(0);opacity:0}}
-/* focus */
+.syspanel h3{font-size:12px;letter-spacing:1px;text-transform:uppercase;font-weight:400;margin-bottom:7px;color:var(--acc)}
+.syspanel .row{display:flex;justify-content:space-between;align-items:center;margin:3px 0;gap:5px;flex-wrap:wrap}
+.syspanel .act{padding:2px 8px;font-size:11px}
+.stock-list{display:flex;flex-direction:column;gap:5px;margin:6px 0}
+.stock-row{display:grid;grid-template-columns:48px 1fr 60px 58px;gap:5px;align-items:center;padding:4px 5px;border:1px solid color-mix(in srgb,var(--border) 45%,transparent);border-radius:2px;cursor:pointer}
+.stock-row.sel{outline:2px solid var(--acc)}
+.stock-row .sym{font-weight:700;font-size:11px}
+.stock-row .chg{font-size:10.5px}
+.stock-row .chg.up{color:var(--good)}.stock-row .chg.dn{color:var(--bad)}
+.mini-chart{height:24px;display:flex;align-items:flex-end;gap:1px}
+.mini-chart i{flex:1;background:var(--acc);border-radius:1px 1px 0 0;min-height:2px;opacity:.85;transition:height .3s}
+.meter{height:14px;background:rgba(0,0,0,.2);border:2px solid var(--border);border-radius:2px;overflow:hidden;margin:6px 0}
+.meter>div{height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));width:0%;transition:width .2s}
+.meter>div.hot{background:linear-gradient(90deg,#f40,#fc0)}
+.lab-opt{display:flex;justify-content:space-between;align-items:center;gap:5px;padding:4px 5px;margin:2px 0;border:1px solid color-mix(in srgb,var(--border) 35%,transparent);border-radius:2px;font-size:11px}
+.prog{height:5px;background:rgba(0,0,0,.18);border-radius:2px;margin:3px 0;overflow:hidden}
+.prog>div{height:100%;background:var(--acc);width:0%;transition:width .25s}
+.prestige{margin-top:8px;padding:8px;border:2px solid var(--acc);border-radius:3px;background:color-mix(in srgb,var(--acc) 9%,var(--card));text-align:center;display:none}
+.prestige h3{color:var(--acc);font-size:12px;letter-spacing:1px;margin-bottom:4px}
+.fl{position:fixed;pointer-events:none;font-weight:700;font-size:17px;color:var(--ink);text-shadow:0 0 4px #fff,0 0 5px var(--acc);animation:up .9s ease-out forwards;z-index:80}
+@keyframes up{to{opacity:0;transform:translateY(-50px)}}
+.golden{position:fixed;z-index:70;border:none;background:none;cursor:pointer;font-size:46px;filter:drop-shadow(0 0 10px var(--acc));animation:pulse 1.1s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.18) rotate(8deg)}}
+.pt{position:fixed;pointer-events:none;border-radius:50%;z-index:1;animation:drift linear forwards}
+@keyframes drift{to{transform:translateY(-105vh) translateX(20px);opacity:0}}
 button:focus-visible,.item:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
-@media(prefers-reduced-motion:reduce){
-  .buff,.golden,.fl,.pt,.spark{animation:none!important}
-  *{transition-duration:.01s!important}
-}
+@media(prefers-reduced-motion:reduce){.fl,.golden,.pt{animation:none!important}}
 </style>
 </head>
 <body>
 <header>
-  <h1>Pencil Factory <span id="subTitle">Classic Works</span></h1>
-  <div id="ticker" aria-live="polite">The graphite awaits.</div>
+  <h1>Pencil Factory <small id="era">Classic Works</small></h1>
+  <div id="ticker">The graphite awaits.</div>
 </header>
 <div class="wrap">
-  <!-- LEFT: Production -->
   <section class="panel">
     <h2>Production</h2>
     <div class="stats">
       <div class="stat big"><small>Cash</small><b id="cash">$0</b></div>
       <div class="stat big"><small>Pencils</small><b id="made">0</b></div>
     </div>
-    <div class="stats" style="margin-top:4px">
-      <div class="stat"><small>Cosmic Graphite</small><b id="essence">0</b></div>
-      <div class="stat"><small>Ascensions</small><b id="ascendCount">0</b></div>
+    <div class="stats">
+      <div class="stat"><small>Cosmic Graphite</small><b id="ess">0</b></div>
+      <div class="stat"><small>Ascensions</small><b id="asc">0</b></div>
     </div>
     <div class="rates" id="rates"></div>
-    <button class="make" id="make" aria-label="Make a pencil">
-      <svg viewBox="0 0 320 80" id="pencilSvg" aria-hidden="true">
-        <g stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" fill-opacity=".95">
-          <rect x="6" y="14" width="34" height="52" rx="8" fill="#c45a62"/>
-          <rect x="40" y="14" width="26" height="52" fill="#8a9098"/>
-          <rect x="66" y="14" width="190" height="52" fill="#d4a017"/>
-          <polygon points="256,14 256,66 306,40" fill="#c4a06a"/>
-          <polygon points="291,33 291,47 306,40" fill="currentColor"/>
-        </g>
-        <rect x="67.5" y="15.5" width="187" height="10" fill="#e8c84a"/>
-        <rect x="67.5" y="54.5" width="187" height="10" fill="#b8860b"/>
-        <text x="130" y="46" font-family="Georgia,serif" font-size="16" font-weight="bold" fill="currentColor">No. 2</text>
+    <button class="make" id="make">
+      <svg viewBox="0 0 300 72" id="psvg"><g stroke="currentColor" stroke-width="2.2" stroke-linejoin="round">
+        <rect x="5" y="12" width="30" height="48" rx="7" fill="#c45a62"/><rect x="35" y="12" width="24" height="48" fill="#8a9098"/>
+        <rect x="59" y="12" width="175" height="48" fill="#d4a017"/><polygon points="234,12 234,60 280,36" fill="#c4a06a"/>
+        <polygon points="268,30 268,42 280,36" fill="currentColor"/></g>
+        <rect x="60" y="13.5" width="173" height="9" fill="#e8c84a"/><rect x="60" y="49.5" width="173" height="9" fill="#b8860b"/>
+        <text x="118" y="42" font-family="Georgia" font-size="15" font-weight="bold" fill="currentColor">No. 2</text>
       </svg>
       <span>Forge Pencil</span>
     </button>
@@ -293,15 +155,14 @@ button:focus-visible,.item:focus-visible{outline:3px solid var(--pink);outline-o
     <h2>Floor</h2>
     <div class="floor" id="floor"></div>
     <div class="goal" id="goal">Goal: The first mark</div>
-    <div class="prestige-box" id="prestigeBox" style="display:none">
-      <h3>⚡ Ascend</h3>
-      <p id="prestigeInfo" style="font-size:12px;margin-bottom:8px">Reset for permanent power</p>
-      <button class="act" id="doAscend" style="font-size:13px;padding:6px 16px">Ascend (+0 Graphite)</button>
+    <div class="prestige" id="presBox">
+      <h3>Ascend</h3>
+      <p id="presInfo" style="font-size:11px;margin-bottom:6px"></p>
+      <button class="act" id="ascendBtn">Ascend</button>
     </div>
     <button class="reset" id="reset">Hard Reset</button>
   </section>
 
-  <!-- CENTER: Helpers -->
   <section class="panel">
     <h2>Workforce</h2>
     <div class="mode" id="mode">Qty:
@@ -313,848 +174,808 @@ button:focus-visible,.item:focus-visible{outline:3px solid var(--pink);outline-o
     <div class="scroll" id="helpers"></div>
   </section>
 
-  <!-- RIGHT: Systems + Upgrades -->
   <section class="panel">
-    <h2>Command Deck</h2>
+    <h2>Command</h2>
     <div class="sysrow">
-      <button class="sysbtn" id="btnStocks" disabled>📈 Exchange</button>
-      <button class="sysbtn" id="btnAccel" disabled>⚡ Beam</button>
-      <button class="sysbtn" id="btnLab" disabled>🔬 Lab</button>
-      <button class="sysbtn" id="btnShip" disabled>🚀 Fleet</button>
-      <button class="sysbtn" id="btnRift" disabled>🌀 Rift</button>
-      <button class="sysbtn" id="btnCasino" disabled>🎰 Casino</button>
+      <button class="sysbtn" id="bStocks" disabled>📈 Exchange</button>
+      <button class="sysbtn" id="bBeam" disabled>⚡ Beam</button>
+      <button class="sysbtn" id="bLab" disabled>🔬 Lab</button>
+      <button class="sysbtn" id="bFleet" disabled>🚀 Fleet</button>
+      <button class="sysbtn" id="bRift" disabled>🌀 Rift</button>
+      <button class="sysbtn" id="bCasino" disabled>🎰 Casino</button>
     </div>
 
-    <!-- STOCKS -->
-    <div class="syspanel" id="panelStocks">
-      <h3>Pencil Stock Exchange</h3>
+    <div class="syspanel" id="pStocks">
+      <h3>Stock Exchange</h3>
       <div class="stock-list" id="stockList"></div>
-      <div class="row" style="margin-top:8px">
-        <span>Selected: <b id="selSym">—</b></span>
-        <span>Cash impact</span>
-      </div>
+      <div class="row"><span>Selected <b id="selSym">—</b></span></div>
       <div class="row">
-        <button class="act" id="buyStock">Buy 1</button>
-        <button class="act" id="buyStock10">Buy 10</button>
-        <button class="act" id="sellStock">Sell 1</button>
+        <button class="act" id="buy1">Buy 1</button>
+        <button class="act" id="buy10">Buy 10</button>
+        <button class="act" id="sell1">Sell 1</button>
         <button class="act" id="sellAll">Sell All</button>
       </div>
-      <div class="row"><span>Portfolio value</span><b id="portVal">$0</b></div>
-      <div class="row"><span>Dividends /sec</span><b id="divRate">$0</b></div>
-      <small style="opacity:.7;display:block;margin-top:6px">Prices react to your production & random events. Later unlocks enable shorting.</small>
+      <div class="row"><span>Portfolio</span><b id="port">$0</b></div>
+      <div class="row"><span>Dividends</span><b id="divs">$0/s</b></div>
     </div>
 
-    <!-- ACCELERATOR -->
-    <div class="syspanel" id="panelAccel">
-      <h3>Graphite Particle Beam</h3>
-      <div class="row"><span>Energy</span><b id="accelE">0 GeV</b></div>
-      <div class="accel-meter"><div class="accel-fill" id="accelFill"></div></div>
-      <div class="row"><span>Multiplier</span><b id="accelMult">1.00×</b></div>
-      <div class="row"><span>Status</span><b id="accelStat">Cold</b></div>
+    <div class="syspanel" id="pBeam">
+      <h3>Particle Beam</h3>
+      <div class="row"><span>Energy</span><b id="beamE">0 GeV</b></div>
+      <div class="meter"><div id="beamFill"></div></div>
+      <div class="row"><span>Multiplier</span><b id="beamM">1.00×</b></div>
+      <div class="row"><span>Status</span><b id="beamS">Cold</b></div>
       <div class="row">
-        <button class="act" id="chargeBeam">Charge (+5 GeV)</button>
-        <button class="act" id="overcharge">Overcharge (risky)</button>
+        <button class="act" id="charge">Charge</button>
+        <button class="act" id="over">Overcharge</button>
       </div>
-      <small style="opacity:.7;display:block;margin-top:6px">Energy multiplies all production. Overcharge can spike or melt the coils.</small>
     </div>
 
-    <!-- LAB -->
-    <div class="syspanel" id="panelLab">
-      <h3>Deep Research</h3>
-      <div class="row"><span>Active</span><b id="labName">None</b></div>
-      <div class="prog-bar"><div class="prog-fill" id="labFill"></div></div>
-      <div class="row"><span>Progress</span><b id="labPct">—</b></div>
+    <div class="syspanel" id="pLab">
+      <h3>Research Lab</h3>
+      <div class="row"><span>Project</span><b id="labN">None</b></div>
+      <div class="prog"><div id="labF"></div></div>
+      <div class="row"><span>Progress</span><b id="labP">—</b></div>
       <div id="labList"></div>
-      <small style="opacity:.7;display:block;margin-top:6px">Projects are unique and permanent. Some unlock new systems.</small>
     </div>
 
-    <!-- FLEET -->
-    <div class="syspanel" id="panelShip">
-      <h3>Interstellar Logistics</h3>
+    <div class="syspanel" id="pFleet">
+      <h3>Logistics Fleet</h3>
       <div class="row"><span>Freighters</span><b id="ships">0</b></div>
       <div class="row"><span>Reach</span><b id="reach">Local</b></div>
-      <div class="row"><span>Value bonus</span><b id="shipMult">1.00×</b></div>
+      <div class="row"><span>Value bonus</span><b id="shipM">1.00×</b></div>
       <div class="row"><button class="act" id="buyShip">Launch Freighter</button></div>
-      <small style="opacity:.7;display:block;margin-top:6px">Each freighter expands market reach and pencil value. Cost scales hard.</small>
     </div>
 
-    <!-- RIFT -->
-    <div class="syspanel" id="panelRift">
+    <div class="syspanel" id="pRift">
       <h3>Dimensional Rift</h3>
-      <div class="row"><span>Rift depth</span><b id="riftDepth">0</b></div>
-      <div class="row"><span>Reality strain</span><b id="riftStrain">Stable</b></div>
-      <div class="row"><span>Dimension bonus</span><b id="riftBonus">1.00×</b></div>
-      <div class="row"><button class="act" id="probeRift">Probe Deeper</button></div>
-      <small style="opacity:.7;display:block;margin-top:6px">Spend massive cash to peer into pencil-dominated realities. Permanent mult.</small>
+      <div class="row"><span>Depth</span><b id="riftD">0</b></div>
+      <div class="row"><span>Bonus</span><b id="riftM">1.00×</b></div>
+      <div class="row"><button class="act" id="probe">Probe Deeper</button></div>
     </div>
 
-    <!-- CASINO -->
-    <div class="syspanel" id="panelCasino">
+    <div class="syspanel" id="pCasino">
       <h3>Graphite Casino</h3>
-      <div class="row"><span>Last result</span><b id="casinoLast">—</b></div>
+      <div class="row"><span>Last</span><b id="casLast">—</b></div>
       <div class="row">
-        <button class="act" id="betLow">Bet 1% (safe)</button>
-        <button class="act" id="betHigh">Bet 10% (spicy)</button>
+        <button class="act" id="bet1">Bet 1%</button>
+        <button class="act" id="bet10">Bet 10%</button>
+        <button class="act" id="betAll">All-in</button>
       </div>
-      <div class="row"><button class="act" id="betAll">All-in (degenerate)</button></div>
-      <small style="opacity:.7;display:block;margin-top:6px">49% win double, 1% jackpot ×10, rest lose. House always smiles.</small>
     </div>
 
-    <h2 style="margin-top:12px">Upgrades</h2>
-    <div class="scroll" id="upgrades"></div>
+    <h2 style="margin-top:10px">Upgrades</h2>
+    <div class="scroll" id="ups"></div>
   </section>
 </div>
 
 <script>
 "use strict";
-const KEY = "pencilFactory_v3";
-const $ = s => document.querySelector(s);
-const $$ = s => document.querySelectorAll(s);
+const KEY="pf_v4";
+const $=s=>document.querySelector(s);
+const $$=s=>document.querySelectorAll(s);
 
-/* ===================== DATA ===================== */
-const HELPERS = [
-  {id:"intern", name:"Intern", desc:"Works for exposure and eraser crumbs.", cost:20, pps:0.08, ico:"🧑‍🎓"},
-  {id:"station", name:"Sharpening Bench", desc:"A blade, a crank, mild danger.", cost:150, pps:0.7, ico:"🔧"},
-  {id:"lathe", name:"Hand Lathe", desc:"Turns billets into hexagonal destiny.", cost:1800, pps:5, ico:"🪚"},
-  {id:"mill", name:"Cedar Mill", desc:"The forest will remember this.", cost:2.2e4, pps:32, ico:"🪵"},
-  {id:"mine", name:"Graphite Pit", desc:"Black dust, blacker lungs.", cost:2.8e5, pps:180, ico:"⛏️"},
-  {id:"line", name:"Assembly Line", desc:"One pencil every 0.7 seconds. Loud.", cost:3.5e6, pps:950, ico:"🏭"},
-  {id:"bots", name:"Robot Gang", desc:"Unionization probability: rising.", cost:5e7, pps:5200, ico:"🤖"},
-  {id:"farm", name:"Cedar Arcology", desc:"Trees that grow already sharpened.", cost:8e8, pps:2.8e4, ico:"🌲"},
-  {id:"orbit", name:"Orbital Forge", desc:"Zero-g extrusion. Beautiful and illegal.", cost:1.5e10, pps:1.6e5, ico:"🛰️"},
-  {id:"luna", name:"Lunar Works", desc:"Dust is free. Radiation is not.", cost:3e11, pps:9e5, ico:"🌙"},
-  {id:"aster", name:"Asteroid Scribe", desc:"Carves carbonaceous chondrites.", cost:6e12, pps:5.5e6, ico:"☄️"},
-  {id:"dyson", name:"Dyson Stylus", desc:"Writes on the solar wind.", cost:1.5e14, pps:3.5e7, ico:"☀️"},
-  {id:"galaxy", name:"Galactic Press", desc:"Spiral arms as conveyor belts.", cost:4e15, pps:2.2e8, ico:"🌌"},
-  {id:"quantum", name:"Quantum Lathe", desc:"Wood exists in all states until observed.", cost:1e17, pps:1.5e9, ico:"⚛️"},
-  {id:"dimension", name:"Pencil Monad", desc:"A closed universe of pure graphite.", cost:3e18, pps:1.2e10, ico:"🌀"}
+/* ========== SAFE MATH ========== */
+const MAX=1e300;
+function safe(n){
+  if(typeof n!=="number" || !isFinite(n) || n<0) return 0;
+  return n>MAX ? MAX : n;
+}
+function safeMul(a,b){
+  a=safe(a); b=safe(b);
+  if(a===0||b===0) return 0;
+  if(a>MAX/Math.max(b,1e-300)) return MAX;
+  const r=a*b;
+  return isFinite(r) ? Math.min(r,MAX) : MAX;
+}
+function safePow(base,exp){
+  if(exp<=0) return 1;
+  if(base<=1) return Math.min(base,MAX);
+  exp=Math.min(exp,2000);
+  const log=exp*Math.log(base);
+  if(!isFinite(log) || log>690) return MAX;
+  return Math.min(Math.pow(base,exp), MAX);
+}
+const SUF=["","K","M","B","T","Qa","Qi","Sx","Sp","Oc","No","Dc","Ud","Dd","Td","Qad","Qid","Sxd","Spd","Ocd","Vg"];
+function fmt(n){
+  n=safe(n);
+  if(n<1000) return n<10 ? n.toFixed(1).replace(/\.0$/,"") : String(Math.floor(n));
+  const e=Math.min(Math.floor(Math.log10(Math.max(n,1))/3), SUF.length-1);
+  const v=n/Math.pow(10,3*e);
+  return v.toFixed(v<10?2:v<100?1:0)+SUF[e];
+}
+function money(n){
+  n=safe(n);
+  return n<1000 ? "$"+n.toFixed(2) : "$"+fmt(n);
+}
+
+/* ========== DATA ========== */
+const H=[
+  {n:"Intern",d:"Works for exposure.",c:25,p:0.1,i:"🧑‍🎓"},
+  {n:"Sharpening Bench",d:"A crank and a prayer.",c:180,p:0.8,i:"🔧"},
+  {n:"Hand Lathe",d:"Hexagonal destiny.",c:2200,p:6,i:"🪚"},
+  {n:"Cedar Mill",d:"The forest remembers.",c:2.8e4,p:38,i:"🪵"},
+  {n:"Graphite Pit",d:"Black dust.",c:3.5e5,p:210,i:"⛏️"},
+  {n:"Assembly Line",d:"Loud and proud.",c:4.5e6,p:1100,i:"🏭"},
+  {n:"Robot Crew",d:"Never sleeps.",c:6e7,p:6000,i:"🤖"},
+  {n:"Cedar Arcology",d:"Pre-sharpened trees.",c:1e9,p:3.2e4,i:"🌲"},
+  {n:"Orbital Forge",d:"Zero-g extrusion.",c:2e10,p:1.8e5,i:"🛰️"},
+  {n:"Lunar Works",d:"Dust is free.",c:4e11,p:1e6,i:"🌙"},
+  {n:"Asteroid Scribe",d:"Carves chondrites.",c:8e12,p:6e6,i:"☄️"},
+  {n:"Dyson Stylus",d:"Writes on sunlight.",c:2e14,p:4e7,i:"☀️"},
+  {n:"Galactic Press",d:"Spiral conveyors.",c:5e15,p:2.5e8,i:"🌌"},
+  {n:"Quantum Lathe",d:"Superposition wood.",c:1.2e17,p:1.8e9,i:"⚛️"},
+  {n:"Pencil Monad",d:"Closed graphite universe.",c:4e18,p:1.5e10,i:"🌀"}
 ];
 
-const STOCKS = [
-  {sym:"PNCL", name:"Pencil Co", base:1, vol:0.04, owned:0, hist:[]},
-  {sym:"GRAF", name:"Graphite Futures", base:2.5, vol:0.07, owned:0, hist:[]},
-  {sym:"CEDR", name:"Cedar Holdings", base:4, vol:0.05, owned:0, hist:[]},
-  {sym:"ORBT", name:"Orbital Ink", base:12, vol:0.09, owned:0, hist:[]},
-  {sym:"VOID", name:"Void Erasers", base:40, vol:0.14, owned:0, hist:[]}
-];
-STOCKS.forEach(s=>{ s.price = s.base; for(let i=0;i<14;i++) s.hist.push(s.base); });
-
-const LAB = [
-  {id:"betterLead", name:"Stabilized Lead", cost:8e4, time:90, desc:"+18% production", done:false, run(S){S.lab.prod*=1.18}},
-  {id:"selfErase", name:"Self-Healing Erasers", cost:1.2e6, time:140, desc:"+22% value", done:false, run(S){S.lab.val*=1.22}},
-  {id:"autoClick", name:"Muscle Memory", cost:4e7, time:200, desc:"Passive +0.4 clicks/sec", done:false, run(S){S.lab.autoClick=0.4}},
-  {id:"stockSense", name:"Insider Graphite", cost:2e8, time:180, desc:"Stocks 30% less volatile", done:false, run(S){S.lab.stockStab=0.7}},
-  {id:"beamCool", name:"Cryo Coils", cost:9e9, time:240, desc:"Accelerator 40% stronger", done:false, run(S){S.lab.beam*=1.4}},
-  {id:"warpCargo", name:"Foldspace Holds", cost:5e11, time:300, desc:"+35% fleet value bonus", done:false, run(S){S.lab.ship*=1.35}},
-  {id:"riftSafe", name:"Reality Anchors", cost:8e13, time:360, desc:"Rift probes 25% cheaper", done:false, run(S){S.lab.riftCost=0.75}},
-  {id:"houseEdge", name:"Loaded Dice", cost:3e15, time:400, desc:"Casino win chance +4%", done:false, run(S){S.lab.casino=0.53}},
-  {id:"omni", name:"Omni-Graphite", cost:2e17, time:500, desc:"+40% everything", done:false, run(S){S.lab.prod*=1.4;S.lab.val*=1.4;S.lab.helper*=1.4}}
+const STK=[
+  {s:"PNCL",b:1,v:0.035},
+  {s:"GRAF",b:2.4,v:0.06},
+  {s:"CEDR",b:5,v:0.045},
+  {s:"ORBT",b:14,v:0.08},
+  {s:"VOID",b:45,v:0.12}
 ];
 
-const UPGRADES = [];
-function U(id,name,desc,cost,fn,req){ UPGRADES.push({id,name,desc,cost,fn,req:req||(()=>true),bought:false}); }
+const LAB=[
+  {id:"lead",n:"Stabilized Lead",c:1e5,t:80,d:"+20% production",fn:s=>{s.lab.prod=safeMul(s.lab.prod,1.2)}},
+  {id:"erase",n:"Self-Healing Erasers",c:1.5e6,t:120,d:"+25% value",fn:s=>{s.lab.val=safeMul(s.lab.val,1.25)}},
+  {id:"muscle",n:"Muscle Memory",c:5e7,t:160,d:"+0.5 auto-clicks/s",fn:s=>{s.lab.auto=0.5}},
+  {id:"insider",n:"Insider Graphite",c:3e8,t:140,d:"Stocks less volatile",fn:s=>{s.lab.stab=0.65}},
+  {id:"cryo",n:"Cryo Coils",c:1.2e10,t:200,d:"Beam +50% effective",fn:s=>{s.lab.beam=safeMul(s.lab.beam,1.5)}},
+  {id:"fold",n:"Foldspace Holds",c:6e11,t:240,d:"Fleet value +40%",fn:s=>{s.lab.ship=safeMul(s.lab.ship,1.4)}},
+  {id:"anchor",n:"Reality Anchors",c:1e14,t:300,d:"Rift probes cheaper",fn:s=>{s.lab.riftC=0.7}},
+  {id:"dice",n:"Loaded Dice",c:4e15,t:320,d:"Casino +5% win",fn:s=>{s.lab.cas=0.54}},
+  {id:"omni",n:"Omni-Graphite",c:3e17,t:400,d:"+45% everything",fn:s=>{s.lab.prod=safeMul(s.lab.prod,1.45);s.lab.val=safeMul(s.lab.val,1.45);s.lab.help=safeMul(s.lab.help,1.45)}}
+];
 
-// Unique, non-repetitive upgrades
-U("ipo","IPO Filing","Unlock the Stock Exchange.",4e4, S=>{S.sys.stocks=true},"total");
-U("beamUnlock","Particle Charter","Unlock the Graphite Beam.",2e6, S=>{S.sys.accel=true},"total");
-U("labUnlock","Black Budget","Unlock Deep Research.",3e5, S=>{S.sys.lab=true},"total");
-U("fleetUnlock","Export Writ","Unlock Interstellar Fleet.",8e8, S=>{S.sys.ship=true},"total");
-U("riftUnlock","Event Horizon Permit","Unlock Dimensional Rift.",5e12, S=>{S.sys.rift=true},"total");
-U("casinoUnlock","Sin License","Unlock the Graphite Casino.",1e11, S=>{S.sys.casino=true},"total");
-
-U("click2","Callus","Clicks are twice as strong.",180, S=>{S.up.click*=2});
-U("click3","Two Hands","Clicks ×2 again.",3500, S=>{S.up.click*=2});
-U("click4","Caffeine IV","Clicks ×2.",9e4, S=>{S.up.click*=2});
-U("click5","Neural Graft","Clicks ×2.",4e7, S=>{S.up.click*=2});
-U("click6","Thought Pencil","Clicks ×3.",8e12, S=>{S.up.click*=3});
-
-U("pct1","Foreman Nod","Clicks also give 3% of PPS.",2e4, S=>{S.up.pct+=0.03});
-U("pct2","Board Seat","Clicks give +5% PPS.",3e7, S=>{S.up.pct+=0.05});
-U("pct3","Cosmic Stylus","Clicks give +8% PPS.",6e12, S=>{S.up.pct+=0.08});
-
-U("val1","Pink Prestige","Pencil value ×1.6",2200, S=>{S.up.val*=1.6});
-U("val2","Brand Myth","Value ×1.7",1.5e5, S=>{S.up.val*=1.7});
-U("val3","School Monopoly","Value ×2",8e7, S=>{S.up.val*=2});
-U("val4","Galactic Standard","Value ×2.5",2e13, S=>{S.up.val*=2.5});
-U("val5","Reality Tender","Value ×3",1e17, S=>{S.up.val*=3});
-
-U("glob1","Shop Radio","Production ×1.3",9e3, S=>{S.up.glob*=1.3});
-U("glob2","Free Coffee","Production ×1.35",4e5, S=>{S.up.glob*=1.35});
-U("glob3","Four-Day Week","Production ×1.6",2e8, S=>{S.up.glob*=1.6});
-U("glob4","Time Dilation","Production ×2",9e12, S=>{S.up.glob*=2});
-U("glob5","Causal Factory","Production ×2.5",4e16, S=>{S.up.glob*=2.5});
-
-U("goldAttract","Golden Magnet","Golden pencils appear 40% more often.",1.5e6, S=>{S.up.goldRate*=0.6});
-U("goldRich","Midas Core","Golden rewards ×2.",5e9, S=>{S.up.goldPow*=2});
-U("divBoost","Dividend Cult","Stock dividends ×2.2",3e8, S=>{S.up.div*=2.2});
-U("shorting","Short License","Unlock shorting (sell what you don't own).",2e10, S=>{S.sys.short=true});
-U("beamSafe","Failsafe Interlock","Overcharge no longer destroys energy.",7e11, S=>{S.up.beamSafe=true});
-U("autoTrade","Algo Trader","Slowly buys the cheapest stock with spare cash.",4e13, S=>{S.up.autoTrade=true});
-U("riftEcho","Echo Chamber","Rift bonus also multiplies clicks.",9e14, S=>{S.up.riftClick=true});
-U("casinoLuck","Loaded Atmosphere","Casino jackpot chance slightly higher.",2e16, S=>{S.up.jackpot=0.015});
-
-// Helper-specific unique upgrades (not pure doubles)
-HELPERS.forEach((h,i)=>{
-  U(h.id+"_tools", h.name+": Precision Kit", "That helper line gains +40% output.", h.cost*12, S=>{S.helperMult[i]*=1.4}, ()=>S.owned[i]>=3);
-  U(h.id+"_over", h.name+": Graveyard Shift", "That helper line gains +60% output.", h.cost*90, S=>{S.helperMult[i]*=1.6}, ()=>S.owned[i]>=12);
-  U(h.id+"_sing", h.name+": Local Singularity", "That helper line gains +100% output.", h.cost*800, S=>{S.helperMult[i]*=2}, ()=>S.owned[i]>=40);
+const UPS=[];
+function addU(id,n,d,c,fn,need){UPS.push({id,n,d,c,fn,need:need||null})}
+addU("ipo","IPO Filing","Unlock Stock Exchange",5e4,s=>{s.sys.stocks=1});
+addU("beamU","Particle Charter","Unlock Particle Beam",3e6,s=>{s.sys.beam=1});
+addU("labU","Black Budget","Unlock Research Lab",4e5,s=>{s.sys.lab=1});
+addU("fleetU","Export Writ","Unlock Logistics Fleet",1e9,s=>{s.sys.fleet=1});
+addU("riftU","Horizon Permit","Unlock Dimensional Rift",8e12,s=>{s.sys.rift=1});
+addU("casU","Sin License","Unlock Casino",2e11,s=>{s.sys.casino=1});
+addU("c1","Callus","Clicks ×2",200,s=>{s.up.click=safeMul(s.up.click,2)});
+addU("c2","Two Hands","Clicks ×2",4e3,s=>{s.up.click=safeMul(s.up.click,2)});
+addU("c3","Caffeine","Clicks ×2",1.2e5,s=>{s.up.click=safeMul(s.up.click,2)});
+addU("c4","Neural Graft","Clicks ×2",6e7,s=>{s.up.click=safeMul(s.up.click,2)});
+addU("c5","Thought Form","Clicks ×3",1e13,s=>{s.up.click=safeMul(s.up.click,3)});
+addU("p1","Foreman Nod","Clicks +3% PPS",3e4,s=>{s.up.pct+=0.03});
+addU("p2","Board Seat","Clicks +5% PPS",4e7,s=>{s.up.pct+=0.05});
+addU("p3","Cosmic Stylus","Clicks +8% PPS",8e12,s=>{s.up.pct+=0.08});
+addU("v1","Pink Prestige","Value ×1.6",2500,s=>{s.up.val=safeMul(s.up.val,1.6)});
+addU("v2","Brand Myth","Value ×1.7",2e5,s=>{s.up.val=safeMul(s.up.val,1.7)});
+addU("v3","School Lock","Value ×2",1e8,s=>{s.up.val=safeMul(s.up.val,2)});
+addU("v4","Galactic Std","Value ×2.5",3e13,s=>{s.up.val=safeMul(s.up.val,2.5)});
+addU("v5","Reality Tender","Value ×3",2e17,s=>{s.up.val=safeMul(s.up.val,3)});
+addU("g1","Shop Radio","Prod ×1.3",1.2e4,s=>{s.up.glob=safeMul(s.up.glob,1.3)});
+addU("g2","Free Coffee","Prod ×1.35",5e5,s=>{s.up.glob=safeMul(s.up.glob,1.35)});
+addU("g3","4-Day Week","Prod ×1.6",3e8,s=>{s.up.glob=safeMul(s.up.glob,1.6)});
+addU("g4","Time Dilation","Prod ×2",1.2e13,s=>{s.up.glob=safeMul(s.up.glob,2)});
+addU("g5","Causal Loop","Prod ×2.5",6e16,s=>{s.up.glob=safeMul(s.up.glob,2.5)});
+addU("goldM","Golden Magnet","Goldens 40% more often",2e6,s=>{s.up.gRate=0.6});
+addU("goldP","Midas Core","Golden rewards ×2",8e9,s=>{s.up.gPow=2});
+addU("divB","Dividend Cult","Dividends ×2.2",4e8,s=>{s.up.div=safeMul(s.up.div,2.2)});
+addU("beamSafe","Failsafe","Overcharge never melts",1e12,s=>{s.up.safe=1});
+addU("autoT","Algo Trader","Auto-buys cheapest stock",6e13,s=>{s.up.auto=1});
+H.forEach((h,i)=>{
+  addU(h.n+"_a",h.n+": Tools","This line +50% output",h.c*15,s=>{s.hMult[i]=safeMul(s.hMult[i],1.5)},()=>S.owned[i]>=4);
+  addU(h.n+"_b",h.n+": Shift","This line +70% output",h.c*120,s=>{s.hMult[i]=safeMul(s.hMult[i],1.7)},()=>S.owned[i]>=15);
+  addU(h.n+"_c",h.n+": Singularity","This line ×2",h.c*900,s=>{s.hMult[i]=safeMul(s.hMult[i],2)},()=>S.owned[i]>=50);
 });
 
-const NEWS = [
-  [0,"The first pencil is free. The rest will cost the universe."],
-  [50,"A teacher in Ohio writes your name on the board. In graphite."],
-  [500,"Three counties now chew exclusively on your product."],
-  [5e3,"Number 3 Pencil Co. files a lawsuit. You sharpen it."],
-  [5e4,"Forests request a meeting. You send a pencil."],
-  [5e5,"National curriculum updated to include your logo."],
-  [5e6,"First orbital forge lights up. The sky looks yellower."],
-  [5e8,"Mars colony demands pink erasers. Non-negotiable."],
-  [5e10,"Astronomers confirm the Moon has a No. 2 core."],
-  [5e12,"A Dyson segment begins autographing solar flares."],
-  [5e14,"Galactic council classifies pencils as soft power."],
-  [5e16,"Observable universe: 47% pencil by volume and rising."],
-  [1e18,"Reality's EULA now includes a graphite clause."],
-  [1e19,"You have become the footnote of physics."]
+const NEWS=[
+  [0,"The first pencil is free. Everything after has a price."],
+  [100,"A school in Ohio just ordered a box."],
+  [2e3,"Three counties now chew only your graphite."],
+  [2e4,"Number 3 Pencil Co. sued. You sharpened the complaint."],
+  [2e5,"Forests requested a meeting. You sent a pencil."],
+  [2e6,"National tests now schedule around your output."],
+  [2e8,"First orbital forge online. The sky looks yellower."],
+  [2e10,"Mars wants pink erasers. Non-negotiable."],
+  [2e12,"The Moon has a No. 2 core. Confirmed."],
+  [2e14,"A Dyson segment autographs solar flares."],
+  [2e16,"Galactic council calls pencils soft power."],
+  [1e18,"Universe census: 49% pencil by volume."],
+  [1e19,"Reality updated its terms. Graphite is now required."]
+];
+const GOALS=[
+  {t:0,x:"The first mark"},{t:200,x:"Supply the school"},{t:2e4,x:"Own the county"},
+  {t:2e6,x:"National brand"},{t:2e8,x:"Every desk on Earth"},{t:2e10,x:"Low Earth orbit"},
+  {t:2e12,x:"Lunar colony"},{t:2e14,x:"Write on the Sun"},{t:2e16,x:"Span the galaxy"},
+  {t:1e18,x:"Conquer the Observable Universe"},{t:1e19,x:"Become the medium of reality"}
 ];
 
-const GOALS = [
-  {t:0, txt:"The first mark"},
-  {t:100, txt:"Supply the schoolhouse"},
-  {t:1e4, txt:"Own the county"},
-  {t:1e6, txt:"National brand"},
-  {t:1e8, txt:"Every desk on Earth"},
-  {t:1e10, txt:"Low Earth orbit"},
-  {t:1e12, txt:"Lunar graphite colony"},
-  {t:1e14, txt:"Write on the Sun"},
-  {t:1e16, txt:"Span the Milky Way"},
-  {t:1e18, txt:"Conquer the Observable Universe"},
-  {t:1e19, txt:"Become the medium of reality"}
-];
-
-/* ===================== STATE ===================== */
+/* ========== STATE ========== */
 function fresh(){
   return {
-    made:0, cash:0, total:0, clicks:0, last:Date.now(),
-    owned: HELPERS.map(()=>0),
-    helperMult: HELPERS.map(()=>1),
-    up:{click:1, pct:0, val:1, glob:1, div:1, goldRate:1, goldPow:1, beamSafe:false, autoTrade:false, riftClick:false, jackpot:0.01},
-    sys:{stocks:false, accel:false, lab:false, ship:false, rift:false, casino:false, short:false},
-    accel:0,
-    lab:{prod:1, val:1, helper:1, autoClick:0, stockStab:1, beam:1, ship:1, riftCost:1, casino:0.49, current:null, prog:0},
-    ships:0, rift:0,
-    essence:0, ascensions:0,
-    bought:{},
-    stocks: STOCKS.map(s=>({sym:s.sym, owned:0, price:s.base, hist:[...s.hist]}))
+    made:0,cash:0,total:0,clicks:0,last:Date.now(),
+    owned:H.map(()=>0), hMult:H.map(()=>1),
+    up:{click:1,pct:0,val:1,glob:1,div:1,gRate:1,gPow:1,safe:0,auto:0},
+    sys:{stocks:0,beam:0,lab:0,fleet:0,rift:0,casino:0},
+    beam:0, ships:0, rift:0,
+    lab:{prod:1,val:1,help:1,auto:0,stab:1,beam:1,ship:1,riftC:1,cas:0.49,cur:null,prog:0,done:{}},
+    ess:0, asc:0, bought:{},
+    stocks:STK.map(x=>({s:x.s,o:0,p:x.b,h:Array(12).fill(x.b),v:x.v}))
   };
 }
 function load(){
   try{
-    const r = JSON.parse(localStorage.getItem(KEY));
+    const r=JSON.parse(localStorage.getItem(KEY));
     if(!r) return fresh();
-    const f = Object.assign(fresh(), r);
-    while(f.owned.length < HELPERS.length) f.owned.push(0);
-    while(f.helperMult.length < HELPERS.length) f.helperMult.push(1);
-    if(!f.stocks || f.stocks.length !== STOCKS.length){
-      f.stocks = STOCKS.map(s=>({sym:s.sym, owned:0, price:s.base, hist:[...s.hist]}));
-    }
+    const f=Object.assign(fresh(),r);
+    while(f.owned.length<H.length) f.owned.push(0);
+    while(f.hMult.length<H.length) f.hMult.push(1);
+    f.made=safe(f.made); f.cash=safe(f.cash); f.total=safe(f.total);
+    f.beam=safe(f.beam); f.ships=(safe(f.ships)|0); f.rift=(safe(f.rift)|0);
+    f.ess=(safe(f.ess)|0); f.asc=(safe(f.asc)|0);
+    f.owned=f.owned.map(x=>Math.min(Math.floor(safe(x)),1e7));
+    f.hMult=f.hMult.map(x=>{const v=safe(x); return v>0?v:1});
+    if(!f.stocks||f.stocks.length!==STK.length)
+      f.stocks=STK.map(x=>({s:x.s,o:0,p:x.b,h:Array(12).fill(x.b),v:x.v}));
+    f.stocks.forEach(st=>{
+      st.p=safe(st.p)||1;
+      st.o=Math.floor(safe(st.o));
+      if(!Array.isArray(st.h)||st.h.length<4) st.h=Array(12).fill(st.p);
+      st.h=st.h.map(x=>safe(x)||st.p);
+    });
+    if(!f.lab) f.lab={prod:1,val:1,help:1,auto:0,stab:1,beam:1,ship:1,riftC:1,cas:0.49,cur:null,prog:0,done:{}};
+    ["prod","val","help","beam","ship"].forEach(k=>{ f.lab[k]=safe(f.lab[k])||1; });
+    if(!f.lab.done) f.lab.done={};
+    if(!f.bought) f.bought={};
+    if(!f.up) f.up={click:1,pct:0,val:1,glob:1,div:1,gRate:1,gPow:1,safe:0,auto:0};
+    ["click","val","glob","div"].forEach(k=>{ f.up[k]=safe(f.up[k])||1; });
     return f;
   }catch(e){ return fresh(); }
 }
-function save(){ S.last = Date.now(); try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
-let S = load();
-const B = {frenzy:0, click:0};
-let mode = "1", openSys = null, selStock = 0;
-let newsHold = 0;
-
-/* ===================== MATH ===================== */
-const SUF = ["","K","M","B","T","Qa","Qi","Sx","Sp","Oc","No","Dc","Ud","Dd","Td","Qad","Qid","Sxd","Spd","Ocd","Vg","Uv"];
-function fmt(n){
-  if(!isFinite(n) || n < 0) return "∞";
-  if(n < 1000) return n < 10 ? n.toFixed(1).replace(/\.0$/,"") : String(Math.floor(n));
-  const e = Math.min(Math.floor(Math.log10(Math.max(n,1))/3), SUF.length-1);
-  const v = n / Math.pow(10, 3*e);
-  return v.toFixed(v<10?2:v<100?1:0) + SUF[e];
+function save(){
+  S.last=Date.now();
+  // final sanitize before save
+  S.cash=safe(S.cash); S.made=safe(S.made); S.total=safe(S.total);
+  try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){}
 }
-function money(n){ return n < 1000 ? "$"+n.toFixed(2) : "$"+fmt(n); }
+let S=load();
+const Buff={frenzy:0,click:0};
+let mode="1", open=null, sel=0, newsHold=0, upKey="";
 
-function essenceMult(){ return 1 + S.essence * 0.15; }
-
+/* ========== CORE ========== */
+function essM(){ return 1 + S.ess * 0.12; }
 function calc(){
-  let base = 0;
-  HELPERS.forEach((h,i)=>{
-    base += S.owned[i] * h.pps * S.helperMult[i];
-  });
-  base *= S.lab.helper;
-  const beam = 1 + (S.accel / 80) * S.lab.beam;
-  const shipM = (1 + S.ships * 0.07) * S.lab.ship;
-  const riftM = 1 + S.rift * 0.12;
-  const ess = essenceMult();
-  const pps = base * S.up.glob * S.lab.prod * beam * riftM * ess * (B.frenzy > 0 ? 7 : 1);
-  const clickVal = S.up.click * (B.click > 0 ? 11 : 1) * ess * (S.up.riftClick ? riftM : 1) + S.up.pct * pps;
-  const val = S.up.val * S.lab.val * shipM * ess;
-  let div = 0;
-  S.stocks.forEach(st=>{ div += st.owned * st.price * 0.0018 * S.up.div; });
-  return {pps, clickVal, val, beam, shipM, riftM, div, ess};
+  let base=0;
+  for(let i=0;i<H.length;i++){
+    base += safeMul(S.owned[i], safeMul(H[i].p, S.hMult[i]));
+  }
+  base = safeMul(base, S.lab.help || 1);
+  const beamM = 1 + safe(S.beam) / 90 * (S.lab.beam || 1);
+  const shipM = safeMul(1 + S.ships * 0.065, S.lab.ship || 1);
+  const riftM = 1 + S.rift * 0.11;
+  const ess = essM();
+  let pps = base * (S.up.glob||1) * (S.lab.prod||1) * beamM * riftM * ess;
+  if(Buff.frenzy>0) pps *= 7;
+  pps = safe(pps);
+  const click = safe( (S.up.click||1) * (Buff.click>0?10:1) * ess + (S.up.pct||0) * pps );
+  const val = safe( (S.up.val||1) * (S.lab.val||1) * shipM * ess );
+  let div=0;
+  S.stocks.forEach(st=>{ div += safeMul(st.o, st.p) * 0.0015 * (S.up.div||1); });
+  return {pps, click, val, beamM, shipM, riftM, div:safe(div), ess};
 }
-
 function earn(n, C){
-  S.made += n;
-  const cash = n * C.val;
-  S.cash += cash;
-  S.total += cash;
+  n = safe(n);
+  if(n <= 0) return;
+  S.made = safe(S.made + n);
+  const cash = safeMul(n, C.val);
+  S.cash = safe(S.cash + cash);
+  S.total = safe(S.total + cash);
 }
-
 function costN(i, n){
-  const r = 1.18;
-  const base = HELPERS[i].cost * Math.pow(r, S.owned[i]);
-  return Math.ceil(base * (Math.pow(r, n) - 1) / (r - 1));
+  n = Math.min(Math.max(1, n|0), 400);
+  const r = 1.175;
+  const owned = Math.min(S.owned[i]||0, 4000);
+  const base = safeMul(H[i].c, safePow(r, owned));
+  if(n === 1) return Math.ceil(safe(base));
+  const geom = safeMul(base, (safePow(r, n) - 1) / (r - 1));
+  return Math.ceil(safe(geom));
 }
 function qty(i){
   if(mode === "max"){
-    let n = 0;
-    while(n < 400 && costN(i, n+1) <= S.cash) n++;
-    return Math.max(n, 1);
+    let n=0;
+    while(n<250 && costN(i, n+1) <= S.cash) n++;
+    return Math.max(1, n);
   }
   return parseInt(mode, 10) || 1;
 }
 
-/* ===================== THEME & GOAL ===================== */
-function updateTheme(){
-  document.body.classList.remove("t-space","t-quantum","t-cosmic");
-  let sub = "Classic Works";
-  if(S.made >= 1e16){ document.body.classList.add("t-cosmic"); sub = "Cosmic Dominion"; }
-  else if(S.made >= 1e12){ document.body.classList.add("t-quantum"); sub = "Quantum Works"; }
-  else if(S.made >= 1e9){ document.body.classList.add("t-space"); sub = "Orbital Division"; }
-  $("#subTitle").textContent = sub;
-
-  let g = GOALS[0];
-  for(const x of GOALS) if(S.made >= x.t) g = x;
-  const next = GOALS.find(x => x.t > S.made);
-  $("#goal").textContent = next ? `Goal: ${g.txt}  →  ${fmt(next.t)}` : `Goal: ${g.txt}`;
+/* ========== RENDER ========== */
+const hEls=[];
+function buildH(){
+  const box=$("#helpers");
+  box.innerHTML="";
+  H.forEach((h,i)=>{
+    const b=document.createElement("button");
+    b.className="item";
+    b.innerHTML=`<span class="ico">${h.i}</span><span class="mid"><b>${h.n}</b><small>${h.d}</small><small class="rt"></small></span><span class="right"><span class="own">0</span><span class="cost"></span></span>`;
+    b.onclick=()=>{
+      const n=qty(i), c=costN(i,n);
+      if(!isFinite(c) || c<=0 || S.cash < c) return;
+      S.cash = safe(S.cash - c);
+      S.owned[i] = (S.owned[i]||0) + n;
+      save();
+    };
+    box.appendChild(b);
+    hEls.push({el:b, own:b.querySelector(".own"), cost:b.querySelector(".cost"), rt:b.querySelector(".rt")});
+  });
 }
 
-/* ===================== RENDER ===================== */
-const helperEls = [];
-function buildHelpers(){
-  const box = $("#helpers");
-  box.innerHTML = "";
-  HELPERS.forEach((h,i)=>{
-    const b = document.createElement("button");
-    b.className = "item";
-    b.innerHTML = `<span class="ico">${h.ico}</span><span class="mid"><b>${h.name}</b><small>${h.desc}</small><small class="rate"></small></span><span class="right"><span class="own">0</span><span class="cost"></span></span>`;
-    b.addEventListener("click", ()=>{
-      const n = qty(i), c = costN(i,n);
-      if(S.cash < c) return;
-      S.cash -= c; S.owned[i] += n; save();
-    });
-    box.appendChild(b);
-    helperEls.push({el:b, own:b.querySelector(".own"), cost:b.querySelector(".cost"), rate:b.querySelector(".rate")});
-  });
+function theme(){
+  document.body.classList.remove("space","quantum","cosmic");
+  let era="Classic Works";
+  if(S.made >= 1e16){ document.body.classList.add("cosmic"); era="Cosmic Dominion"; }
+  else if(S.made >= 1e12){ document.body.classList.add("quantum"); era="Quantum Works"; }
+  else if(S.made >= 1e9){ document.body.classList.add("space"); era="Orbital Division"; }
+  $("#era").textContent = era;
+  let g=GOALS[0];
+  for(const x of GOALS) if(S.made >= x.t) g=x;
+  const next=GOALS.find(x=>x.t > S.made);
+  $("#goal").textContent = next ? `Goal: ${g.x} → ${fmt(next.t)}` : `Goal: ${g.x}`;
 }
 
 function renderStocks(C){
-  const box = $("#stockList");
+  const box=$("#stockList");
   if(!box.children.length){
     S.stocks.forEach((st,i)=>{
-      const row = document.createElement("div");
-      row.className = "stock-row" + (i===selStock?" selected":"");
-      row.innerHTML = `<span class="sym">${st.sym}</span><div class="mini-chart"></div><span class="price"></span><span class="chg"></span>`;
-      row.addEventListener("click", ()=>{ selStock=i; renderStocks(calc()); });
-      const chart = row.querySelector(".mini-chart");
-      st.hist.forEach(()=> chart.appendChild(document.createElement("i")));
-      box.appendChild(row);
+      const r=document.createElement("div");
+      r.className="stock-row"+(i===sel?" sel":"");
+      r.innerHTML=`<span class="sym">${st.s}</span><div class="mini-chart"></div><span class="pr"></span><span class="chg"></span>`;
+      r.onclick=()=>{ sel=i; renderStocks(calc()); };
+      const ch=r.querySelector(".mini-chart");
+      for(let k=0;k<12;k++) ch.appendChild(document.createElement("i"));
+      box.appendChild(r);
     });
   }
-  let port = 0;
+  let port=0;
   S.stocks.forEach((st,i)=>{
-    const row = box.children[i];
-    row.classList.toggle("selected", i===selStock);
-    const max = Math.max(...st.hist, 0.01);
-    row.querySelectorAll("i").forEach((bar,j)=>{
-      bar.style.height = Math.max(2, (st.hist[j]/max)*26) + "px";
+    const r=box.children[i];
+    r.classList.toggle("sel", i===sel);
+    const mx=Math.max(...st.h.map(safe), 0.01);
+    r.querySelectorAll("i").forEach((bar,j)=>{
+      bar.style.height = Math.max(2, (safe(st.h[j])/mx)*22) + "px";
     });
-    const prev = st.hist[st.hist.length-2] || st.price;
-    const chg = ((st.price - prev)/prev)*100;
-    row.querySelector(".price").textContent = money(st.price);
-    const chgEl = row.querySelector(".chg");
-    chgEl.textContent = (chg>=0?"+":"") + chg.toFixed(1) + "%";
-    chgEl.className = "chg " + (chg>=0?"up":"dn");
-    port += st.owned * st.price;
+    const prev=safe(st.h[st.h.length-2]) || st.p;
+    const chg=((st.p - prev)/Math.max(prev,0.01))*100;
+    r.querySelector(".pr").textContent=money(st.p);
+    const ce=r.querySelector(".chg");
+    ce.textContent=(chg>=0?"+":"")+chg.toFixed(1)+"%";
+    ce.className="chg "+(chg>=0?"up":"dn");
+    port += st.o * st.p;
   });
-  $("#selSym").textContent = S.stocks[selStock].sym + " ×" + S.stocks[selStock].owned;
-  $("#portVal").textContent = money(port);
-  $("#divRate").textContent = money(C.div) + "/s";
+  $("#selSym").textContent = S.stocks[sel].s + " ×" + S.stocks[sel].o;
+  $("#port").textContent = money(port);
+  $("#divs").textContent = money(C.div)+"/s";
 }
 
-function renderAccel(C){
-  $("#accelE").textContent = fmt(S.accel) + " GeV";
-  $("#accelMult").textContent = C.beam.toFixed(2) + "×";
-  const pct = Math.min(100, S.accel / 8);
-  const fill = $("#accelFill");
-  fill.style.width = pct + "%";
-  fill.classList.toggle("hot", S.accel > 500);
-  $("#accelStat").textContent = S.accel > 700 ? "CRITICAL" : S.accel > 350 ? "Hot" : S.accel > 80 ? "Warm" : "Cold";
+function renderBeam(C){
+  $("#beamE").textContent = fmt(S.beam)+" GeV";
+  $("#beamM").textContent = C.beamM.toFixed(2)+"×";
+  const pct=Math.min(100, S.beam/6);
+  const f=$("#beamFill");
+  f.style.width=pct+"%";
+  f.classList.toggle("hot", S.beam>400);
+  $("#beamS").textContent = S.beam>600?"CRITICAL":S.beam>250?"Hot":S.beam>60?"Warm":"Cold";
 }
 
 function renderLab(){
-  if(S.lab.current){
-    const p = LAB.find(x=>x.id===S.lab.current);
-    $("#labName").textContent = p ? p.name : "—";
-    const pct = Math.min(100, (S.lab.prog / (p?p.time:1))*100);
-    $("#labPct").textContent = pct.toFixed(0) + "%";
-    $("#labFill").style.width = pct + "%";
-  } else {
-    $("#labName").textContent = "None";
-    $("#labPct").textContent = "—";
-    $("#labFill").style.width = "0%";
+  if(S.lab.cur){
+    const p=LAB.find(x=>x.id===S.lab.cur);
+    $("#labN").textContent = p ? p.n : "—";
+    const pct=Math.min(100, (S.lab.prog/(p?p.t:1))*100);
+    $("#labP").textContent = pct.toFixed(0)+"%";
+    $("#labF").style.width = pct+"%";
+  }else{
+    $("#labN").textContent="None";
+    $("#labP").textContent="—";
+    $("#labF").style.width="0%";
   }
-  const list = $("#labList");
-  let html = "";
+  const list=$("#labList");
+  let html="";
   LAB.forEach(p=>{
-    if(p.done || S.bought["lab_"+p.id]) return;
-    const busy = !!S.lab.current;
-    const can = S.cash >= p.cost && !busy;
-    html += `<div class="lab-opt"><span><b>${p.name}</b><br><small style="opacity:.7">${p.desc} · ${p.time}s</small></span>
-      <button class="act" data-lab="${p.id}" ${can?"":"disabled"}>${money(p.cost)}</button></div>`;
+    if(S.lab.done[p.id]) return;
+    const can=S.cash>=p.c && !S.lab.cur;
+    html+=`<div class="lab-opt"><span><b>${p.n}</b><br><small style="opacity:.7">${p.d} · ${p.t}s</small></span>
+      <button class="act" data-l="${p.id}" ${can?"":"disabled"}>${money(p.c)}</button></div>`;
   });
-  if(!html) html = '<div class="empty">All research complete.</div>';
-  if(list.dataset.h !== html){ list.innerHTML = html; list.dataset.h = html; }
+  if(!html) html='<div class="empty">All research done.</div>';
+  if(list.dataset.h!==html){ list.innerHTML=html; list.dataset.h=html; }
 }
 
-function renderShip(C){
-  $("#ships").textContent = S.ships;
-  const names = ["Local","Regional","Continental","Planetary","Orbital","System","Interstellar","Galactic","Universal","Omniversal"];
-  $("#reach").textContent = names[Math.min(S.ships, names.length-1)];
-  $("#shipMult").textContent = C.shipM.toFixed(2) + "×";
-}
-
-function renderRift(C){
-  $("#riftDepth").textContent = S.rift;
-  $("#riftStrain").textContent = S.rift > 20 ? "Fraying" : S.rift > 10 ? "Tense" : "Stable";
-  $("#riftBonus").textContent = C.riftM.toFixed(2) + "×";
-}
-
-function visibleUpgrades(){
-  return UPGRADES.filter(u=>{
+function visUp(){
+  return UPS.filter(u=>{
     if(S.bought[u.id]) return false;
-    if(u.req === "total") return S.total >= u.cost * 0.12;
-    if(typeof u.req === "function") return u.req();
-    return S.total >= u.cost * 0.18;
-  }).sort((a,b)=>a.cost-b.cost);
+    if(u.need){ try{ return u.need(); }catch(e){ return false; } }
+    return S.total >= u.c * 0.15;
+  }).sort((a,b)=>a.c-b.c);
 }
 
-let upKey = "";
-function renderUpgrades(){
-  const vis = visibleUpgrades();
-  const key = vis.map(u=>u.id).join(",");
-  const box = $("#upgrades");
-  if(key !== upKey){
-    upKey = key;
-    box.innerHTML = "";
-    if(!vis.length){ box.innerHTML = '<div class="empty">No upgrades ready. Grow further.</div>'; return; }
-    vis.slice(0,40).forEach(u=>{
-      const b = document.createElement("button");
-      b.className = "item";
-      b.innerHTML = `<span class="mid"><b>${u.name}</b><small>${u.desc}</small></span><span class="right cost">${money(u.cost)}</span>`;
-      b.addEventListener("click", ()=>{
-        if(S.cash < u.cost || S.bought[u.id]) return;
-        S.cash -= u.cost;
-        S.bought[u.id] = true;
+function renderUp(){
+  const vis=visUp();
+  const key=vis.map(u=>u.id).join();
+  const box=$("#ups");
+  if(key!==upKey){
+    upKey=key;
+    box.innerHTML="";
+    if(!vis.length){ box.innerHTML='<div class="empty">Keep producing.</div>'; return; }
+    vis.slice(0,30).forEach(u=>{
+      const b=document.createElement("button");
+      b.className="item";
+      b.innerHTML=`<span class="mid"><b>${u.n}</b><small>${u.d}</small></span><span class="right cost">${money(u.c)}</span>`;
+      b.onclick=()=>{
+        if(S.cash < u.c || S.bought[u.id]) return;
+        S.cash=safe(S.cash - u.c);
+        S.bought[u.id]=1;
         u.fn(S);
-        // sync sys flags from bought unlocks
-        if(u.id==="ipo") S.sys.stocks=true;
-        if(u.id==="beamUnlock") S.sys.accel=true;
-        if(u.id==="labUnlock") S.sys.lab=true;
-        if(u.id==="fleetUnlock") S.sys.ship=true;
-        if(u.id==="riftUnlock") S.sys.rift=true;
-        if(u.id==="casinoUnlock") S.sys.casino=true;
-        upKey = "";
+        upKey="";
         save();
-      });
+      };
       box.appendChild(b);
     });
   }
   box.querySelectorAll(".item").forEach((el,i)=>{
-    const u = vis[i];
-    if(u) el.classList.toggle("afford", S.cash >= u.cost);
+    const u=vis[i];
+    if(u) el.classList.toggle("afford", S.cash >= u.c);
   });
 }
 
 function render(){
-  const C = calc();
-  $("#cash").textContent = money(S.cash);
-  $("#made").textContent = fmt(Math.floor(S.made));
-  $("#essence").textContent = fmt(S.essence);
-  $("#ascendCount").textContent = S.ascensions;
-  $("#rates").textContent = `${fmt(C.pps)}/s · ${money(C.val)} each · ${money(C.pps*C.val + C.div)}/s total`;
-  document.title = fmt(Math.floor(S.made)) + " — Pencil Factory";
+  // emergency sanitize
+  if(!isFinite(S.cash) || S.cash<0) S.cash=0;
+  if(!isFinite(S.made) || S.made<0) S.made=0;
 
-  HELPERS.forEach((h,i)=>{
-    const e = helperEls[i];
-    const show = i===0 || S.owned[i]>0 || S.owned[i-1]>0 || S.total >= h.cost*0.2;
-    e.el.style.display = show ? "" : "none";
-    const n = qty(i), c = costN(i,n);
-    e.own.textContent = S.owned[i];
-    e.cost.textContent = (n>1?"×"+n+" ":"") + money(c);
-    e.rate.textContent = fmt(h.pps * S.helperMult[i] * C.ess * S.lab.helper) + "/s each";
-    e.el.classList.toggle("afford", S.cash >= c);
+  const C=calc();
+  $("#cash").textContent=money(S.cash);
+  $("#made").textContent=fmt(Math.floor(S.made));
+  $("#ess").textContent=fmt(S.ess);
+  $("#asc").textContent=S.asc;
+  $("#rates").textContent=`${fmt(C.pps)}/s · ${money(C.val)} each · ${money(C.pps*C.val + C.div)}/s`;
+  document.title=fmt(Math.floor(S.made))+" — Pencil Factory";
+
+  H.forEach((h,i)=>{
+    const e=hEls[i];
+    const show=i===0 || S.owned[i]>0 || (i>0&&S.owned[i-1]>0) || S.total>=h.c*0.18;
+    e.el.style.display=show?"":"none";
+    const n=qty(i), c=costN(i,n);
+    e.own.textContent=S.owned[i]||0;
+    e.cost.textContent=(n>1?"×"+n+" ":"")+money(c);
+    e.rt.textContent=fmt(safeMul(h.p, S.hMult[i]) * C.ess * (S.lab.help||1))+"/s each";
+    e.el.classList.toggle("afford", isFinite(c) && c>0 && S.cash>=c);
   });
+  renderUp();
+  theme();
 
-  renderUpgrades();
-  updateTheme();
+  let bt="";
+  if(Buff.frenzy>0) bt+=`<span class="buff">Frenzy ×7 · ${Math.ceil(Buff.frenzy)}s</span>`;
+  if(Buff.click>0) bt+=`<span class="buff">Click Storm ×10 · ${Math.ceil(Buff.click)}s</span>`;
+  if($("#buffs").dataset.t!==bt){ $("#buffs").innerHTML=bt; $("#buffs").dataset.t=bt; }
 
-  // buffs
-  let bt = "";
-  if(B.frenzy>0) bt += `<span class="buff">Frenzy ×7 · ${Math.ceil(B.frenzy)}s</span>`;
-  if(B.click>0) bt += `<span class="buff">Click Storm ×11 · ${Math.ceil(B.click)}s</span>`;
-  if($("#buffs").dataset.t !== bt){ $("#buffs").innerHTML = bt; $("#buffs").dataset.t = bt; }
-
-  // floor
-  let fl = "";
-  HELPERS.forEach((h,i)=>{
+  let fl="";
+  H.forEach((h,i)=>{
     if(S.owned[i]>0)
-      fl += `<span title="${h.name} ×${S.owned[i]}">${h.ico.repeat(Math.min(S.owned[i],5))}${S.owned[i]>5?"<small>+"+(S.owned[i]-5)+"</small>":""}</span>`;
+      fl+=`<span title="${h.n} ×${S.owned[i]}">${h.i.repeat(Math.min(S.owned[i],4))}${S.owned[i]>4?"+"+(S.owned[i]-4):""}</span>`;
   });
-  if(!fl) fl = '<span class="floor-empty">Silent floor. Hire someone.</span>';
-  if($("#floor").dataset.t !== fl){ $("#floor").innerHTML = fl; $("#floor").dataset.t = fl; }
+  if(!fl) fl='<span class="floor-empty">Empty. Hire someone.</span>';
+  if($("#floor").dataset.t!==fl){ $("#floor").innerHTML=fl; $("#floor").dataset.t=fl; }
 
-  // systems lock
-  const sysMap = {stocks:"Stocks",accel:"Accel",lab:"Lab",ship:"Ship",rift:"Rift",casino:"Casino"};
-  Object.keys(sysMap).forEach(k=>{
-    const btn = $("#btn"+sysMap[k]);
-    if(btn){
-      btn.disabled = !S.sys[k];
-      btn.classList.toggle("on", openSys === k);
-    }
+  const map={stocks:"bStocks",beam:"bBeam",lab:"bLab",fleet:"bFleet",rift:"bRift",casino:"bCasino"};
+  Object.keys(map).forEach(k=>{
+    const btn=$("#"+map[k]);
+    btn.disabled=!S.sys[k];
+    btn.classList.toggle("on", open===k);
   });
 
-  if(openSys==="stocks") renderStocks(C);
-  if(openSys==="accel") renderAccel(C);
-  if(openSys==="lab") renderLab();
-  if(openSys==="ship") renderShip(C);
-  if(openSys==="rift") renderRift(C);
+  if(open==="stocks") renderStocks(C);
+  if(open==="beam") renderBeam(C);
+  if(open==="lab") renderLab();
+  if(open==="fleet"){
+    $("#ships").textContent=S.ships;
+    const names=["Local","Regional","Continental","Planetary","Orbital","System","Interstellar","Galactic","Universal"];
+    $("#reach").textContent=names[Math.min(S.ships, names.length-1)];
+    $("#shipM").textContent=C.shipM.toFixed(2)+"×";
+  }
+  if(open==="rift"){
+    $("#riftD").textContent=S.rift;
+    $("#riftM").textContent=C.riftM.toFixed(2)+"×";
+  }
 
-  // prestige
-  const canAsc = S.made >= 1e11;
-  const gain = Math.floor(Math.pow(S.made / 1e11, 0.5));
-  $("#prestigeBox").style.display = canAsc ? "block" : "none";
-  if(canAsc){
-    $("#prestigeInfo").textContent = `Reset progress for ${gain} Cosmic Graphite (permanent +15% each).`;
-    $("#doAscend").textContent = `Ascend (+${fmt(gain)} Graphite)`;
+  const can=S.made>=1e11;
+  $("#presBox").style.display=can?"block":"none";
+  if(can){
+    const gain=Math.floor(Math.pow(S.made/1e11, 0.45));
+    $("#presInfo").textContent=`Reset for ${fmt(gain)} Cosmic Graphite (+12% permanent each).`;
+    $("#ascendBtn").textContent=`Ascend (+${fmt(gain)})`;
   }
 }
 
-/* ===================== SYSTEMS UI ===================== */
-function setSys(name){
-  if(!S.sys[name] && name) return;
-  openSys = openSys === name ? null : name;
-  ["Stocks","Accel","Lab","Ship","Rift","Casino"].forEach(s=>{
-    const pan = $("#panel"+s);
-    if(pan) pan.classList.toggle("open", openSys === s.toLowerCase());
-  });
+/* ========== SYSTEMS ========== */
+function setOpen(name){
+  if(name && !S.sys[name]) return;
+  open = open===name ? null : name;
+  $("#pStocks").classList.toggle("open", open==="stocks");
+  $("#pBeam").classList.toggle("open", open==="beam");
+  $("#pLab").classList.toggle("open", open==="lab");
+  $("#pFleet").classList.toggle("open", open==="fleet");
+  $("#pRift").classList.toggle("open", open==="rift");
+  $("#pCasino").classList.toggle("open", open==="casino");
 }
+$("#bStocks").onclick=()=>setOpen("stocks");
+$("#bBeam").onclick=()=>setOpen("beam");
+$("#bLab").onclick=()=>setOpen("lab");
+$("#bFleet").onclick=()=>setOpen("fleet");
+$("#bRift").onclick=()=>setOpen("rift");
+$("#bCasino").onclick=()=>setOpen("casino");
 
-$("#btnStocks").onclick = ()=>setSys("stocks");
-$("#btnAccel").onclick = ()=>setSys("accel");
-$("#btnLab").onclick = ()=>setSys("lab");
-$("#btnShip").onclick = ()=>setSys("ship");
-$("#btnRift").onclick = ()=>setSys("rift");
-$("#btnCasino").onclick = ()=>setSys("casino");
-
-// Stock actions
-$("#buyStock").onclick = ()=>{
-  const st = S.stocks[selStock];
-  if(S.cash < st.price) return;
-  S.cash -= st.price; st.owned++; save();
+$("#buy1").onclick=()=>{
+  const st=S.stocks[sel];
+  if(S.cash < st.p) return;
+  S.cash=safe(S.cash-st.p); st.o++; save();
 };
-$("#buyStock10").onclick = ()=>{
-  const st = S.stocks[selStock];
+$("#buy10").onclick=()=>{
+  const st=S.stocks[sel];
   let n=0;
-  while(n<10 && S.cash >= st.price){ S.cash -= st.price; st.owned++; n++; }
+  while(n<10 && S.cash>=st.p){ S.cash=safe(S.cash-st.p); st.o++; n++; }
   save();
 };
-$("#sellStock").onclick = ()=>{
-  const st = S.stocks[selStock];
-  if(st.owned > 0){ st.owned--; S.cash += st.price; }
-  else if(S.sys.short){ st.owned--; S.cash += st.price; } // short
-  save();
+$("#sell1").onclick=()=>{
+  const st=S.stocks[sel];
+  if(st.o<1) return;
+  st.o--; S.cash=safe(S.cash+st.p); save();
 };
-$("#sellAll").onclick = ()=>{
-  const st = S.stocks[selStock];
-  if(st.owned > 0){ S.cash += st.owned * st.price; st.owned = 0; save(); }
+$("#sellAll").onclick=()=>{
+  const st=S.stocks[sel];
+  if(st.o<1) return;
+  S.cash=safe(S.cash + st.o*st.p); st.o=0; save();
 };
 
-// Accelerator
-$("#chargeBeam").onclick = ()=>{
-  const cost = 40 + S.accel * 6;
+$("#charge").onclick=()=>{
+  const cost=50 + S.beam*5;
   if(S.cash < cost) return;
-  S.cash -= cost;
-  S.accel += 5 + Math.floor(S.accel * 0.015);
+  S.cash=safe(S.cash-cost);
+  S.beam=safe(S.beam + 5 + Math.floor(S.beam*0.012));
   save();
 };
-$("#overcharge").onclick = ()=>{
-  const cost = 200 + S.accel * 15;
+$("#over").onclick=()=>{
+  const cost=250 + S.beam*12;
   if(S.cash < cost) return;
-  S.cash -= cost;
-  if(Math.random() < 0.72 || S.up.beamSafe){
-    S.accel += 25 + Math.floor(S.accel * 0.04);
-    say("Overcharge successful. Coils scream.", 5);
-  } else {
-    S.accel = Math.floor(S.accel * 0.4);
-    say("Coil meltdown! Energy lost.", 6);
+  S.cash=safe(S.cash-cost);
+  if(Math.random()<0.75 || S.up.safe){
+    S.beam=safe(S.beam + 22 + Math.floor(S.beam*0.03));
+    say("Overcharge OK.",4);
+  }else{
+    S.beam=safe(S.beam*0.35);
+    say("Coil meltdown!",5);
   }
   save();
 };
 
-// Lab
-$("#labList").addEventListener("click", e=>{
-  const btn = e.target.closest("[data-lab]");
-  if(!btn || S.lab.current) return;
-  const p = LAB.find(x=>x.id===btn.dataset.lab);
-  if(!p || p.done || S.cash < p.cost) return;
-  S.cash -= p.cost;
-  S.lab.current = p.id;
-  S.lab.prog = 0;
+$("#labList").onclick=e=>{
+  const b=e.target.closest("[data-l]");
+  if(!b || S.lab.cur) return;
+  const p=LAB.find(x=>x.id===b.dataset.l);
+  if(!p || S.lab.done[p.id] || S.cash < p.c) return;
+  S.cash=safe(S.cash-p.c);
+  S.lab.cur=p.id;
+  S.lab.prog=0;
   save();
-});
-
-// Fleet
-$("#buyShip").onclick = ()=>{
-  const cost = 1.2e9 * Math.pow(3.5, S.ships);
-  if(S.cash < cost) return;
-  S.cash -= cost; S.ships++; save();
 };
 
-// Rift
-$("#probeRift").onclick = ()=>{
-  const cost = 2e13 * Math.pow(2.8, S.rift) * (S.lab.riftCost || 1);
+$("#buyShip").onclick=()=>{
+  const cost=safe(1.5e9 * safePow(3.4, S.ships));
   if(S.cash < cost) return;
-  S.cash -= cost; S.rift++; save();
-  say("The rift widens. Something pencil-shaped stares back.", 7);
+  S.cash=safe(S.cash-cost);
+  S.ships++;
+  save();
+};
+$("#probe").onclick=()=>{
+  const cost=safe(3e13 * safePow(2.7, S.rift) * (S.lab.riftC||1));
+  if(S.cash < cost) return;
+  S.cash=safe(S.cash-cost);
+  S.rift++;
+  say("The rift widens.",5);
+  save();
 };
 
-// Casino
 function gamble(pct){
-  const bet = S.cash * pct;
+  const bet=safe(S.cash * pct);
   if(bet < 1) return;
-  S.cash -= bet;
-  const winChance = S.lab.casino || 0.49;
-  const jack = S.up.jackpot || 0.01;
-  const r = Math.random();
-  if(r < jack){
-    S.cash += bet * 10;
-    $("#casinoLast").textContent = "JACKPOT ×10";
-    say("The casino weeps. You do not.", 6);
-  } else if(r < winChance){
-    S.cash += bet * 2;
-    $("#casinoLast").textContent = "Win ×2";
-  } else {
-    $("#casinoLast").textContent = "Lost";
+  S.cash=safe(S.cash - bet);
+  const win=S.lab.cas || 0.49;
+  const r=Math.random();
+  if(r < 0.012){
+    S.cash=safe(S.cash + bet*10);
+    $("#casLast").textContent="JACKPOT ×10";
+    say("Jackpot!",5);
+  }else if(r < win){
+    S.cash=safe(S.cash + bet*2);
+    $("#casLast").textContent="Win ×2";
+  }else{
+    $("#casLast").textContent="Lost";
   }
   save();
 }
-$("#betLow").onclick = ()=>gamble(0.01);
-$("#betHigh").onclick = ()=>gamble(0.10);
-$("#betAll").onclick = ()=>gamble(1);
+$("#bet1").onclick=()=>gamble(0.01);
+$("#bet10").onclick=()=>gamble(0.1);
+$("#betAll").onclick=()=>gamble(1);
 
-/* ===================== CLICK & GOLDEN ===================== */
-const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-function floatText(x,y,t){
-  const el = document.createElement("div");
-  el.className = "fl"; el.textContent = t;
-  el.style.left = (x-12)+"px"; el.style.top = (y-18)+"px";
+/* ========== CLICK / GOLDEN ========== */
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function floatT(x,y,t){
+  const el=document.createElement("div");
+  el.className="fl"; el.textContent=t;
+  el.style.left=(x-10)+"px"; el.style.top=(y-16)+"px";
   document.body.appendChild(el);
-  setTimeout(()=>el.remove(), 1000);
+  setTimeout(()=>el.remove(),900);
 }
-function sparks(x,y){
-  if(reduce) return;
-  for(let i=0;i<6;i++){
-    const s = document.createElement("div");
-    s.className = "spark";
-    s.style.left = x+"px"; s.style.top = y+"px";
-    s.style.setProperty("--sx", (Math.random()-0.5)*60+"px");
-    s.style.setProperty("--sy", (Math.random()-0.5)*60+"px");
-    document.body.appendChild(s);
-    setTimeout(()=>s.remove(), 600);
-  }
-}
-
-$("#make").addEventListener("click", e=>{
-  const C = calc();
-  earn(C.clickVal, C);
+$("#make").onclick=e=>{
+  const C=calc();
+  earn(C.click, C);
   S.clicks++;
-  let x = e.clientX, y = e.clientY;
-  if(!x && !y){ const r = e.currentTarget.getBoundingClientRect(); x=r.left+r.width/2; y=r.top+r.height/2; }
-  floatText(x, y, "+"+fmt(C.clickVal));
-  sparks(x, y);
-  if(!reduce){
-    const svg = $("#pencilSvg");
-    svg.animate([{transform:"scale(1)"},{transform:"scale(.92) rotate(-3deg)"},{transform:"scale(1)"}],{duration:110});
+  let x=e.clientX, y=e.clientY;
+  if(!x && !y){
+    const r=e.currentTarget.getBoundingClientRect();
+    x=r.left+r.width/2; y=r.top+r.height/2;
   }
-});
-
-let goldenIn = 35 + Math.random()*40, goldenEl = null;
-function spawnGolden(){
-  const b = document.createElement("button");
-  b.className = "golden"; b.textContent = "✏️";
-  b.style.left = (6+Math.random()*82)+"vw";
-  b.style.top = (12+Math.random()*70)+"vh";
-  b.onclick = ()=>{
-    const C = calc(), r = Math.random();
-    const pow = S.up.goldPow || 1;
-    if(r < 0.38){ B.frenzy = 28; say("Frenzy! 7× production.", 8); }
-    else if(r < 0.72){
-      const g = Math.max(C.pps * C.val * 400 * pow, 30);
-      S.cash += g; S.total += g;
-      say("Bulk order +"+money(g), 7);
-    } else { B.click = 14; say("Click Storm! ×11 clicks.", 7); }
-    b.remove(); goldenEl = null;
-  };
-  document.body.appendChild(b); goldenEl = b;
-  setTimeout(()=>{ if(goldenEl===b){ b.remove(); goldenEl=null; } }, 12000);
-}
-
-/* ===================== PRESTIGE ===================== */
-$("#doAscend").onclick = ()=>{
-  if(S.made < 1e11) return;
-  const gain = Math.floor(Math.pow(S.made / 1e11, 0.5));
-  if(!confirm(`Ascend and gain ${gain} Cosmic Graphite?\n\nThis resets pencils, cash, helpers, and most progress.\nGraphite and ascension bonuses are permanent.`)) return;
-  const keep = {essence: S.essence + gain, ascensions: S.ascensions + 1};
-  S = fresh();
-  S.essence = keep.essence;
-  S.ascensions = keep.ascensions;
-  // keep some late unlocks feeling earned via essence
-  B.frenzy = 0; B.click = 0; upKey = ""; openSys = null;
-  save();
-  say(`Ascension complete. ${gain} Cosmic Graphite acquired. The factory is reborn.`, 12);
-  setSys(null);
+  floatT(x,y,"+"+fmt(C.click));
+  if(!reduce){
+    $("#psvg").animate([{transform:"scale(1)"},{transform:"scale(.93) rotate(-2deg)"},{transform:"scale(1)"}],{duration:100});
+  }
 };
 
-/* ===================== LOOP ===================== */
-let last = performance.now(), saveT=0, newsT=0, stockT=0, autoT=0;
-function say(t, hold){ $("#ticker").textContent = t; newsHold = hold || 7; }
-function rotateNews(){
-  if(newsHold > 0) return;
-  const pool = NEWS.filter(n => S.made >= n[0]);
-  const recent = pool.slice(-4);
-  $("#ticker").textContent = recent[Math.floor(Math.random()*recent.length)][1];
+let gIn=30+Math.random()*40, gEl=null;
+function spawnG(){
+  const b=document.createElement("button");
+  b.className="golden"; b.textContent="✏️";
+  b.style.left=(5+Math.random()*85)+"vw";
+  b.style.top=(10+Math.random()*70)+"vh";
+  b.onclick=()=>{
+    const C=calc(), r=Math.random(), pow=S.up.gPow||1;
+    if(r<0.4){ Buff.frenzy=26; say("Frenzy! 7× production.",7); }
+    else if(r<0.75){
+      const g=Math.max(C.pps*C.val*350*pow, 20);
+      S.cash=safe(S.cash+g); S.total=safe(S.total+g);
+      say("Bulk +"+money(g),6);
+    }else{ Buff.click=13; say("Click Storm!",6); }
+    b.remove(); gEl=null;
+  };
+  document.body.appendChild(b); gEl=b;
+  setTimeout(()=>{ if(gEl===b){ b.remove(); gEl=null; } },11000);
+}
+
+/* ========== PRESTIGE ========== */
+$("#ascendBtn").onclick=()=>{
+  if(S.made < 1e11) return;
+  const gain=Math.floor(Math.pow(S.made/1e11, 0.45));
+  if(!confirm(`Ascend for ${fmt(gain)} Cosmic Graphite?\n\nResets almost everything.\nGraphite is permanent (+12% each).`)) return;
+  const keep={ess:S.ess+gain, asc:S.asc+1};
+  S=fresh();
+  S.ess=keep.ess; S.asc=keep.asc;
+  Buff.frenzy=0; Buff.click=0; upKey=""; open=null;
+  save();
+  say(`Ascended. +${fmt(gain)} Graphite.`,10);
+  setOpen(null);
+};
+
+/* ========== LOOP ========== */
+let last=performance.now(), sT=0, nT=0, stT=0, aT=0;
+function say(t,h){ $("#ticker").textContent=t; newsHold=h||6; }
+function rotNews(){
+  if(newsHold>0) return;
+  const pool=NEWS.filter(n=>S.made>=n[0]);
+  const r=pool.slice(-3);
+  $("#ticker").textContent=r[Math.floor(Math.random()*r.length)][1];
 }
 
 setInterval(()=>{
-  const now = performance.now();
-  const dt = Math.min((now-last)/1000, 30);
-  last = now;
-  const C = calc();
+  const now=performance.now();
+  const dt=Math.min((now-last)/1000, 15);
+  last=now;
+  const C=calc();
 
-  earn(C.pps * dt, C);
-  S.cash += C.div * dt;
-  S.total += C.div * dt;
+  earn(C.pps*dt, C);
+  S.cash=safe(S.cash + C.div*dt);
+  S.total=safe(S.total + C.div*dt);
+  if(S.lab.auto>0) earn(C.click * S.lab.auto * dt, C);
 
-  // auto click from research
-  if(S.lab.autoClick > 0){
-    earn(C.clickVal * S.lab.autoClick * dt, C);
-  }
+  Buff.frenzy=Math.max(0, Buff.frenzy-dt);
+  Buff.click=Math.max(0, Buff.click-dt);
 
-  B.frenzy = Math.max(0, B.frenzy - dt);
-  B.click = Math.max(0, B.click - dt);
-
-  // lab progress
-  if(S.lab.current){
-    const p = LAB.find(x=>x.id===S.lab.current);
+  if(S.lab.cur){
+    const p=LAB.find(x=>x.id===S.lab.cur);
     S.lab.prog += dt;
-    if(p && S.lab.prog >= p.time){
-      p.run(S);
-      p.done = true;
-      S.bought["lab_"+p.id] = true;
-      say("Research complete: "+p.name+" — "+p.desc, 9);
-      S.lab.current = null;
-      S.lab.prog = 0;
+    if(p && S.lab.prog >= p.t){
+      p.fn(S);
+      S.lab.done[p.id]=1;
+      say("Research: "+p.n+" — "+p.d, 8);
+      S.lab.cur=null;
+      S.lab.prog=0;
     }
   }
 
-  // stock tick
-  stockT += dt;
-  if(stockT >= 2.2){
-    stockT = 0;
-    const stab = S.lab.stockStab || 1;
+  stT+=dt;
+  if(stT>=2.4){
+    stT=0;
+    const stab=S.lab.stab||1;
     S.stocks.forEach(st=>{
-      const force = (Math.random()-0.47) * st.vol * 0.08 * stab + Math.min(C.pps/5e9, 0.02);
-      st.price = Math.max(0.15, st.price * (1 + force));
-      st.hist.push(st.price);
-      if(st.hist.length > 14) st.hist.shift();
+      const force=(Math.random()-0.48)*st.v*0.07*stab + Math.min(C.pps/8e9, 0.015);
+      st.p=Math.max(0.2, safe(st.p*(1+force)));
+      st.h.push(st.p);
+      if(st.h.length>12) st.h.shift();
     });
   }
 
-  // auto trader
-  autoT += dt;
-  if(S.up.autoTrade && autoT > 4){
-    autoT = 0;
-    let cheapest = S.stocks[0];
-    S.stocks.forEach(st=>{ if(st.price < cheapest.price) cheapest = st; });
-    if(S.cash > cheapest.price * 3){
-      S.cash -= cheapest.price;
-      cheapest.owned++;
+  aT+=dt;
+  if(S.up.auto && aT>5){
+    aT=0;
+    let cheap=S.stocks[0];
+    S.stocks.forEach(st=>{ if(st.p < cheap.p) cheap=st; });
+    if(S.cash > cheap.p*4){
+      S.cash=safe(S.cash-cheap.p);
+      cheap.o++;
     }
   }
 
-  if(newsHold > 0) newsHold -= dt;
-  newsT += dt;
-  if(newsT >= 8){ newsT=0; rotateNews(); }
+  if(newsHold>0) newsHold-=dt;
+  nT+=dt;
+  if(nT>=8){ nT=0; rotNews(); }
 
-  if(!goldenEl){
-    goldenIn -= dt * (S.up.goldRate || 1);
-    if(goldenIn <= 0){ spawnGolden(); goldenIn = 40 + Math.random()*55; }
+  if(!gEl){
+    gIn -= dt*(S.up.gRate||1);
+    if(gIn<=0){ spawnG(); gIn=38+Math.random()*50; }
   }
 
-  saveT += dt;
-  if(saveT >= 4){ saveT=0; save(); }
-
+  sT+=dt;
+  if(sT>=4){ sT=0; save(); }
   render();
-}, 100);
+},100);
 
-/* particles */
-function spawnPt(){
-  if(S.made < 5e8 || reduce) return;
-  if(document.querySelectorAll(".pt").length > 16) return;
-  const p = document.createElement("div");
-  p.className = "pt";
-  const sz = 1 + Math.random()*2.2;
-  p.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}vw;bottom:-4px;background:${Math.random()>.5?"#fff":"var(--accent)"};opacity:.4;animation-duration:${9+Math.random()*12}s`;
+setInterval(()=>{
+  if(S.made<3e8 || reduce || document.querySelectorAll(".pt").length>14) return;
+  const p=document.createElement("div");
+  p.className="pt";
+  const sz=1+Math.random()*2;
+  p.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}vw;bottom:-3px;background:${Math.random()>.5?"#fff":"var(--acc)"};opacity:.35;animation-duration:${8+Math.random()*11}s`;
   document.body.appendChild(p);
-  setTimeout(()=>p.remove(), 22000);
-}
-setInterval(spawnPt, 900);
+  setTimeout(()=>p.remove(),20000);
+},1000);
 
-/* controls */
-$("#mode").addEventListener("click", e=>{
-  const b = e.target.closest("button"); if(!b) return;
-  mode = b.dataset.m;
+$("#mode").onclick=e=>{
+  const b=e.target.closest("button");
+  if(!b) return;
+  mode=b.dataset.m;
   $$("#mode button").forEach(x=>x.classList.toggle("on", x===b));
-});
-$("#reset").onclick = ()=>{
-  if(confirm("Hard reset everything including Cosmic Graphite?")){
-    S = fresh(); B.frenzy=0; B.click=0; upKey=""; openSys=null; save();
-    say("The factory is ash. Begin again.", 8);
-    setSys(null);
+};
+$("#reset").onclick=()=>{
+  if(confirm("Hard reset EVERYTHING including Cosmic Graphite?")){
+    S=fresh();
+    Buff.frenzy=0; Buff.click=0; upKey=""; open=null;
+    save();
+    say("Ash. Begin again.",6);
+    setOpen(null);
   }
 };
 
-/* offline */
 (function(){
-  const secs = Math.min((Date.now()-S.last)/1000, 6*3600);
-  if(secs > 45){
-    const C = calc();
-    const gain = C.pps * secs * 0.4;
-    if(gain >= 1){ earn(gain, C); say("While away, the works produced "+fmt(gain)+" pencils.", 11); }
-  } else {
-    rotateNews();
-    say(NEWS[0][1], 5);
+  const secs=Math.min((Date.now()-S.last)/1000, 5*3600);
+  if(secs>40){
+    const C=calc();
+    const gain=C.pps*secs*0.35;
+    if(gain>=1){ earn(gain,C); say("While away: +"+fmt(gain)+" pencils.",10); }
+  }else{
+    rotNews();
+    say(NEWS[0][1],4);
   }
 })();
 
-buildHelpers();
+buildH();
 render();
-setSys(null);
+setOpen(null);
 </script>
 </body>
 </html>
