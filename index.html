@@ -3,955 +3,1156 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pencil Factory</title>
+<title>Pencil Factory — Cosmic Edition</title>
 <style>
 :root{
-  --paper:#f3ecd9; --paper-dark:#e8dfc4; --grid:#c9bda0;
-  --ink:#2a2218; --ink-soft:#5c4f3d;
-  --yellow:#d4a017; --yellow-d:#b8860b; --yellow-l:#f0d78c;
-  --pink:#c75b63; --metal:#8a8e92; --wood:#c4a06a; --wood-d:#8b6914;
-  --red:#9b2c2c; --card:#faf6eb; --soft:#f5e6b8; --brass:#b8973a;
-  --shadow:#2a2218; --accent:#d4a017;
+  --bg:#f0e6d0; --bg2:#e8dcc0; --card:#faf4e6; --ink:#1e1810;
+  --muted:#6b5c48; --accent:#c9920a; --accent2:#e8b84a; --pink:#c45a62;
+  --good:#2a7a4a; --bad:#a33; --shadow:rgba(30,24,16,.35);
+  --glow:transparent; --panel-border:#1e1810;
+  --font:Georgia,"Palatino Linotype",serif;
 }
-*{box-sizing:border-box}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
 body{
-  margin:0; min-height:100vh; color:var(--ink);
-  font-family:Georgia,"Times New Roman",Times,serif;
-  background-color:var(--paper);
+  min-height:100vh;color:var(--ink);font-family:var(--font);
+  background:var(--bg);
   background-image:
-    linear-gradient(var(--grid) 1px,transparent 1px),
-    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
-  background-size:28px 28px;
-  background-attachment:fixed;
-  line-height:1.45;
-  transition:background-color 2s,color 1.5s;
+    linear-gradient(rgba(180,160,120,.25) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(180,160,120,.25) 1px,transparent 1px);
+  background-size:32px 32px;
+  transition:background 1.8s,color 1.2s;
+  overflow-x:hidden;
 }
-body.theme-space{
+/* ===== THEMES ===== */
+body.t-space{
+  --bg:#0c0a1a; --bg2:#14122a; --card:rgba(22,20,45,.94); --ink:#e6e0f5;
+  --muted:#9a90b8; --accent:#7a9cff; --accent2:#a8c0ff; --pink:#e070a0;
+  --good:#5dcea0; --bad:#f66; --shadow:rgba(0,0,20,.6); --panel-border:#5a5088;
+  --glow:0 0 24px rgba(100,120,255,.2);
   background-image:
-    radial-gradient(ellipse at 20% 30%,rgba(80,60,140,.35) 0%,transparent 50%),
-    radial-gradient(ellipse at 80% 70%,rgba(40,80,160,.3) 0%,transparent 45%),
-    radial-gradient(2px 2px at 10% 20%,#fff 0%,transparent 100%),
-    radial-gradient(1.5px 1.5px at 30% 60%,#dde 0%,transparent 100%),
-    radial-gradient(1px 1px at 70% 40%,#fff 0%,transparent 100%),
-    radial-gradient(2px 2px at 90% 80%,#cde 0%,transparent 100%),
-    radial-gradient(1px 1px at 50% 10%,#fff 0%,transparent 100%),
-    linear-gradient(180deg,#0b0a1a 0%,#1a1430 40%,#0d1528 100%);
+    radial-gradient(ellipse 80% 50% at 20% 20%,rgba(80,60,160,.4),transparent),
+    radial-gradient(ellipse 60% 40% at 80% 70%,rgba(40,80,180,.3),transparent),
+    radial-gradient(1.5px 1.5px at 15% 25%,#fff,transparent),
+    radial-gradient(1px 1px at 55% 15%,#cdf,transparent),
+    radial-gradient(2px 2px at 85% 55%,#fff,transparent),
+    radial-gradient(1px 1px at 35% 75%,#eef,transparent),
+    linear-gradient(180deg,#08061a,#12102a 50%,#0a1020);
   background-size:auto;
-  color:#e8e4f0;
 }
-body.theme-quantum{
+body.t-quantum{
+  --bg:#050812; --bg2:#0a1420; --card:rgba(8,18,32,.95); --ink:#c8f0f0;
+  --muted:#70a8a8; --accent:#00d4c8; --accent2:#60fff0; --pink:#d060e0;
+  --good:#40e0a0; --bad:#f55; --shadow:rgba(0,20,30,.7); --panel-border:#0a8a80;
+  --glow:0 0 28px rgba(0,220,200,.18);
   background-image:
-    radial-gradient(ellipse at 50% 50%,rgba(0,200,180,.12) 0%,transparent 60%),
-    radial-gradient(ellipse at 20% 80%,rgba(180,40,200,.15) 0%,transparent 50%),
-    radial-gradient(1px 1px at 15% 25%,#0ff 0%,transparent 100%),
-    radial-gradient(1.5px 1.5px at 85% 15%,#f0f 0%,transparent 100%),
-    radial-gradient(1px 1px at 45% 75%,#0ff 0%,transparent 100%),
-    linear-gradient(160deg,#050510 0%,#0a1020 50%,#100818 100%);
-  color:#d0f0f0;
+    radial-gradient(ellipse 70% 50% at 50% 40%,rgba(0,180,160,.15),transparent),
+    radial-gradient(ellipse 50% 40% at 20% 80%,rgba(160,40,200,.12),transparent),
+    radial-gradient(1px 1px at 20% 30%,#0ff,transparent),
+    radial-gradient(1.5px 1.5px at 70% 20%,#f0f,transparent),
+    radial-gradient(1px 1px at 40% 70%,#0ff,transparent),
+    linear-gradient(160deg,#030510,#0a1525 60%,#0c0818);
 }
-body.theme-cosmic{
+body.t-cosmic{
+  --bg:#0a0610; --bg2:#140a18; --card:rgba(20,12,22,.95); --ink:#f5e6c8;
+  --muted:#c0a070; --accent:#f0a020; --accent2:#ffd070; --pink:#e07050;
+  --good:#80d060; --bad:#f55; --shadow:rgba(20,8,10,.7); --panel-border:#a06020;
+  --glow:0 0 32px rgba(255,150,40,.15);
   background-image:
-    radial-gradient(ellipse at 30% 20%,rgba(255,180,50,.2) 0%,transparent 40%),
-    radial-gradient(ellipse at 70% 60%,rgba(100,50,200,.25) 0%,transparent 50%),
-    radial-gradient(ellipse at 50% 90%,rgba(255,100,50,.15) 0%,transparent 40%),
-    radial-gradient(2px 2px at 12% 18%,#fff 0%,transparent 100%),
-    radial-gradient(1px 1px at 88% 22%,#ffd 0%,transparent 100%),
-    radial-gradient(1.5px 1.5px at 55% 45%,#fff 0%,transparent 100%),
-    linear-gradient(180deg,#0a0612 0%,#1a0a20 50%,#120818 100%);
-  color:#f5e8d0;
+    radial-gradient(ellipse 60% 40% at 30% 15%,rgba(255,160,40,.22),transparent),
+    radial-gradient(ellipse 50% 50% at 75% 65%,rgba(120,40,180,.2),transparent),
+    radial-gradient(2px 2px at 12% 22%,#fff,transparent),
+    radial-gradient(1px 1px at 88% 18%,#ffd,transparent),
+    radial-gradient(1.5px 1.5px at 50% 50%,#fff,transparent),
+    linear-gradient(180deg,#08040e,#160a1a 50%,#100818);
 }
+/* ===== LAYOUT ===== */
 header{
-  max-width:1280px;margin:0 auto;padding:20px 16px 0;
-  border-bottom:3px double var(--ink);
-  margin-bottom:4px;
-  transition:border-color 1.5s;
-}
-body.theme-space header,body.theme-quantum header,body.theme-cosmic header{
-  border-color:rgba(180,160,220,.4);
+  max-width:1320px;margin:0 auto;padding:16px 14px 0;
+  border-bottom:3px double var(--panel-border);
+  transition:border-color 1s;
 }
 h1{
-  font-family:Georgia,"Palatino Linotype","Book Antiqua",serif;
-  font-size:34px;margin:0;letter-spacing:1.5px;
-  font-weight:normal;text-transform:uppercase;
-  color:var(--ink);transition:color 1.5s;
+  font-size:clamp(22px,4vw,32px);font-weight:normal;letter-spacing:2px;
+  text-transform:uppercase;color:var(--ink);
 }
-body.theme-space h1,body.theme-quantum h1,body.theme-cosmic h1{color:#f0e8ff}
-h1::after{
-  content:"";display:block;width:110px;height:3px;
-  background:var(--accent);margin-top:7px;
-  transition:background 1.5s,width 1s;
-}
-body.theme-space h1::after{background:#8af;width:160px}
-body.theme-quantum h1::after{background:#0fd;width:200px}
-body.theme-cosmic h1::after{background:#f90;width:240px}
+h1 span{color:var(--accent);font-size:.7em;letter-spacing:1px;display:block;margin-top:2px}
 #ticker{
-  margin-top:10px;padding:9px 14px;
-  background:var(--ink);color:var(--paper);
-  border:1px solid var(--brass);
-  font-size:14.5px;min-height:38px;
-  font-style:italic;letter-spacing:.2px;
-  transition:background 1.5s,border-color 1.5s,color 1.5s;
+  margin:10px 0 0;padding:8px 12px;background:var(--ink);color:var(--bg);
+  border:1px solid var(--accent);font-size:13.5px;font-style:italic;min-height:36px;
+  transition:all .8s;
 }
-body.theme-space #ticker{background:#12102a;border-color:#668;color:#d8d0f0}
-body.theme-quantum #ticker{background:#081820;border-color:#0a8;color:#c0f0e8}
-body.theme-cosmic #ticker{background:#1a0c18;border-color:#a60;color:#f0d8b0}
+body.t-space #ticker,body.t-quantum #ticker,body.t-cosmic #ticker{background:rgba(0,0,0,.55);color:var(--ink)}
 .wrap{
-  max-width:1280px;margin:0 auto;padding:16px;
-  display:grid;gap:16px;
-  grid-template-columns:minmax(270px,1fr) minmax(290px,1.15fr) minmax(270px,1fr);
+  max-width:1320px;margin:0 auto;padding:14px;
+  display:grid;gap:14px;
+  grid-template-columns:minmax(260px,1fr) minmax(280px,1.2fr) minmax(280px,1fr);
   align-items:start;
 }
-@media(max-width:980px){.wrap{grid-template-columns:1fr}}
+@media(max-width:1000px){.wrap{grid-template-columns:1fr}}
 .panel{
-  background:var(--card);
-  border:3px solid var(--ink);
-  border-radius:2px;
-  padding:14px 16px;
-  box-shadow:5px 5px 0 var(--shadow);
-  position:relative;
-  transition:background 1.5s,border-color 1.5s,box-shadow 1.5s,color 1.5s;
-}
-body.theme-space .panel{
-  background:rgba(20,18,40,.92);border-color:#668;
-  box-shadow:5px 5px 0 #0a0820,0 0 20px rgba(100,80,200,.15);
-  color:#e0d8f0;
-}
-body.theme-quantum .panel{
-  background:rgba(8,16,28,.94);border-color:#0a8;
-  box-shadow:5px 5px 0 #041018,0 0 24px rgba(0,200,180,.12);
-  color:#c8f0e8;
-}
-body.theme-cosmic .panel{
-  background:rgba(18,10,20,.94);border-color:#a60;
-  box-shadow:5px 5px 0 #100810,0 0 28px rgba(255,140,40,.12);
-  color:#f0e0c0;
+  background:var(--card);border:3px solid var(--panel-border);
+  border-radius:3px;padding:12px 14px;
+  box-shadow:5px 5px 0 var(--shadow),var(--glow);
+  position:relative;transition:all 1s;
 }
 .panel::before{
-  content:"";position:absolute;top:5px;left:5px;right:5px;bottom:5px;
-  border:1px solid var(--grid);pointer-events:none;
-  transition:border-color 1.5s;
+  content:"";position:absolute;inset:5px;border:1px solid color-mix(in srgb,var(--panel-border) 30%,transparent);
+  pointer-events:none;border-radius:1px;
 }
-body.theme-space .panel::before{border-color:rgba(100,90,160,.25)}
-body.theme-quantum .panel::before{border-color:rgba(0,160,140,.2)}
-body.theme-cosmic .panel::before{border-color:rgba(180,100,30,.25)}
 .panel h2{
-  font-family:Georgia,"Palatino Linotype",serif;
-  margin:0 0 12px;font-size:17px;
-  letter-spacing:1.5px;text-transform:uppercase;
-  border-bottom:2px solid var(--accent);
-  display:inline-block;padding-bottom:2px;
-  font-weight:normal;transition:border-color 1.5s,color 1.5s;
+  font-size:15px;letter-spacing:1.5px;text-transform:uppercase;font-weight:normal;
+  border-bottom:2px solid var(--accent);display:inline-block;padding-bottom:2px;margin-bottom:10px;
 }
-body.theme-space .panel h2{border-color:#8af;color:#d8d0ff}
-body.theme-quantum .panel h2{border-color:#0fd;color:#a0fff0}
-body.theme-cosmic .panel h2{border-color:#f90;color:#ffd080}
-.scroll{max-height:68vh;overflow-y:auto;padding:2px 4px 2px 2px}
-@media(max-width:980px){.scroll{max-height:none}}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px}
-.stat small{
-  display:block;font-size:11px;color:var(--ink-soft);
-  text-transform:uppercase;letter-spacing:1px;
-}
-body.theme-space .stat small,body.theme-quantum .stat small,body.theme-cosmic .stat small{color:inherit;opacity:.65}
-.stat b{font-family:Georgia,serif;font-size:26px;display:block;line-height:1.12;font-weight:normal}
-.stat.big b{font-size:30px}
-.rates{
-  font-size:12.5px;color:var(--ink-soft);margin:4px 0 8px;
-  border-top:1px solid var(--grid);padding-top:7px;
-}
-body.theme-space .rates,body.theme-quantum .rates,body.theme-cosmic .rates{border-color:rgba(150,140,180,.25);color:inherit;opacity:.75}
+.scroll{max-height:62vh;overflow-y:auto;padding-right:4px}
+@media(max-width:1000px){.scroll{max-height:none}}
+/* stats */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px}
+.stat small{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.stat b{font-size:24px;font-weight:normal;line-height:1.15}
+.stat.big b{font-size:28px}
+.rates{font-size:12px;color:var(--muted);border-top:1px solid color-mix(in srgb,var(--panel-border) 40%,transparent);padding-top:6px;margin:4px 0 8px}
+/* make button */
 .make{
-  display:block;width:100%;margin:10px 0;padding:14px 8px 10px;
-  background:var(--soft);
-  border:3px solid var(--ink);
-  border-radius:2px;
-  cursor:pointer;font:inherit;color:inherit;
-  text-align:center;user-select:none;-webkit-tap-highlight-color:transparent;
-  box-shadow:3px 3px 0 var(--shadow);
-  transition:background .15s,transform .1s,border-color 1.5s,box-shadow 1.5s;
+  display:block;width:100%;margin:8px 0;padding:12px 8px 10px;
+  background:color-mix(in srgb,var(--accent) 18%,var(--card));
+  border:3px solid var(--panel-border);border-radius:3px;cursor:pointer;
+  font:inherit;color:inherit;text-align:center;
+  box-shadow:3px 3px 0 var(--shadow);transition:transform .08s,background .15s;
+  user-select:none;-webkit-tap-highlight-color:transparent;
 }
-body.theme-space .make{background:rgba(40,30,80,.7);border-color:#88a;box-shadow:3px 3px 0 #0a0820}
-body.theme-quantum .make{background:rgba(0,40,50,.7);border-color:#0a8;box-shadow:3px 3px 0 #041018}
-body.theme-cosmic .make{background:rgba(50,25,10,.7);border-color:#c80;box-shadow:3px 3px 0 #100810}
-.make:hover{background:var(--yellow-l)}
-body.theme-space .make:hover{background:rgba(60,50,120,.85)}
-body.theme-quantum .make:hover{background:rgba(0,60,70,.85)}
-body.theme-cosmic .make:hover{background:rgba(70,35,15,.85)}
-.make:active{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--shadow)}
-.make svg{width:100%;max-width:290px;height:auto;display:block;margin:0 auto 6px}
-.make span{font-family:Georgia,serif;font-size:18px;letter-spacing:1px;text-transform:uppercase}
-.make:focus-visible,.item:focus-visible,.mode button:focus-visible,.golden:focus-visible,.reset:focus-visible,.sysbtn:focus-visible{
-  outline:3px solid var(--red);outline-offset:2px;
-}
-#buffs{min-height:26px;font-size:12.5px;display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.make:hover{background:color-mix(in srgb,var(--accent) 30%,var(--card))}
+.make:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shadow)}
+.make svg{width:100%;max-width:280px;height:auto;display:block;margin:0 auto 6px;transition:transform .12s}
+.make span{font-size:16px;letter-spacing:1px;text-transform:uppercase}
+#buffs{min-height:24px;display:flex;flex-wrap:wrap;gap:5px;margin:6px 0}
 .buff{
-  background:var(--yellow);border:2px solid var(--ink);
-  border-radius:2px;padding:2px 9px;font-weight:bold;letter-spacing:.4px;
-  box-shadow:2px 2px 0 var(--shadow);font-size:12px;
+  background:var(--accent);color:var(--bg);border:2px solid var(--panel-border);
+  border-radius:2px;padding:2px 8px;font-size:11px;font-weight:bold;
+  animation:buffPulse 1.5s ease-in-out infinite;
 }
-body.theme-space .buff{background:#46a;border-color:#88c;color:#eef}
-body.theme-quantum .buff{background:#086;border-color:#0ca;color:#eff}
-body.theme-cosmic .buff{background:#a50;border-color:#c80;color:#ffd}
-.floor{
-  display:flex;flex-wrap:wrap;gap:2px 10px;
-  font-size:20px;min-height:28px;line-height:1.3;
-  padding:6px 0;border-top:1px solid var(--grid);
-}
-body.theme-space .floor,body.theme-quantum .floor,body.theme-cosmic .floor{border-color:rgba(150,140,180,.2)}
-.floor-empty{font-size:12.5px;color:var(--ink-soft);font-style:italic}
-.mode{display:flex;gap:5px;margin-bottom:10px;align-items:center;font-size:12.5px;text-transform:uppercase;letter-spacing:.4px}
-.mode button{
-  font:inherit;border:2px solid var(--ink);
-  background:var(--card);border-radius:2px;
-  padding:3px 12px;cursor:pointer;box-shadow:2px 2px 0 var(--shadow);
-  transition:background .12s;
-}
-body.theme-space .mode button{background:rgba(30,25,55,.8);border-color:#668;color:#d0c8e8;box-shadow:2px 2px 0 #0a0820}
-body.theme-quantum .mode button{background:rgba(8,20,30,.8);border-color:#0a8;color:#b0e8e0;box-shadow:2px 2px 0 #041018}
-body.theme-cosmic .mode button{background:rgba(30,15,10,.8);border-color:#a60;color:#e8d0b0;box-shadow:2px 2px 0 #100810}
-.mode button.on{background:var(--yellow);font-weight:bold}
-body.theme-space .mode button.on{background:#46a;color:#fff}
-body.theme-quantum .mode button.on{background:#086;color:#fff}
-body.theme-cosmic .mode button.on{background:#a50;color:#fff}
-.item{
-  display:flex;gap:10px;align-items:center;width:100%;
-  text-align:left;font:inherit;color:inherit;
-  border:2px solid var(--ink);background:var(--card);
-  padding:8px 10px;margin-bottom:7px;border-radius:2px;
-  cursor:pointer;box-shadow:2px 2px 0 var(--shadow);
-  transition:background .12s,border-color 1s;
-}
-body.theme-space .item{background:rgba(25,22,50,.85);border-color:#557;box-shadow:2px 2px 0 #0a0820;color:#d8d0f0}
-body.theme-quantum .item{background:rgba(6,18,28,.9);border-color:#087;box-shadow:2px 2px 0 #041018;color:#c0e8e0}
-body.theme-cosmic .item{background:rgba(25,12,15,.9);border-color:#854;box-shadow:2px 2px 0 #100810;color:#f0d8b0}
-.item.afford{background:var(--soft)}
-body.theme-space .item.afford{background:rgba(40,35,90,.9)}
-body.theme-quantum .item.afford{background:rgba(0,40,50,.9)}
-body.theme-cosmic .item.afford{background:rgba(50,28,12,.9)}
-.item.afford:hover{background:var(--yellow-l)}
-body.theme-space .item.afford:hover{background:rgba(55,50,110,.95)}
-body.theme-quantum .item.afford:hover{background:rgba(0,55,65,.95)}
-body.theme-cosmic .item.afford:hover{background:rgba(65,35,15,.95)}
-.item:not(.afford){opacity:.5;cursor:not-allowed}
-.ico{font-size:24px;width:34px;text-align:center;flex:none}
-.mid{flex:1;min-width:0}
-.mid b{display:block;font-size:14px;font-weight:normal;letter-spacing:.3px}
-.mid small{display:block;font-size:11.5px;color:var(--ink-soft);line-height:1.3;font-style:italic}
-body.theme-space .mid small,body.theme-quantum .mid small,body.theme-cosmic .mid small{color:inherit;opacity:.65}
-.right{text-align:right;flex:none}
-.own{display:block;font-family:Georgia,serif;font-size:20px;font-weight:normal}
-.cost{font-size:12px;font-weight:bold;color:var(--wood-d)}
-body.theme-space .cost{color:#aaf}
-body.theme-quantum .cost{color:#6fd}
-body.theme-cosmic .cost{color:#fc8}
-.empty{font-size:12.5px;color:var(--ink-soft);font-style:italic;padding:6px 0}
-.reset{
-  margin-top:12px;font:inherit;font-size:11.5px;
-  background:none;border:2px solid var(--ink);
-  border-radius:2px;padding:4px 11px;cursor:pointer;
-  text-transform:uppercase;letter-spacing:1px;color:var(--ink-soft);
-}
-body.theme-space .reset,body.theme-quantum .reset,body.theme-cosmic .reset{border-color:inherit;color:inherit;opacity:.6}
-.reset:hover{background:var(--paper-dark);color:var(--ink);opacity:1}
-/* Systems */
-.sysrow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
-.sysbtn{
-  font:inherit;border:2px solid var(--ink);background:var(--card);
-  border-radius:2px;padding:8px 6px;cursor:pointer;text-align:center;
-  box-shadow:2px 2px 0 var(--shadow);font-size:12.5px;letter-spacing:.3px;
-  transition:background .12s;
-}
-body.theme-space .sysbtn{background:rgba(30,25,55,.85);border-color:#668;color:#d0c8e8;box-shadow:2px 2px 0 #0a0820}
-body.theme-quantum .sysbtn{background:rgba(8,20,30,.85);border-color:#0a8;color:#b0e8e0;box-shadow:2px 2px 0 #041018}
-body.theme-cosmic .sysbtn{background:rgba(30,15,10,.85);border-color:#a60;color:#e8d0b0;box-shadow:2px 2px 0 #100810}
-.sysbtn:hover{background:var(--soft)}
-body.theme-space .sysbtn:hover{background:rgba(50,45,100,.9)}
-body.theme-quantum .sysbtn:hover{background:rgba(0,50,60,.9)}
-body.theme-cosmic .sysbtn:hover{background:rgba(55,30,12,.9)}
-.sysbtn.on{background:var(--yellow);font-weight:bold}
-body.theme-space .sysbtn.on{background:#46a;color:#fff}
-body.theme-quantum .sysbtn.on{background:#086;color:#fff}
-body.theme-cosmic .sysbtn.on{background:#a50;color:#fff}
-.syspanel{
-  display:none;margin-top:8px;padding:10px;
-  border:2px solid var(--ink);border-radius:2px;
-  background:var(--paper-dark);font-size:13px;
-}
-body.theme-space .syspanel{background:rgba(15,12,35,.9);border-color:#557}
-body.theme-quantum .syspanel{background:rgba(5,14,22,.9);border-color:#087}
-body.theme-cosmic .syspanel{background:rgba(20,10,12,.9);border-color:#854}
-.syspanel.open{display:block}
-.syspanel h3{margin:0 0 8px;font-size:14px;letter-spacing:1px;text-transform:uppercase;font-weight:normal}
-.syspanel .row{display:flex;justify-content:space-between;align-items:center;margin:5px 0;gap:8px}
-.syspanel button.act{
-  font:inherit;font-size:12px;border:2px solid var(--ink);
-  background:var(--soft);border-radius:2px;padding:3px 10px;cursor:pointer;
-}
-body.theme-space .syspanel button.act{background:rgba(50,40,100,.8);border-color:#668;color:#e0d8ff}
-body.theme-quantum .syspanel button.act{background:rgba(0,45,55,.8);border-color:#0a8;color:#c0f0e8}
-body.theme-cosmic .syspanel button.act{background:rgba(55,30,10,.8);border-color:#a60;color:#f0d8b0}
-.syspanel button.act:hover{filter:brightness(1.15)}
-.syspanel .chart{
-  height:48px;display:flex;align-items:flex-end;gap:2px;margin:8px 0 4px;
-}
-.syspanel .bar{flex:1;background:var(--yellow);border-radius:1px 1px 0 0;min-height:2px;transition:height .4s}
-body.theme-space .syspanel .bar{background:#68c}
-body.theme-quantum .syspanel .bar{background:#0cb}
-body.theme-cosmic .syspanel .bar{background:#e80}
+@keyframes buffPulse{50%{filter:brightness(1.2)}}
+.floor{display:flex;flex-wrap:wrap;gap:2px 8px;font-size:18px;min-height:26px;padding:6px 0;border-top:1px solid color-mix(in srgb,var(--panel-border) 35%,transparent)}
+.floor-empty{font-size:12px;color:var(--muted);font-style:italic}
 .goal{
-  margin-top:10px;padding:8px 10px;border:2px dashed var(--ink);
-  border-radius:2px;font-size:12.5px;text-align:center;
-  letter-spacing:.3px;
+  margin-top:8px;padding:7px 9px;border:2px dashed var(--panel-border);
+  border-radius:2px;font-size:12px;text-align:center;letter-spacing:.3px;
 }
-body.theme-space .goal{border-color:#668;color:#c8c0e8}
-body.theme-quantum .goal{border-color:#0a8;color:#a0e0d8}
-body.theme-cosmic .goal{border-color:#a60;color:#e8c890}
+/* mode + items */
+.mode{display:flex;gap:5px;margin-bottom:8px;align-items:center;font-size:12px;text-transform:uppercase;letter-spacing:.4px}
+.mode button,.sysbtn,.act{
+  font:inherit;border:2px solid var(--panel-border);background:var(--card);
+  border-radius:2px;padding:4px 11px;cursor:pointer;box-shadow:2px 2px 0 var(--shadow);
+  transition:background .12s,transform .08s;color:inherit;
+}
+.mode button.on,.sysbtn.on{background:var(--accent);color:var(--bg);font-weight:bold}
+.mode button:hover,.sysbtn:hover,.act:hover{filter:brightness(1.12)}
+.item{
+  display:flex;gap:9px;align-items:center;width:100%;text-align:left;font:inherit;color:inherit;
+  border:2px solid var(--panel-border);background:var(--card);padding:7px 9px;margin-bottom:6px;
+  border-radius:2px;cursor:pointer;box-shadow:2px 2px 0 var(--shadow);transition:background .12s;
+}
+.item.afford{background:color-mix(in srgb,var(--accent) 14%,var(--card))}
+.item.afford:hover{background:color-mix(in srgb,var(--accent) 25%,var(--card))}
+.item:not(.afford){opacity:.45;cursor:not-allowed}
+.ico{font-size:22px;width:32px;text-align:center;flex:none}
+.mid{flex:1;min-width:0}
+.mid b{display:block;font-size:13.5px;font-weight:normal}
+.mid small{display:block;font-size:11px;color:var(--muted);line-height:1.3;font-style:italic}
+.right{text-align:right;flex:none}
+.own{display:block;font-size:18px}
+.cost{font-size:11.5px;font-weight:bold;color:var(--accent)}
+.empty{font-size:12px;color:var(--muted);font-style:italic;padding:6px 0}
+.reset{margin-top:10px;font:inherit;font-size:11px;background:none;border:2px solid var(--panel-border);
+  border-radius:2px;padding:4px 10px;cursor:pointer;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+.reset:hover{color:var(--ink);background:var(--bg2)}
+/* systems */
+.sysrow{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}
+.sysbtn{padding:7px 4px;font-size:12px;text-align:center}
+.sysbtn:disabled,.sysbtn[disabled]{opacity:.35;pointer-events:none}
+.syspanel{
+  display:none;margin:8px 0;padding:10px;border:2px solid var(--panel-border);
+  border-radius:2px;background:color-mix(in srgb,var(--bg2) 80%,var(--card));font-size:12.5px;
+  animation:panelIn .25s ease;
+}
+.syspanel.open{display:block}
+@keyframes panelIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.syspanel h3{font-size:13px;letter-spacing:1px;text-transform:uppercase;font-weight:normal;margin-bottom:8px;color:var(--accent)}
+.syspanel .row{display:flex;justify-content:space-between;align-items:center;margin:4px 0;gap:6px;flex-wrap:wrap}
+.syspanel .act{padding:3px 9px;font-size:11.5px}
+/* stock chart */
+.stock-list{display:flex;flex-direction:column;gap:6px;margin:8px 0}
+.stock-row{
+  display:grid;grid-template-columns:52px 1fr 64px 70px;gap:6px;align-items:center;
+  padding:5px 6px;border:1px solid color-mix(in srgb,var(--panel-border) 50%,transparent);border-radius:2px;
+  background:color-mix(in srgb,var(--card) 70%,transparent);
+}
+.stock-row .sym{font-weight:bold;letter-spacing:.5px;font-size:12px}
+.stock-row .chg{font-size:11px}
+.stock-row .chg.up{color:var(--good)}
+.stock-row .chg.dn{color:var(--bad)}
+.mini-chart{height:28px;display:flex;align-items:flex-end;gap:1px}
+.mini-chart i{flex:1;background:var(--accent);border-radius:1px 1px 0 0;min-height:2px;transition:height .35s ease;opacity:.85}
+.stock-row.selected{outline:2px solid var(--accent)}
+/* accelerator visual */
+.accel-meter{
+  height:18px;background:rgba(0,0,0,.25);border:2px solid var(--panel-border);border-radius:2px;
+  overflow:hidden;margin:8px 0;position:relative;
+}
+.accel-fill{
+  height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));
+  width:0%;transition:width .2s;box-shadow:0 0 12px var(--accent);
+}
+.accel-fill.hot{background:linear-gradient(90deg,#f50,#ff0);animation:hotPulse .4s infinite}
+@keyframes hotPulse{50%{filter:brightness(1.3)}}
+/* research */
+.lab-opt{
+  display:flex;justify-content:space-between;align-items:center;gap:6px;
+  padding:5px 6px;margin:3px 0;border:1px solid color-mix(in srgb,var(--panel-border) 40%,transparent);
+  border-radius:2px;font-size:11.5px;
+}
+.lab-opt button{flex:none}
+.prog-bar{height:6px;background:rgba(0,0,0,.2);border-radius:2px;margin:4px 0;overflow:hidden}
+.prog-fill{height:100%;background:var(--accent);width:0%;transition:width .3s}
+/* prestige */
+.prestige-box{
+  margin-top:10px;padding:10px;border:2px solid var(--accent);border-radius:3px;
+  background:color-mix(in srgb,var(--accent) 10%,var(--card));text-align:center;
+}
+.prestige-box h3{color:var(--accent);margin-bottom:6px;font-size:13px;letter-spacing:1px}
+/* floating text */
 .fl{
-  position:fixed;pointer-events:none;
-  font-family:Georgia,serif;font-weight:bold;font-size:19px;
-  color:var(--ink);text-shadow:0 0 4px #fff,0 0 4px #fff;
-  animation:up 1s ease-out forwards;z-index:50;
+  position:fixed;pointer-events:none;font-family:var(--font);font-weight:bold;font-size:18px;
+  color:var(--ink);text-shadow:0 0 4px #fff,0 0 6px var(--accent);
+  animation:floatUp 1s ease-out forwards;z-index:80;
 }
-body.theme-space .fl,body.theme-quantum .fl,body.theme-cosmic .fl{color:#fff;text-shadow:0 0 6px #88f,0 0 4px #000}
-@keyframes up{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-60px)}}
+@keyframes floatUp{from{opacity:1;transform:translateY(0) scale(1)}to{opacity:0;transform:translateY(-55px) scale(.9)}}
 .golden{
-  position:fixed;z-index:60;border:none;background:none;
-  cursor:pointer;font-size:50px;line-height:1;
-  filter:drop-shadow(0 0 10px #d4a017) drop-shadow(0 0 4px #fff);
-  animation:pulse 1.2s ease-in-out infinite;
+  position:fixed;z-index:70;border:none;background:none;cursor:pointer;font-size:48px;line-height:1;
+  filter:drop-shadow(0 0 12px var(--accent)) drop-shadow(0 0 4px #fff);
+  animation:goldPulse 1.1s ease-in-out infinite;
 }
-@keyframes pulse{50%{transform:scale(1.18) rotate(8deg)}}
-@media(prefers-reduced-motion:reduce){.golden{animation:none}.fl{animation-duration:.01s}}
-.particle{
-  position:fixed;pointer-events:none;border-radius:50%;
-  background:#fff;opacity:.4;z-index:1;
-  animation:drift linear infinite;
+@keyframes goldPulse{50%{transform:scale(1.2) rotate(10deg)}}
+/* particles */
+.pt{
+  position:fixed;pointer-events:none;border-radius:50%;z-index:2;
+  animation:drift linear forwards;
 }
 @keyframes drift{
-  0%{transform:translateY(0) translateX(0);opacity:.3}
-  50%{opacity:.6}
-  100%{transform:translateY(-100vh) translateX(20px);opacity:0}
+  0%{transform:translateY(0) translateX(0);opacity:.5}
+  100%{transform:translateY(-110vh) translateX(30px);opacity:0}
+}
+/* click particles */
+.spark{
+  position:fixed;pointer-events:none;width:6px;height:6px;border-radius:50%;
+  background:var(--accent);z-index:60;animation:spark .6s ease-out forwards;
+}
+@keyframes spark{to{transform:translate(var(--sx),var(--sy)) scale(0);opacity:0}}
+/* focus */
+button:focus-visible,.item:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){
+  .buff,.golden,.fl,.pt,.spark{animation:none!important}
+  *{transition-duration:.01s!important}
 }
 </style>
 </head>
 <body>
 <header>
-  <h1>Pencil Factory</h1>
-  <div id="ticker" aria-live="polite"></div>
+  <h1>Pencil Factory <span id="subTitle">Classic Works</span></h1>
+  <div id="ticker" aria-live="polite">The graphite awaits.</div>
 </header>
 <div class="wrap">
-  <section class="panel" aria-label="Production">
+  <!-- LEFT: Production -->
+  <section class="panel">
     <h2>Production</h2>
     <div class="stats">
       <div class="stat big"><small>Cash</small><b id="cash">$0</b></div>
-      <div class="stat big"><small>Pencils made</small><b id="made">0</b></div>
+      <div class="stat big"><small>Pencils</small><b id="made">0</b></div>
+    </div>
+    <div class="stats" style="margin-top:4px">
+      <div class="stat"><small>Cosmic Graphite</small><b id="essence">0</b></div>
+      <div class="stat"><small>Ascensions</small><b id="ascendCount">0</b></div>
     </div>
     <div class="rates" id="rates"></div>
     <button class="make" id="make" aria-label="Make a pencil">
-      <svg viewBox="0 0 320 80" id="pencil" aria-hidden="true">
-        <g stroke="#2a2218" stroke-width="3" stroke-linejoin="round">
-          <rect x="6" y="14" width="34" height="52" rx="9" fill="#c75b63"/>
-          <rect x="40" y="14" width="26" height="52" fill="#8a8e92"/>
+      <svg viewBox="0 0 320 80" id="pencilSvg" aria-hidden="true">
+        <g stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" fill-opacity=".95">
+          <rect x="6" y="14" width="34" height="52" rx="8" fill="#c45a62"/>
+          <rect x="40" y="14" width="26" height="52" fill="#8a9098"/>
           <rect x="66" y="14" width="190" height="52" fill="#d4a017"/>
           <polygon points="256,14 256,66 306,40" fill="#c4a06a"/>
-          <polygon points="291,33 291,47 306,40" fill="#2a2218"/>
+          <polygon points="291,33 291,47 306,40" fill="currentColor"/>
         </g>
-        <rect x="67.5" y="15.5" width="187" height="11" fill="#e8c84a"/>
-        <rect x="67.5" y="53.5" width="187" height="11" fill="#b8860b"/>
-        <line x1="40" y1="30" x2="66" y2="30" stroke="#2a2218" stroke-width="2"/>
-        <line x1="40" y1="50" x2="66" y2="50" stroke="#2a2218" stroke-width="2"/>
-        <text x="130" y="46" font-family="Georgia,serif" font-size="17" font-weight="bold" fill="#2a2218">No. 2</text>
+        <rect x="67.5" y="15.5" width="187" height="10" fill="#e8c84a"/>
+        <rect x="67.5" y="54.5" width="187" height="10" fill="#b8860b"/>
+        <text x="130" y="46" font-family="Georgia,serif" font-size="16" font-weight="bold" fill="currentColor">No. 2</text>
       </svg>
-      <span>Make a pencil</span>
+      <span>Forge Pencil</span>
     </button>
     <div id="buffs"></div>
-    <h2>Factory Floor</h2>
+    <h2>Floor</h2>
     <div class="floor" id="floor"></div>
-    <div class="goal" id="goal">Goal: Make your first pencil</div>
-    <button class="reset" id="reset">Reset Factory</button>
+    <div class="goal" id="goal">Goal: The first mark</div>
+    <div class="prestige-box" id="prestigeBox" style="display:none">
+      <h3>⚡ Ascend</h3>
+      <p id="prestigeInfo" style="font-size:12px;margin-bottom:8px">Reset for permanent power</p>
+      <button class="act" id="doAscend" style="font-size:13px;padding:6px 16px">Ascend (+0 Graphite)</button>
+    </div>
+    <button class="reset" id="reset">Hard Reset</button>
   </section>
-  <section class="panel" aria-label="Helpers">
-    <h2>Helpers</h2>
-    <div class="mode" id="mode">Buy:
+
+  <!-- CENTER: Helpers -->
+  <section class="panel">
+    <h2>Workforce</h2>
+    <div class="mode" id="mode">Qty:
       <button data-m="1" class="on">1</button>
       <button data-m="10">10</button>
+      <button data-m="100">100</button>
       <button data-m="max">Max</button>
     </div>
     <div class="scroll" id="helpers"></div>
   </section>
-  <section class="panel" aria-label="Upgrades & Systems">
-    <h2>Systems</h2>
+
+  <!-- RIGHT: Systems + Upgrades -->
+  <section class="panel">
+    <h2>Command Deck</h2>
     <div class="sysrow">
-      <button class="sysbtn" id="btnStocks" data-sys="stocks">📈 Stocks</button>
-      <button class="sysbtn" id="btnAccel" data-sys="accel">⚡ Accelerator</button>
-      <button class="sysbtn" id="btnLab" data-sys="lab">🔬 Research</button>
-      <button class="sysbtn" id="btnShip" data-sys="ship">🚀 Logistics</button>
-    </div>
-    <div class="syspanel" id="panelStocks">
-      <h3>Pencil Stock Exchange</h3>
-      <div class="row"><span>PENCIL share price</span><b id="stockPrice">$1.00</b></div>
-      <div class="row"><span>Shares owned</span><b id="stockOwned">0</b></div>
-      <div class="row"><span>Dividend / sec</span><b id="stockDiv">$0</b></div>
-      <div class="chart" id="stockChart"></div>
-      <div class="row">
-        <button class="act" id="buyStock">Buy 1 share</button>
-        <button class="act" id="sellStock">Sell 1 share</button>
-      </div>
-      <small style="opacity:.7;display:block;margin-top:6px">Price drifts with production. Dividends scale with shares × price.</small>
-    </div>
-    <div class="syspanel" id="panelAccel">
-      <h3>Pencil Particle Accelerator</h3>
-      <div class="row"><span>Beam energy</span><b id="accelEnergy">0 GeV</b></div>
-      <div class="row"><span>Acceleration</span><b id="accelRate">1.00×</b></div>
-      <div class="row"><span>Coolant status</span><b id="accelCool">Stable</b></div>
-      <div class="row">
-        <button class="act" id="fireAccel">Fire beam (+energy)</button>
-      </div>
-      <small style="opacity:.7;display:block;margin-top:6px">Spend cash to charge the beam. Higher energy multiplies all production.</small>
-    </div>
-    <div class="syspanel" id="panelLab">
-      <h3>Research Laboratory</h3>
-      <div class="row"><span>Research points</span><b id="labRP">0</b></div>
-      <div class="row"><span>Active project</span><b id="labProject">None</b></div>
-      <div class="row"><span>Progress</span><b id="labProg">—</b></div>
-      <div id="labOptions"></div>
-      <small style="opacity:.7;display:block;margin-top:6px">Spend cash to start research. Completing projects unlocks permanent bonuses.</small>
-    </div>
-    <div class="syspanel" id="panelShip">
-      <h3>Interstellar Logistics</h3>
-      <div class="row"><span>Fleet size</span><b id="shipFleet">0</b></div>
-      <div class="row"><span>Reach</span><b id="shipReach">Local</b></div>
-      <div class="row"><span>Export bonus</span><b id="shipBonus">1.00×</b></div>
-      <div class="row">
-        <button class="act" id="buyShip">Launch freighter</button>
-      </div>
-      <small style="opacity:.7;display:block;margin-top:6px">Freighters expand your market. More reach = higher pencil value.</small>
+      <button class="sysbtn" id="btnStocks" disabled>📈 Exchange</button>
+      <button class="sysbtn" id="btnAccel" disabled>⚡ Beam</button>
+      <button class="sysbtn" id="btnLab" disabled>🔬 Lab</button>
+      <button class="sysbtn" id="btnShip" disabled>🚀 Fleet</button>
+      <button class="sysbtn" id="btnRift" disabled>🌀 Rift</button>
+      <button class="sysbtn" id="btnCasino" disabled>🎰 Casino</button>
     </div>
 
-    <h2 style="margin-top:14px">Upgrades</h2>
+    <!-- STOCKS -->
+    <div class="syspanel" id="panelStocks">
+      <h3>Pencil Stock Exchange</h3>
+      <div class="stock-list" id="stockList"></div>
+      <div class="row" style="margin-top:8px">
+        <span>Selected: <b id="selSym">—</b></span>
+        <span>Cash impact</span>
+      </div>
+      <div class="row">
+        <button class="act" id="buyStock">Buy 1</button>
+        <button class="act" id="buyStock10">Buy 10</button>
+        <button class="act" id="sellStock">Sell 1</button>
+        <button class="act" id="sellAll">Sell All</button>
+      </div>
+      <div class="row"><span>Portfolio value</span><b id="portVal">$0</b></div>
+      <div class="row"><span>Dividends /sec</span><b id="divRate">$0</b></div>
+      <small style="opacity:.7;display:block;margin-top:6px">Prices react to your production & random events. Later unlocks enable shorting.</small>
+    </div>
+
+    <!-- ACCELERATOR -->
+    <div class="syspanel" id="panelAccel">
+      <h3>Graphite Particle Beam</h3>
+      <div class="row"><span>Energy</span><b id="accelE">0 GeV</b></div>
+      <div class="accel-meter"><div class="accel-fill" id="accelFill"></div></div>
+      <div class="row"><span>Multiplier</span><b id="accelMult">1.00×</b></div>
+      <div class="row"><span>Status</span><b id="accelStat">Cold</b></div>
+      <div class="row">
+        <button class="act" id="chargeBeam">Charge (+5 GeV)</button>
+        <button class="act" id="overcharge">Overcharge (risky)</button>
+      </div>
+      <small style="opacity:.7;display:block;margin-top:6px">Energy multiplies all production. Overcharge can spike or melt the coils.</small>
+    </div>
+
+    <!-- LAB -->
+    <div class="syspanel" id="panelLab">
+      <h3>Deep Research</h3>
+      <div class="row"><span>Active</span><b id="labName">None</b></div>
+      <div class="prog-bar"><div class="prog-fill" id="labFill"></div></div>
+      <div class="row"><span>Progress</span><b id="labPct">—</b></div>
+      <div id="labList"></div>
+      <small style="opacity:.7;display:block;margin-top:6px">Projects are unique and permanent. Some unlock new systems.</small>
+    </div>
+
+    <!-- FLEET -->
+    <div class="syspanel" id="panelShip">
+      <h3>Interstellar Logistics</h3>
+      <div class="row"><span>Freighters</span><b id="ships">0</b></div>
+      <div class="row"><span>Reach</span><b id="reach">Local</b></div>
+      <div class="row"><span>Value bonus</span><b id="shipMult">1.00×</b></div>
+      <div class="row"><button class="act" id="buyShip">Launch Freighter</button></div>
+      <small style="opacity:.7;display:block;margin-top:6px">Each freighter expands market reach and pencil value. Cost scales hard.</small>
+    </div>
+
+    <!-- RIFT -->
+    <div class="syspanel" id="panelRift">
+      <h3>Dimensional Rift</h3>
+      <div class="row"><span>Rift depth</span><b id="riftDepth">0</b></div>
+      <div class="row"><span>Reality strain</span><b id="riftStrain">Stable</b></div>
+      <div class="row"><span>Dimension bonus</span><b id="riftBonus">1.00×</b></div>
+      <div class="row"><button class="act" id="probeRift">Probe Deeper</button></div>
+      <small style="opacity:.7;display:block;margin-top:6px">Spend massive cash to peer into pencil-dominated realities. Permanent mult.</small>
+    </div>
+
+    <!-- CASINO -->
+    <div class="syspanel" id="panelCasino">
+      <h3>Graphite Casino</h3>
+      <div class="row"><span>Last result</span><b id="casinoLast">—</b></div>
+      <div class="row">
+        <button class="act" id="betLow">Bet 1% (safe)</button>
+        <button class="act" id="betHigh">Bet 10% (spicy)</button>
+      </div>
+      <div class="row"><button class="act" id="betAll">All-in (degenerate)</button></div>
+      <small style="opacity:.7;display:block;margin-top:6px">49% win double, 1% jackpot ×10, rest lose. House always smiles.</small>
+    </div>
+
+    <h2 style="margin-top:12px">Upgrades</h2>
     <div class="scroll" id="upgrades"></div>
   </section>
 </div>
+
 <script>
 "use strict";
-const KEY = "pencilFactory_v2";
-/* ---------- Data ---------- */
-const H = [
-  {name:"Intern",            desc:"Sharpens and assembles. Unpaid.",              cost:15,     pps:0.1,   ico:"🧑‍🎓"},
-  {name:"Sharpening Station",desc:"A crank, a blade, and a dream.",               cost:100,    pps:1,     ico:"🔧"},
-  {name:"Hand Lathe",        desc:"Turns raw wood into pencil bodies.",           cost:1100,   pps:8,     ico:"🪚"},
-  {name:"Cedar Mill",        desc:"Slices cedar into thin slats.",                cost:12000,  pps:47,    ico:"🪵"},
-  {name:"Graphite Mine",     desc:"Digs the lead so you don't have to.",          cost:130000, pps:260,   ico:"⛏️"},
-  {name:"Assembly Line",     desc:"Conveyor belts and loud machines.",            cost:1.4e6,  pps:1400,  ico:"🏭"},
-  {name:"Robot Crew",        desc:"Never tired. Never unionizes. Yet.",           cost:2e7,    pps:7800,  ico:"🤖"},
-  {name:"Cedar Plantation",  desc:"Trees grown to order.",                        cost:3.3e8,  pps:44000, ico:"🌲"},
-  {name:"Orbital Forge",     desc:"Zero-g extrusion in low Earth orbit.",         cost:5.1e9,  pps:260000,ico:"🛰️"},
-  {name:"Lunar Factory",     desc:"Low gravity, high output. Dusty.",             cost:7.5e10, pps:1.6e6, ico:"🌙"},
-  {name:"Asteroid Miner",    desc:"Harvests carbonaceous chondrites for lead.",   cost:1.2e12, pps:1e7,   ico:"☄️"},
-  {name:"Dyson Pencil",      desc:"A partial sphere that writes on the sun.",     cost:2e13,   pps:6.5e7, ico:"☀️"},
-  {name:"Galactic Press",    desc:"Prints pencils across spiral arms.",           cost:3.5e14, pps:4e8,   ico:"🌌"},
-  {name:"Quantum Lathe",     desc:"Spins wood in superposition. Somehow works.",  cost:6e15,   pps:2.5e9, ico:"⚛️"},
-  {name:"Pencil Dimension",  desc:"A universe where everything is a pencil.",     cost:1e17,   pps:1.6e10,ico:"🌀"}
+const KEY = "pencilFactory_v3";
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+
+/* ===================== DATA ===================== */
+const HELPERS = [
+  {id:"intern", name:"Intern", desc:"Works for exposure and eraser crumbs.", cost:20, pps:0.08, ico:"🧑‍🎓"},
+  {id:"station", name:"Sharpening Bench", desc:"A blade, a crank, mild danger.", cost:150, pps:0.7, ico:"🔧"},
+  {id:"lathe", name:"Hand Lathe", desc:"Turns billets into hexagonal destiny.", cost:1800, pps:5, ico:"🪚"},
+  {id:"mill", name:"Cedar Mill", desc:"The forest will remember this.", cost:2.2e4, pps:32, ico:"🪵"},
+  {id:"mine", name:"Graphite Pit", desc:"Black dust, blacker lungs.", cost:2.8e5, pps:180, ico:"⛏️"},
+  {id:"line", name:"Assembly Line", desc:"One pencil every 0.7 seconds. Loud.", cost:3.5e6, pps:950, ico:"🏭"},
+  {id:"bots", name:"Robot Gang", desc:"Unionization probability: rising.", cost:5e7, pps:5200, ico:"🤖"},
+  {id:"farm", name:"Cedar Arcology", desc:"Trees that grow already sharpened.", cost:8e8, pps:2.8e4, ico:"🌲"},
+  {id:"orbit", name:"Orbital Forge", desc:"Zero-g extrusion. Beautiful and illegal.", cost:1.5e10, pps:1.6e5, ico:"🛰️"},
+  {id:"luna", name:"Lunar Works", desc:"Dust is free. Radiation is not.", cost:3e11, pps:9e5, ico:"🌙"},
+  {id:"aster", name:"Asteroid Scribe", desc:"Carves carbonaceous chondrites.", cost:6e12, pps:5.5e6, ico:"☄️"},
+  {id:"dyson", name:"Dyson Stylus", desc:"Writes on the solar wind.", cost:1.5e14, pps:3.5e7, ico:"☀️"},
+  {id:"galaxy", name:"Galactic Press", desc:"Spiral arms as conveyor belts.", cost:4e15, pps:2.2e8, ico:"🌌"},
+  {id:"quantum", name:"Quantum Lathe", desc:"Wood exists in all states until observed.", cost:1e17, pps:1.5e9, ico:"⚛️"},
+  {id:"dimension", name:"Pencil Monad", desc:"A closed universe of pure graphite.", cost:3e18, pps:1.2e10, ico:"🌀"}
 ];
-const U = [];
-function add(id,name,desc,cost,kind,val,extra){ U.push(Object.assign({id,name,desc,cost,kind,val},extra||{})); }
-// Click
-[[100,"Sharper Point"],[500,"Comfy Grip"],[5000,"Two-Handed Clicking"],[50000,"Triple Espresso"],[5e6,"Click Mastery"],[2e9,"Neural Click Link"],[1e13,"Thought-Form Pencils"]]
-  .forEach((a,i)=>add("click"+i,a[1],"Each click makes twice as many pencils.",a[0],"click",2));
-// Pct of pps on click
-[[10000,0.02,"Foreman's Handshake"],[1e6,0.03,"Floor Manager Badge"],[1e8,0.05,"Executive Pen"],[5e11,0.08,"Cosmic Stylus"],[2e15,0.12,"Omniscient Click"]]
-  .forEach((a,i)=>add("pct"+i,a[2],"Each click also makes "+Math.round(a[1]*100)+"% of your pencils per second.",a[0],"pct",a[1]));
-// Value
-[[1000,1.5,"Pink Erasers","Pencils sell for 50% more."],[25000,1.5,"Brand Logo","Pencils sell for 50% more."],
- [1e6,2,"Bulk Contracts","Pencils sell for twice as much."],[2.5e8,2,"School Supply Deal","Pencils sell for twice as much."],
- [2e10,3,"Golden Standard","Pencils sell for three times as much."],[5e13,3,"Interstellar Brand","Pencils sell for three times as much."],
- [1e16,5,"Universal Currency","Pencils are now legal tender everywhere."]]
-  .forEach((a,i)=>add("val"+i,a[2],a[3],a[0],"value",a[1]));
-// Global
-[[5000,1.25,"Radio Playing Music","All production is 25% faster."],[2e5,1.25,"Coffee Machine","All production is 25% faster."],
- [3e7,1.5,"Staff Break Room","All production is 50% faster."],[5e9,2,"Four-Day Work Week","All production is twice as fast."],
- [8e12,2,"Time Dilation Shifts","All production is twice as fast."],[3e16,3,"Causal Loop Factory","All production is three times as fast."]]
-  .forEach((a,i)=>add("glob"+i,a[2],a[3],a[0],"global",a[1]));
-// Unique unlocks & flavor
-add("stockUnlock","IPO Filing","Unlock the Pencil Stock Exchange.",25000,"unlock","stocks");
-add("accelUnlock","Particle Budget","Unlock the Pencil Particle Accelerator.",5e6,"unlock","accel");
-add("labUnlock","Research Grant","Unlock the Research Laboratory.",2e5,"unlock","lab");
-add("shipUnlock","Export License","Unlock Interstellar Logistics.",1e9,"unlock","ship");
-add("stockDiv","Dividend Policy","Stock dividends are twice as generous.",5e7,"stockDiv",2);
-add("accelEff","Superconducting Magnets","Accelerator energy is 50% more effective.",2e10,"accelEff",1.5);
-add("labSpeed","Graduate Students","Research progresses 50% faster.",1e8,"labSpeed",1.5);
-add("shipRange","Warp Couriers","Logistics reach expands faster.",5e12,"shipRange",1.5);
-// Helper tiers
-const TIERS = [
-  {thr:1,mult:10,name:"Better Tools"},
-  {thr:10,mult:100,name:"Overtime"},
-  {thr:25,mult:1000,name:"Efficiency Study"},
-  {thr:50,mult:10000,name:"Mass Production"},
-  {thr:100,mult:1e5,name:"Singularity Protocol"}
+
+const STOCKS = [
+  {sym:"PNCL", name:"Pencil Co", base:1, vol:0.04, owned:0, hist:[]},
+  {sym:"GRAF", name:"Graphite Futures", base:2.5, vol:0.07, owned:0, hist:[]},
+  {sym:"CEDR", name:"Cedar Holdings", base:4, vol:0.05, owned:0, hist:[]},
+  {sym:"ORBT", name:"Orbital Ink", base:12, vol:0.09, owned:0, hist:[]},
+  {sym:"VOID", name:"Void Erasers", base:40, vol:0.14, owned:0, hist:[]}
 ];
-H.forEach((h,i)=>TIERS.forEach((t,k)=>
-  add("h"+i+"_"+k,h.name+": "+t.name,"Output of every "+h.name+" doubles. (Needs "+t.thr+" owned)",h.cost*t.mult,"helper",2,{h:i,thr:t.thr})));
-U.sort((a,b)=>a.cost-b.cost);
+STOCKS.forEach(s=>{ s.price = s.base; for(let i=0;i<14;i++) s.hist.push(s.base); });
+
+const LAB = [
+  {id:"betterLead", name:"Stabilized Lead", cost:8e4, time:90, desc:"+18% production", done:false, run(S){S.lab.prod*=1.18}},
+  {id:"selfErase", name:"Self-Healing Erasers", cost:1.2e6, time:140, desc:"+22% value", done:false, run(S){S.lab.val*=1.22}},
+  {id:"autoClick", name:"Muscle Memory", cost:4e7, time:200, desc:"Passive +0.4 clicks/sec", done:false, run(S){S.lab.autoClick=0.4}},
+  {id:"stockSense", name:"Insider Graphite", cost:2e8, time:180, desc:"Stocks 30% less volatile", done:false, run(S){S.lab.stockStab=0.7}},
+  {id:"beamCool", name:"Cryo Coils", cost:9e9, time:240, desc:"Accelerator 40% stronger", done:false, run(S){S.lab.beam*=1.4}},
+  {id:"warpCargo", name:"Foldspace Holds", cost:5e11, time:300, desc:"+35% fleet value bonus", done:false, run(S){S.lab.ship*=1.35}},
+  {id:"riftSafe", name:"Reality Anchors", cost:8e13, time:360, desc:"Rift probes 25% cheaper", done:false, run(S){S.lab.riftCost=0.75}},
+  {id:"houseEdge", name:"Loaded Dice", cost:3e15, time:400, desc:"Casino win chance +4%", done:false, run(S){S.lab.casino=0.53}},
+  {id:"omni", name:"Omni-Graphite", cost:2e17, time:500, desc:"+40% everything", done:false, run(S){S.lab.prod*=1.4;S.lab.val*=1.4;S.lab.helper*=1.4}}
+];
+
+const UPGRADES = [];
+function U(id,name,desc,cost,fn,req){ UPGRADES.push({id,name,desc,cost,fn,req:req||(()=>true),bought:false}); }
+
+// Unique, non-repetitive upgrades
+U("ipo","IPO Filing","Unlock the Stock Exchange.",4e4, S=>{S.sys.stocks=true},"total");
+U("beamUnlock","Particle Charter","Unlock the Graphite Beam.",2e6, S=>{S.sys.accel=true},"total");
+U("labUnlock","Black Budget","Unlock Deep Research.",3e5, S=>{S.sys.lab=true},"total");
+U("fleetUnlock","Export Writ","Unlock Interstellar Fleet.",8e8, S=>{S.sys.ship=true},"total");
+U("riftUnlock","Event Horizon Permit","Unlock Dimensional Rift.",5e12, S=>{S.sys.rift=true},"total");
+U("casinoUnlock","Sin License","Unlock the Graphite Casino.",1e11, S=>{S.sys.casino=true},"total");
+
+U("click2","Callus","Clicks are twice as strong.",180, S=>{S.up.click*=2});
+U("click3","Two Hands","Clicks ×2 again.",3500, S=>{S.up.click*=2});
+U("click4","Caffeine IV","Clicks ×2.",9e4, S=>{S.up.click*=2});
+U("click5","Neural Graft","Clicks ×2.",4e7, S=>{S.up.click*=2});
+U("click6","Thought Pencil","Clicks ×3.",8e12, S=>{S.up.click*=3});
+
+U("pct1","Foreman Nod","Clicks also give 3% of PPS.",2e4, S=>{S.up.pct+=0.03});
+U("pct2","Board Seat","Clicks give +5% PPS.",3e7, S=>{S.up.pct+=0.05});
+U("pct3","Cosmic Stylus","Clicks give +8% PPS.",6e12, S=>{S.up.pct+=0.08});
+
+U("val1","Pink Prestige","Pencil value ×1.6",2200, S=>{S.up.val*=1.6});
+U("val2","Brand Myth","Value ×1.7",1.5e5, S=>{S.up.val*=1.7});
+U("val3","School Monopoly","Value ×2",8e7, S=>{S.up.val*=2});
+U("val4","Galactic Standard","Value ×2.5",2e13, S=>{S.up.val*=2.5});
+U("val5","Reality Tender","Value ×3",1e17, S=>{S.up.val*=3});
+
+U("glob1","Shop Radio","Production ×1.3",9e3, S=>{S.up.glob*=1.3});
+U("glob2","Free Coffee","Production ×1.35",4e5, S=>{S.up.glob*=1.35});
+U("glob3","Four-Day Week","Production ×1.6",2e8, S=>{S.up.glob*=1.6});
+U("glob4","Time Dilation","Production ×2",9e12, S=>{S.up.glob*=2});
+U("glob5","Causal Factory","Production ×2.5",4e16, S=>{S.up.glob*=2.5});
+
+U("goldAttract","Golden Magnet","Golden pencils appear 40% more often.",1.5e6, S=>{S.up.goldRate*=0.6});
+U("goldRich","Midas Core","Golden rewards ×2.",5e9, S=>{S.up.goldPow*=2});
+U("divBoost","Dividend Cult","Stock dividends ×2.2",3e8, S=>{S.up.div*=2.2});
+U("shorting","Short License","Unlock shorting (sell what you don't own).",2e10, S=>{S.sys.short=true});
+U("beamSafe","Failsafe Interlock","Overcharge no longer destroys energy.",7e11, S=>{S.up.beamSafe=true});
+U("autoTrade","Algo Trader","Slowly buys the cheapest stock with spare cash.",4e13, S=>{S.up.autoTrade=true});
+U("riftEcho","Echo Chamber","Rift bonus also multiplies clicks.",9e14, S=>{S.up.riftClick=true});
+U("casinoLuck","Loaded Atmosphere","Casino jackpot chance slightly higher.",2e16, S=>{S.up.jackpot=0.015});
+
+// Helper-specific unique upgrades (not pure doubles)
+HELPERS.forEach((h,i)=>{
+  U(h.id+"_tools", h.name+": Precision Kit", "That helper line gains +40% output.", h.cost*12, S=>{S.helperMult[i]*=1.4}, ()=>S.owned[i]>=3);
+  U(h.id+"_over", h.name+": Graveyard Shift", "That helper line gains +60% output.", h.cost*90, S=>{S.helperMult[i]*=1.6}, ()=>S.owned[i]>=12);
+  U(h.id+"_sing", h.name+": Local Singularity", "That helper line gains +100% output.", h.cost*800, S=>{S.helperMult[i]*=2}, ()=>S.owned[i]>=40);
+});
 
 const NEWS = [
-  [0,"Welcome to the factory. The first pencil is on the house."],
-  [0,"Tip: golden pencils that float by are worth a click."],
-  [10,"Pencil number 10. Management is cautiously optimistic."],
-  [100,"A local school just ordered a box of your pencils."],
-  [1000,"Your pencils are now being chewed in three counties."],
-  [10000,"A rival, Number 3 Pencil Co., files a complaint. You file it under 'P'."],
-  [1e5,"Somewhere, a forest looks nervous."],
-  [1e6,"You now supply most of the pencils in the country."],
-  [1e7,"Standardized tests are scheduled around your production."],
-  [1e8,"Libraries keep your pencils in the emergency kit."],
-  [1e9,"Every student on Earth owns at least one of your pencils."],
-  [5e9,"First orbital forge comes online. Gravity is optional."],
-  [1e11,"Astronomers report the Moon looks slightly more yellow."],
-  [1e12,"Mars colony places a bulk order. They want the erasers pink."],
-  [1e13,"Gravity is now measured in pencils."],
-  [1e14,"A Dyson swarm segment begins writing on the solar wind."],
-  [1e15,"The pencil dimension has applied for a trade agreement."],
-  [1e16,"Galactic council debates whether pencils are a weapon."],
-  [1e17,"Observable universe census: 51% pencil by volume."],
-  [1e18,"Reality's terms of service have been updated to include graphite."]
+  [0,"The first pencil is free. The rest will cost the universe."],
+  [50,"A teacher in Ohio writes your name on the board. In graphite."],
+  [500,"Three counties now chew exclusively on your product."],
+  [5e3,"Number 3 Pencil Co. files a lawsuit. You sharpen it."],
+  [5e4,"Forests request a meeting. You send a pencil."],
+  [5e5,"National curriculum updated to include your logo."],
+  [5e6,"First orbital forge lights up. The sky looks yellower."],
+  [5e8,"Mars colony demands pink erasers. Non-negotiable."],
+  [5e10,"Astronomers confirm the Moon has a No. 2 core."],
+  [5e12,"A Dyson segment begins autographing solar flares."],
+  [5e14,"Galactic council classifies pencils as soft power."],
+  [5e16,"Observable universe: 47% pencil by volume and rising."],
+  [1e18,"Reality's EULA now includes a graphite clause."],
+  [1e19,"You have become the footnote of physics."]
 ];
 
 const GOALS = [
-  {thr:0,      text:"Goal: Make your first pencil"},
-  {thr:100,    text:"Goal: Supply the local school"},
-  {thr:1e4,    text:"Goal: Dominate the county fair"},
-  {thr:1e6,    text:"Goal: Become a national brand"},
-  {thr:1e8,    text:"Goal: Supply every desk on Earth"},
-  {thr:1e10,   text:"Goal: Reach low Earth orbit"},
-  {thr:1e12,   text:"Goal: Colonize the Moon with graphite"},
-  {thr:1e14,   text:"Goal: Write on the Sun"},
-  {thr:1e16,   text:"Goal: Span the Milky Way"},
-  {thr:1e17,   text:"Goal: Conquer the Observable Universe"},
-  {thr:1e18,   text:"Goal: Redefine reality in No. 2"}
+  {t:0, txt:"The first mark"},
+  {t:100, txt:"Supply the schoolhouse"},
+  {t:1e4, txt:"Own the county"},
+  {t:1e6, txt:"National brand"},
+  {t:1e8, txt:"Every desk on Earth"},
+  {t:1e10, txt:"Low Earth orbit"},
+  {t:1e12, txt:"Lunar graphite colony"},
+  {t:1e14, txt:"Write on the Sun"},
+  {t:1e16, txt:"Span the Milky Way"},
+  {t:1e18, txt:"Conquer the Observable Universe"},
+  {t:1e19, txt:"Become the medium of reality"}
 ];
 
-const LAB_PROJECTS = [
-  {id:"graphite", name:"Improved Graphite", cost:5e4, time:60, desc:"+15% all production", effect:()=>{S.labBonus.prod*=1.15}},
-  {id:"eraser",   name:"Self-Healing Erasers", cost:2e6, time:120, desc:"+20% pencil value", effect:()=>{S.labBonus.val*=1.2}},
-  {id:"wood",     name:"Instant Cedar", cost:5e8, time:180, desc:"+25% helper output", effect:()=>{S.labBonus.helper*=1.25}},
-  {id:"quantum",  name:"Quantum Lead", cost:1e12, time:300, desc:"+30% all production", effect:()=>{S.labBonus.prod*=1.3}},
-  {id:"reality",  name:"Reality Ink", cost:5e15, time:480, desc:"+50% everything", effect:()=>{S.labBonus.prod*=1.5;S.labBonus.val*=1.5;S.labBonus.helper*=1.5}}
-];
-
-/* ---------- State ---------- */
+/* ===================== STATE ===================== */
 function fresh(){
   return {
-    made:0,cash:0,total:0,owned:H.map(()=>0),up:{},clicks:0,last:Date.now(),
-    stocks:0, stockPrice:1, stockHist:[1,1,1,1,1,1,1,1],
-    accelEnergy:0,
-    labRP:0, labCurrent:null, labProgress:0, labDone:{},
-    labBonus:{prod:1,val:1,helper:1},
-    ships:0
+    made:0, cash:0, total:0, clicks:0, last:Date.now(),
+    owned: HELPERS.map(()=>0),
+    helperMult: HELPERS.map(()=>1),
+    up:{click:1, pct:0, val:1, glob:1, div:1, goldRate:1, goldPow:1, beamSafe:false, autoTrade:false, riftClick:false, jackpot:0.01},
+    sys:{stocks:false, accel:false, lab:false, ship:false, rift:false, casino:false, short:false},
+    accel:0,
+    lab:{prod:1, val:1, helper:1, autoClick:0, stockStab:1, beam:1, ship:1, riftCost:1, casino:0.49, current:null, prog:0},
+    ships:0, rift:0,
+    essence:0, ascensions:0,
+    bought:{},
+    stocks: STOCKS.map(s=>({sym:s.sym, owned:0, price:s.base, hist:[...s.hist]}))
   };
 }
 function load(){
   try{
     const r = JSON.parse(localStorage.getItem(KEY));
-    if(r){
-      const f = Object.assign(fresh(),r);
-      while(f.owned.length<H.length) f.owned.push(0);
-      if(!f.labBonus) f.labBonus={prod:1,val:1,helper:1};
-      if(!f.stockHist) f.stockHist=[1,1,1,1,1,1,1,1];
-      if(!f.labDone) f.labDone={};
-      return f;
+    if(!r) return fresh();
+    const f = Object.assign(fresh(), r);
+    while(f.owned.length < HELPERS.length) f.owned.push(0);
+    while(f.helperMult.length < HELPERS.length) f.helperMult.push(1);
+    if(!f.stocks || f.stocks.length !== STOCKS.length){
+      f.stocks = STOCKS.map(s=>({sym:s.sym, owned:0, price:s.base, hist:[...s.hist]}));
     }
-  }catch(e){}
-  return fresh();
+    return f;
+  }catch(e){ return fresh(); }
 }
-function save(){ S.last = Date.now(); try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} }
+function save(){ S.last = Date.now(); try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
 let S = load();
 const B = {frenzy:0, click:0};
-let mode = "1";
-let openSys = null;
+let mode = "1", openSys = null, selStock = 0;
+let newsHold = 0;
 
-/* ---------- Helpers ---------- */
-const $ = s => document.querySelector(s);
-const SUF = ["","K","M","B","T","Qa","Qi","Sx","Sp","Oc","No","Dc","Ud","Dd","Td","Qad","Qid","Sxd","Spd","Ocd","Nod","Vg"];
+/* ===================== MATH ===================== */
+const SUF = ["","K","M","B","T","Qa","Qi","Sx","Sp","Oc","No","Dc","Ud","Dd","Td","Qad","Qid","Sxd","Spd","Ocd","Vg","Uv"];
 function fmt(n){
-  if(!isFinite(n)||n<0) return "∞";
-  if(n<1000) return (n<10 ? n.toFixed(1).replace(/\.0$/,"") : String(Math.floor(n)));
-  const e = Math.min(Math.floor(Math.log10(n)/3), SUF.length-1);
-  const v = n/Math.pow(10,3*e);
-  return v.toFixed(v<10?2:v<100?1:0)+SUF[e];
+  if(!isFinite(n) || n < 0) return "∞";
+  if(n < 1000) return n < 10 ? n.toFixed(1).replace(/\.0$/,"") : String(Math.floor(n));
+  const e = Math.min(Math.floor(Math.log10(Math.max(n,1))/3), SUF.length-1);
+  const v = n / Math.pow(10, 3*e);
+  return v.toFixed(v<10?2:v<100?1:0) + SUF[e];
 }
-function money(n){ return n<1000 ? "$"+n.toFixed(2) : "$"+fmt(n); }
+function money(n){ return n < 1000 ? "$"+n.toFixed(2) : "$"+fmt(n); }
 
-function unlocked(sys){
-  if(S.up[sys+"Unlock"]) return true;
-  if(sys==="stocks" && S.total>=20000) return true;
-  if(sys==="lab" && S.total>=1e5) return true;
-  if(sys==="accel" && S.total>=3e6) return true;
-  if(sys==="ship" && S.total>=5e8) return true;
-  return false;
-}
+function essenceMult(){ return 1 + S.essence * 0.15; }
 
 function calc(){
-  let clickMult=1, pct=0, valMult=1, gMult=1;
-  const hm = H.map(()=>1);
-  let stockDivMult=1, accelEff=1;
-  for(const u of U){
-    if(!S.up[u.id]) continue;
-    if(u.kind==="click") clickMult*=u.val;
-    else if(u.kind==="pct") pct+=u.val;
-    else if(u.kind==="value") valMult*=u.val;
-    else if(u.kind==="global") gMult*=u.val;
-    else if(u.kind==="helper") hm[u.h]*=u.val;
-    else if(u.kind==="stockDiv") stockDivMult*=u.val;
-    else if(u.kind==="accelEff") accelEff*=u.val;
-  }
-  let base=0;
-  H.forEach((h,i)=>{ base += S.owned[i]*h.pps*hm[i]; });
-  base *= S.labBonus.helper;
-  const accelMult = 1 + (S.accelEnergy/100)*accelEff;
-  const shipMult = 1 + S.ships*0.08;
-  const pps = base * gMult * S.labBonus.prod * accelMult * (B.frenzy>0?7:1);
-  const clickVal = (clickMult*(B.click>0?10:1) + pct*pps);
-  valMult *= S.labBonus.val * shipMult;
-  const stockDiv = S.stocks * S.stockPrice * 0.002 * stockDivMult;
-  return {pps,clickVal,valMult,hm,gMult,accelMult,shipMult,stockDiv};
+  let base = 0;
+  HELPERS.forEach((h,i)=>{
+    base += S.owned[i] * h.pps * S.helperMult[i];
+  });
+  base *= S.lab.helper;
+  const beam = 1 + (S.accel / 80) * S.lab.beam;
+  const shipM = (1 + S.ships * 0.07) * S.lab.ship;
+  const riftM = 1 + S.rift * 0.12;
+  const ess = essenceMult();
+  const pps = base * S.up.glob * S.lab.prod * beam * riftM * ess * (B.frenzy > 0 ? 7 : 1);
+  const clickVal = S.up.click * (B.click > 0 ? 11 : 1) * ess * (S.up.riftClick ? riftM : 1) + S.up.pct * pps;
+  const val = S.up.val * S.lab.val * shipM * ess;
+  let div = 0;
+  S.stocks.forEach(st=>{ div += st.owned * st.price * 0.0018 * S.up.div; });
+  return {pps, clickVal, val, beam, shipM, riftM, div, ess};
 }
-function earn(n,C){ S.made+=n; const c=n*C.valMult; S.cash+=c; S.total+=c; }
-function costN(i,n){
-  const r=1.15;
-  return Math.ceil(H[i].cost*Math.pow(r,S.owned[i])*(Math.pow(r,n)-1)/(r-1));
+
+function earn(n, C){
+  S.made += n;
+  const cash = n * C.val;
+  S.cash += cash;
+  S.total += cash;
+}
+
+function costN(i, n){
+  const r = 1.18;
+  const base = HELPERS[i].cost * Math.pow(r, S.owned[i]);
+  return Math.ceil(base * (Math.pow(r, n) - 1) / (r - 1));
 }
 function qty(i){
-  if(mode==="max"){ let n=0; while(n<500 && costN(i,n+1)<=S.cash) n++; return Math.max(n,1); }
-  return parseInt(mode,10);
+  if(mode === "max"){
+    let n = 0;
+    while(n < 400 && costN(i, n+1) <= S.cash) n++;
+    return Math.max(n, 1);
+  }
+  return parseInt(mode, 10) || 1;
 }
 
-/* ---------- Theme ---------- */
+/* ===================== THEME & GOAL ===================== */
 function updateTheme(){
-  const m = S.made;
-  document.body.classList.remove("theme-space","theme-quantum","theme-cosmic");
-  if(m >= 1e16) document.body.classList.add("theme-cosmic");
-  else if(m >= 1e13) document.body.classList.add("theme-quantum");
-  else if(m >= 1e10) document.body.classList.add("theme-space");
+  document.body.classList.remove("t-space","t-quantum","t-cosmic");
+  let sub = "Classic Works";
+  if(S.made >= 1e16){ document.body.classList.add("t-cosmic"); sub = "Cosmic Dominion"; }
+  else if(S.made >= 1e12){ document.body.classList.add("t-quantum"); sub = "Quantum Works"; }
+  else if(S.made >= 1e9){ document.body.classList.add("t-space"); sub = "Orbital Division"; }
+  $("#subTitle").textContent = sub;
+
   let g = GOALS[0];
-  for(const goal of GOALS) if(S.made >= goal.thr) g = goal;
-  const next = GOALS.find(x=>x.thr > S.made);
-  $("#goal").textContent = next ? g.text + "  →  next: "+fmt(next.thr) : g.text;
+  for(const x of GOALS) if(S.made >= x.t) g = x;
+  const next = GOALS.find(x => x.t > S.made);
+  $("#goal").textContent = next ? `Goal: ${g.txt}  →  ${fmt(next.t)}` : `Goal: ${g.txt}`;
 }
 
-/* ---------- Ticker ---------- */
-let newsHold = 0;
-function say(t,hold){ $("#ticker").textContent=t; newsHold=hold||8; }
-function rotateNews(){
-  if(newsHold>0) return;
-  const pool = NEWS.filter(n=>S.made>=n[0]);
-  const recent = pool.slice(-4);
-  $("#ticker").textContent = recent[Math.floor(Math.random()*recent.length)][1];
-}
-
-/* ---------- Systems UI ---------- */
-function setSys(name){
-  openSys = openSys===name ? null : name;
-  ["stocks","accel","lab","ship"].forEach(s=>{
-    const btn = $("#btn"+s.charAt(0).toUpperCase()+s.slice(1));
-    const pan = $("#panel"+s.charAt(0).toUpperCase()+s.slice(1));
-    if(btn) btn.classList.toggle("on", openSys===s);
-    if(pan) pan.classList.toggle("open", openSys===s);
+/* ===================== RENDER ===================== */
+const helperEls = [];
+function buildHelpers(){
+  const box = $("#helpers");
+  box.innerHTML = "";
+  HELPERS.forEach((h,i)=>{
+    const b = document.createElement("button");
+    b.className = "item";
+    b.innerHTML = `<span class="ico">${h.ico}</span><span class="mid"><b>${h.name}</b><small>${h.desc}</small><small class="rate"></small></span><span class="right"><span class="own">0</span><span class="cost"></span></span>`;
+    b.addEventListener("click", ()=>{
+      const n = qty(i), c = costN(i,n);
+      if(S.cash < c) return;
+      S.cash -= c; S.owned[i] += n; save();
+    });
+    box.appendChild(b);
+    helperEls.push({el:b, own:b.querySelector(".own"), cost:b.querySelector(".cost"), rate:b.querySelector(".rate")});
   });
 }
 
 function renderStocks(C){
-  $("#stockPrice").textContent = money(S.stockPrice);
-  $("#stockOwned").textContent = fmt(S.stocks);
-  $("#stockDiv").textContent = money(C.stockDiv)+"/s";
-  const chart = $("#stockChart");
-  if(chart.children.length !== S.stockHist.length){
-    chart.innerHTML = S.stockHist.map(()=>'<div class="bar"></div>').join("");
+  const box = $("#stockList");
+  if(!box.children.length){
+    S.stocks.forEach((st,i)=>{
+      const row = document.createElement("div");
+      row.className = "stock-row" + (i===selStock?" selected":"");
+      row.innerHTML = `<span class="sym">${st.sym}</span><div class="mini-chart"></div><span class="price"></span><span class="chg"></span>`;
+      row.addEventListener("click", ()=>{ selStock=i; renderStocks(calc()); });
+      const chart = row.querySelector(".mini-chart");
+      st.hist.forEach(()=> chart.appendChild(document.createElement("i")));
+      box.appendChild(row);
+    });
   }
-  const max = Math.max(...S.stockHist, 0.01);
-  chart.querySelectorAll(".bar").forEach((b,i)=>{
-    b.style.height = Math.max(4, (S.stockHist[i]/max)*48) + "px";
+  let port = 0;
+  S.stocks.forEach((st,i)=>{
+    const row = box.children[i];
+    row.classList.toggle("selected", i===selStock);
+    const max = Math.max(...st.hist, 0.01);
+    row.querySelectorAll("i").forEach((bar,j)=>{
+      bar.style.height = Math.max(2, (st.hist[j]/max)*26) + "px";
+    });
+    const prev = st.hist[st.hist.length-2] || st.price;
+    const chg = ((st.price - prev)/prev)*100;
+    row.querySelector(".price").textContent = money(st.price);
+    const chgEl = row.querySelector(".chg");
+    chgEl.textContent = (chg>=0?"+":"") + chg.toFixed(1) + "%";
+    chgEl.className = "chg " + (chg>=0?"up":"dn");
+    port += st.owned * st.price;
   });
-}
-function renderAccel(C){
-  $("#accelEnergy").textContent = fmt(S.accelEnergy)+" GeV";
-  $("#accelRate").textContent = C.accelMult.toFixed(2)+"×";
-  $("#accelCool").textContent = S.accelEnergy>500 ? "Critical" : S.accelEnergy>200 ? "Warm" : "Stable";
-}
-function renderLab(){
-  $("#labRP").textContent = fmt(S.labRP);
-  if(S.labCurrent){
-    const p = LAB_PROJECTS.find(x=>x.id===S.labCurrent);
-    $("#labProject").textContent = p ? p.name : "—";
-    const pct = Math.min(100, (S.labProgress/(p?p.time:1))*100);
-    $("#labProg").textContent = pct.toFixed(0)+"%";
-  } else {
-    $("#labProject").textContent = "None";
-    $("#labProg").textContent = "—";
-  }
-  const box = $("#labOptions");
-  let html = "";
-  LAB_PROJECTS.forEach(p=>{
-    if(S.labDone[p.id]) return;
-    const busy = !!S.labCurrent;
-    const can = S.cash >= p.cost && !busy;
-    html += `<div class="row"><span>${p.name} <small style="opacity:.7">(${p.desc})</small></span>
-      <button class="act" data-lab="${p.id}" ${can?"":"disabled"} style="${can?"":"opacity:.5"}">${money(p.cost)}</button></div>`;
-  });
-  if(!html) html = '<div class="empty">All research complete.</div>';
-  if(box.dataset.h !== html){ box.innerHTML = html; box.dataset.h = html; }
-}
-function renderShip(C){
-  $("#shipFleet").textContent = S.ships;
-  const reaches = ["Local","Continental","Planetary","Orbital","Interplanetary","Interstellar","Galactic","Universal"];
-  $("#shipReach").textContent = reaches[Math.min(S.ships, reaches.length-1)] || "Universal";
-  $("#shipBonus").textContent = C.shipMult.toFixed(2)+"×";
+  $("#selSym").textContent = S.stocks[selStock].sym + " ×" + S.stocks[selStock].owned;
+  $("#portVal").textContent = money(port);
+  $("#divRate").textContent = money(C.div) + "/s";
 }
 
-/* ---------- Building the UI ---------- */
-const helperEls = [];
-function buildHelpers(){
-  const box=$("#helpers"); box.innerHTML="";
-  H.forEach((h,i)=>{
-    const b=document.createElement("button");
-    b.className="item"; b.dataset.i=i;
-    b.innerHTML='<span class="ico">'+h.ico+'</span><span class="mid"><b>'+h.name+'</b><small>'+h.desc+
-      '</small><small class="rate"></small></span><span class="right"><span class="own">0</span><span class="cost"></span></span>';
-    b.addEventListener("click",()=>buyHelper(i));
-    box.appendChild(b);
-    helperEls.push({el:b,own:b.querySelector(".own"),cost:b.querySelector(".cost"),rate:b.querySelector(".rate")});
+function renderAccel(C){
+  $("#accelE").textContent = fmt(S.accel) + " GeV";
+  $("#accelMult").textContent = C.beam.toFixed(2) + "×";
+  const pct = Math.min(100, S.accel / 8);
+  const fill = $("#accelFill");
+  fill.style.width = pct + "%";
+  fill.classList.toggle("hot", S.accel > 500);
+  $("#accelStat").textContent = S.accel > 700 ? "CRITICAL" : S.accel > 350 ? "Hot" : S.accel > 80 ? "Warm" : "Cold";
+}
+
+function renderLab(){
+  if(S.lab.current){
+    const p = LAB.find(x=>x.id===S.lab.current);
+    $("#labName").textContent = p ? p.name : "—";
+    const pct = Math.min(100, (S.lab.prog / (p?p.time:1))*100);
+    $("#labPct").textContent = pct.toFixed(0) + "%";
+    $("#labFill").style.width = pct + "%";
+  } else {
+    $("#labName").textContent = "None";
+    $("#labPct").textContent = "—";
+    $("#labFill").style.width = "0%";
+  }
+  const list = $("#labList");
+  let html = "";
+  LAB.forEach(p=>{
+    if(p.done || S.bought["lab_"+p.id]) return;
+    const busy = !!S.lab.current;
+    const can = S.cash >= p.cost && !busy;
+    html += `<div class="lab-opt"><span><b>${p.name}</b><br><small style="opacity:.7">${p.desc} · ${p.time}s</small></span>
+      <button class="act" data-lab="${p.id}" ${can?"":"disabled"}>${money(p.cost)}</button></div>`;
   });
+  if(!html) html = '<div class="empty">All research complete.</div>';
+  if(list.dataset.h !== html){ list.innerHTML = html; list.dataset.h = html; }
 }
-function buyHelper(i){
-  const n=qty(i), c=costN(i,n);
-  if(S.cash<c) return;
-  S.cash-=c; S.owned[i]+=n; save();
+
+function renderShip(C){
+  $("#ships").textContent = S.ships;
+  const names = ["Local","Regional","Continental","Planetary","Orbital","System","Interstellar","Galactic","Universal","Omniversal"];
+  $("#reach").textContent = names[Math.min(S.ships, names.length-1)];
+  $("#shipMult").textContent = C.shipM.toFixed(2) + "×";
 }
-let upKey="";
+
+function renderRift(C){
+  $("#riftDepth").textContent = S.rift;
+  $("#riftStrain").textContent = S.rift > 20 ? "Fraying" : S.rift > 10 ? "Tense" : "Stable";
+  $("#riftBonus").textContent = C.riftM.toFixed(2) + "×";
+}
+
 function visibleUpgrades(){
-  return U.filter(u=>{
-    if(S.up[u.id]) return false;
-    if(u.kind==="unlock") return S.total >= u.cost*0.15;
-    if(u.kind==="helper") return S.owned[u.h]>=u.thr;
-    return S.total>=u.cost*0.2;
-  });
+  return UPGRADES.filter(u=>{
+    if(S.bought[u.id]) return false;
+    if(u.req === "total") return S.total >= u.cost * 0.12;
+    if(typeof u.req === "function") return u.req();
+    return S.total >= u.cost * 0.18;
+  }).sort((a,b)=>a.cost-b.cost);
 }
+
+let upKey = "";
 function renderUpgrades(){
-  const vis=visibleUpgrades();
-  const key=vis.map(u=>u.id).join(",");
-  const box=$("#upgrades");
-  if(key!==upKey){
-    upKey=key; box.innerHTML="";
-    if(!vis.length){ box.innerHTML='<div class="empty">No upgrades available. Keep producing.</div>'; }
-    vis.forEach(u=>{
-      const b=document.createElement("button");
-      b.className="item"; b.dataset.id=u.id;
-      b.innerHTML='<span class="mid"><b>'+u.name+'</b><small>'+u.desc+'</small></span><span class="right cost">'+money(u.cost)+'</span>';
-      b.addEventListener("click",()=>{
-        if(S.cash<u.cost) return;
-        S.cash-=u.cost; S.up[u.id]=1; save(); upKey="";
+  const vis = visibleUpgrades();
+  const key = vis.map(u=>u.id).join(",");
+  const box = $("#upgrades");
+  if(key !== upKey){
+    upKey = key;
+    box.innerHTML = "";
+    if(!vis.length){ box.innerHTML = '<div class="empty">No upgrades ready. Grow further.</div>'; return; }
+    vis.slice(0,40).forEach(u=>{
+      const b = document.createElement("button");
+      b.className = "item";
+      b.innerHTML = `<span class="mid"><b>${u.name}</b><small>${u.desc}</small></span><span class="right cost">${money(u.cost)}</span>`;
+      b.addEventListener("click", ()=>{
+        if(S.cash < u.cost || S.bought[u.id]) return;
+        S.cash -= u.cost;
+        S.bought[u.id] = true;
+        u.fn(S);
+        // sync sys flags from bought unlocks
+        if(u.id==="ipo") S.sys.stocks=true;
+        if(u.id==="beamUnlock") S.sys.accel=true;
+        if(u.id==="labUnlock") S.sys.lab=true;
+        if(u.id==="fleetUnlock") S.sys.ship=true;
+        if(u.id==="riftUnlock") S.sys.rift=true;
+        if(u.id==="casinoUnlock") S.sys.casino=true;
+        upKey = "";
+        save();
       });
       box.appendChild(b);
     });
   }
-  box.querySelectorAll(".item").forEach(el=>{
-    const u=U.find(x=>x.id===el.dataset.id);
-    if(u) el.classList.toggle("afford", S.cash>=u.cost);
+  box.querySelectorAll(".item").forEach((el,i)=>{
+    const u = vis[i];
+    if(u) el.classList.toggle("afford", S.cash >= u.cost);
   });
 }
+
 function render(){
-  const C=calc();
-  $("#cash").textContent=money(S.cash);
-  $("#made").textContent=fmt(Math.floor(S.made));
-  $("#rates").textContent=fmt(C.pps)+" /sec  ·  "+money(C.valMult)+" each  ·  "+money(C.pps*C.valMult + C.stockDiv)+"/sec";
-  document.title=fmt(Math.floor(S.made))+" pencils — Pencil Factory";
-  H.forEach((h,i)=>{
-    const e=helperEls[i];
-    const show = i===0 || S.owned[i]>0 || S.owned[i-1]>0 || S.total>=h.cost*0.25;
+  const C = calc();
+  $("#cash").textContent = money(S.cash);
+  $("#made").textContent = fmt(Math.floor(S.made));
+  $("#essence").textContent = fmt(S.essence);
+  $("#ascendCount").textContent = S.ascensions;
+  $("#rates").textContent = `${fmt(C.pps)}/s · ${money(C.val)} each · ${money(C.pps*C.val + C.div)}/s total`;
+  document.title = fmt(Math.floor(S.made)) + " — Pencil Factory";
+
+  HELPERS.forEach((h,i)=>{
+    const e = helperEls[i];
+    const show = i===0 || S.owned[i]>0 || S.owned[i-1]>0 || S.total >= h.cost*0.2;
     e.el.style.display = show ? "" : "none";
-    const n=qty(i), c=costN(i,n);
-    e.own.textContent=S.owned[i];
-    e.cost.textContent=(n>1?"×"+n+": ":"")+money(c);
-    e.rate.textContent=fmt(h.pps*C.hm[i]*C.gMult*S.labBonus.helper*(1+(S.accelEnergy/100)))+" /sec each";
-    e.el.classList.toggle("afford", S.cash>=c);
+    const n = qty(i), c = costN(i,n);
+    e.own.textContent = S.owned[i];
+    e.cost.textContent = (n>1?"×"+n+" ":"") + money(c);
+    e.rate.textContent = fmt(h.pps * S.helperMult[i] * C.ess * S.lab.helper) + "/s each";
+    e.el.classList.toggle("afford", S.cash >= c);
   });
+
   renderUpgrades();
   updateTheme();
-  let bt="";
-  if(B.frenzy>0) bt+='<span class="buff">Frenzy ×7 · '+Math.ceil(B.frenzy)+'s</span>';
-  if(B.click>0)  bt+='<span class="buff">Click Rush ×10 · '+Math.ceil(B.click)+'s</span>';
-  if($("#buffs").dataset.t!==bt){ $("#buffs").innerHTML=bt; $("#buffs").dataset.t=bt; }
-  let fl="";
-  H.forEach((h,i)=>{ if(S.owned[i]>0) fl+='<span class="grp" title="'+h.name+' ×'+S.owned[i]+'">'+h.ico.repeat(Math.min(S.owned[i],6))+(S.owned[i]>6?"<small>+"+(S.owned[i]-6)+"</small>":"")+'</span>'; });
-  if(!fl) fl='<span class="floor-empty">Empty. Buy a helper to fill it up.</span>';
-  if($("#floor").dataset.t!==fl){ $("#floor").innerHTML=fl; $("#floor").dataset.t=fl; }
+
+  // buffs
+  let bt = "";
+  if(B.frenzy>0) bt += `<span class="buff">Frenzy ×7 · ${Math.ceil(B.frenzy)}s</span>`;
+  if(B.click>0) bt += `<span class="buff">Click Storm ×11 · ${Math.ceil(B.click)}s</span>`;
+  if($("#buffs").dataset.t !== bt){ $("#buffs").innerHTML = bt; $("#buffs").dataset.t = bt; }
+
+  // floor
+  let fl = "";
+  HELPERS.forEach((h,i)=>{
+    if(S.owned[i]>0)
+      fl += `<span title="${h.name} ×${S.owned[i]}">${h.ico.repeat(Math.min(S.owned[i],5))}${S.owned[i]>5?"<small>+"+(S.owned[i]-5)+"</small>":""}</span>`;
+  });
+  if(!fl) fl = '<span class="floor-empty">Silent floor. Hire someone.</span>';
+  if($("#floor").dataset.t !== fl){ $("#floor").innerHTML = fl; $("#floor").dataset.t = fl; }
+
+  // systems lock
+  const sysMap = {stocks:"Stocks",accel:"Accel",lab:"Lab",ship:"Ship",rift:"Rift",casino:"Casino"};
+  Object.keys(sysMap).forEach(k=>{
+    const btn = $("#btn"+sysMap[k]);
+    if(btn){
+      btn.disabled = !S.sys[k];
+      btn.classList.toggle("on", openSys === k);
+    }
+  });
+
   if(openSys==="stocks") renderStocks(C);
   if(openSys==="accel") renderAccel(C);
   if(openSys==="lab") renderLab();
   if(openSys==="ship") renderShip(C);
-  ["stocks","accel","lab","ship"].forEach(s=>{
-    const btn = $("#btn"+s.charAt(0).toUpperCase()+s.slice(1));
-    if(btn){
-      const ok = unlocked(s);
-      btn.style.opacity = ok ? "1" : ".4";
-      btn.style.pointerEvents = ok ? "" : "none";
-    }
+  if(openSys==="rift") renderRift(C);
+
+  // prestige
+  const canAsc = S.made >= 1e11;
+  const gain = Math.floor(Math.pow(S.made / 1e11, 0.5));
+  $("#prestigeBox").style.display = canAsc ? "block" : "none";
+  if(canAsc){
+    $("#prestigeInfo").textContent = `Reset progress for ${gain} Cosmic Graphite (permanent +15% each).`;
+    $("#doAscend").textContent = `Ascend (+${fmt(gain)} Graphite)`;
+  }
+}
+
+/* ===================== SYSTEMS UI ===================== */
+function setSys(name){
+  if(!S.sys[name] && name) return;
+  openSys = openSys === name ? null : name;
+  ["Stocks","Accel","Lab","Ship","Rift","Casino"].forEach(s=>{
+    const pan = $("#panel"+s);
+    if(pan) pan.classList.toggle("open", openSys === s.toLowerCase());
   });
 }
 
-/* ---------- Clicking ---------- */
-const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-function floatText(x,y,t){
-  const s=document.createElement("div");
-  s.className="fl"; s.textContent=t;
-  s.style.left=(x-14)+"px"; s.style.top=(y-20)+"px";
-  document.body.appendChild(s);
-  setTimeout(()=>s.remove(),1000);
-}
-$("#make").addEventListener("click",e=>{
-  const C=calc();
-  earn(C.clickVal,C); S.clicks++;
-  let x=e.clientX, y=e.clientY;
-  if(!x && !y){ const r=e.currentTarget.getBoundingClientRect(); x=r.left+r.width/2; y=r.top+r.height/2; }
-  floatText(x,y,"+"+fmt(C.clickVal));
-  if(!reduce) $("#pencil").animate([{transform:"scale(1)"},{transform:"scale(.93) rotate(-2deg)"},{transform:"scale(1)"}],{duration:120});
-});
+$("#btnStocks").onclick = ()=>setSys("stocks");
+$("#btnAccel").onclick = ()=>setSys("accel");
+$("#btnLab").onclick = ()=>setSys("lab");
+$("#btnShip").onclick = ()=>setSys("ship");
+$("#btnRift").onclick = ()=>setSys("rift");
+$("#btnCasino").onclick = ()=>setSys("casino");
 
-/* ---------- Golden pencil ---------- */
-let goldenIn = 40+Math.random()*50, goldenEl=null;
-function spawnGolden(){
-  const b=document.createElement("button");
-  b.className="golden"; b.textContent="✏️"; b.setAttribute("aria-label","Golden pencil bonus");
-  b.style.left=(8+Math.random()*80)+"vw"; b.style.top=(15+Math.random()*65)+"vh";
-  b.addEventListener("click",()=>{ clickGolden(); b.remove(); goldenEl=null; });
-  document.body.appendChild(b); goldenEl=b;
-  setTimeout(()=>{ if(goldenEl===b){ b.remove(); goldenEl=null; } },13000);
-}
-function clickGolden(){
-  const C=calc(), r=Math.random();
-  if(r<0.4){ B.frenzy=30; say("Frenzy! Production is 7× for 30 seconds.",10); }
-  else if(r<0.75){ const g=Math.max(C.pps*C.valMult*500,25); S.cash+=g; S.total+=g; say("Big order! +"+money(g)+" in bulk sales.",10); }
-  else { B.click=15; say("Click rush! Clicks are 10× for 15 seconds.",10); }
-}
+// Stock actions
+$("#buyStock").onclick = ()=>{
+  const st = S.stocks[selStock];
+  if(S.cash < st.price) return;
+  S.cash -= st.price; st.owned++; save();
+};
+$("#buyStock10").onclick = ()=>{
+  const st = S.stocks[selStock];
+  let n=0;
+  while(n<10 && S.cash >= st.price){ S.cash -= st.price; st.owned++; n++; }
+  save();
+};
+$("#sellStock").onclick = ()=>{
+  const st = S.stocks[selStock];
+  if(st.owned > 0){ st.owned--; S.cash += st.price; }
+  else if(S.sys.short){ st.owned--; S.cash += st.price; } // short
+  save();
+};
+$("#sellAll").onclick = ()=>{
+  const st = S.stocks[selStock];
+  if(st.owned > 0){ S.cash += st.owned * st.price; st.owned = 0; save(); }
+};
 
-/* ---------- System actions ---------- */
-$("#btnStocks").addEventListener("click",()=>setSys("stocks"));
-$("#btnAccel").addEventListener("click",()=>setSys("accel"));
-$("#btnLab").addEventListener("click",()=>setSys("lab"));
-$("#btnShip").addEventListener("click",()=>setSys("ship"));
-
-$("#buyStock").addEventListener("click",()=>{
-  const price = S.stockPrice;
-  if(S.cash < price) return;
-  S.cash -= price; S.stocks += 1; save();
-});
-$("#sellStock").addEventListener("click",()=>{
-  if(S.stocks < 1) return;
-  S.stocks -= 1; S.cash += S.stockPrice; save();
-});
-$("#fireAccel").addEventListener("click",()=>{
-  const cost = 50 + S.accelEnergy*8;
+// Accelerator
+$("#chargeBeam").onclick = ()=>{
+  const cost = 40 + S.accel * 6;
   if(S.cash < cost) return;
   S.cash -= cost;
-  S.accelEnergy += 5 + Math.floor(S.accelEnergy*0.02);
+  S.accel += 5 + Math.floor(S.accel * 0.015);
   save();
-});
-$("#buyShip").addEventListener("click",()=>{
-  const cost = 1e9 * Math.pow(3.2, S.ships);
+};
+$("#overcharge").onclick = ()=>{
+  const cost = 200 + S.accel * 15;
   if(S.cash < cost) return;
-  S.cash -= cost; S.ships += 1; save();
-});
-$("#labOptions").addEventListener("click",e=>{
-  const btn = e.target.closest("[data-lab]");
-  if(!btn || S.labCurrent) return;
-  const p = LAB_PROJECTS.find(x=>x.id===btn.dataset.lab);
-  if(!p || S.cash < p.cost || S.labDone[p.id]) return;
-  S.cash -= p.cost;
-  S.labCurrent = p.id;
-  S.labProgress = 0;
+  S.cash -= cost;
+  if(Math.random() < 0.72 || S.up.beamSafe){
+    S.accel += 25 + Math.floor(S.accel * 0.04);
+    say("Overcharge successful. Coils scream.", 5);
+  } else {
+    S.accel = Math.floor(S.accel * 0.4);
+    say("Coil meltdown! Energy lost.", 6);
+  }
   save();
-  renderLab();
+};
+
+// Lab
+$("#labList").addEventListener("click", e=>{
+  const btn = e.target.closest("[data-lab]");
+  if(!btn || S.lab.current) return;
+  const p = LAB.find(x=>x.id===btn.dataset.lab);
+  if(!p || p.done || S.cash < p.cost) return;
+  S.cash -= p.cost;
+  S.lab.current = p.id;
+  S.lab.prog = 0;
+  save();
 });
 
-/* ---------- Main loop ---------- */
-let last=performance.now(), saveT=0, newsT=0, stockT=0;
+// Fleet
+$("#buyShip").onclick = ()=>{
+  const cost = 1.2e9 * Math.pow(3.5, S.ships);
+  if(S.cash < cost) return;
+  S.cash -= cost; S.ships++; save();
+};
+
+// Rift
+$("#probeRift").onclick = ()=>{
+  const cost = 2e13 * Math.pow(2.8, S.rift) * (S.lab.riftCost || 1);
+  if(S.cash < cost) return;
+  S.cash -= cost; S.rift++; save();
+  say("The rift widens. Something pencil-shaped stares back.", 7);
+};
+
+// Casino
+function gamble(pct){
+  const bet = S.cash * pct;
+  if(bet < 1) return;
+  S.cash -= bet;
+  const winChance = S.lab.casino || 0.49;
+  const jack = S.up.jackpot || 0.01;
+  const r = Math.random();
+  if(r < jack){
+    S.cash += bet * 10;
+    $("#casinoLast").textContent = "JACKPOT ×10";
+    say("The casino weeps. You do not.", 6);
+  } else if(r < winChance){
+    S.cash += bet * 2;
+    $("#casinoLast").textContent = "Win ×2";
+  } else {
+    $("#casinoLast").textContent = "Lost";
+  }
+  save();
+}
+$("#betLow").onclick = ()=>gamble(0.01);
+$("#betHigh").onclick = ()=>gamble(0.10);
+$("#betAll").onclick = ()=>gamble(1);
+
+/* ===================== CLICK & GOLDEN ===================== */
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+function floatText(x,y,t){
+  const el = document.createElement("div");
+  el.className = "fl"; el.textContent = t;
+  el.style.left = (x-12)+"px"; el.style.top = (y-18)+"px";
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(), 1000);
+}
+function sparks(x,y){
+  if(reduce) return;
+  for(let i=0;i<6;i++){
+    const s = document.createElement("div");
+    s.className = "spark";
+    s.style.left = x+"px"; s.style.top = y+"px";
+    s.style.setProperty("--sx", (Math.random()-0.5)*60+"px");
+    s.style.setProperty("--sy", (Math.random()-0.5)*60+"px");
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(), 600);
+  }
+}
+
+$("#make").addEventListener("click", e=>{
+  const C = calc();
+  earn(C.clickVal, C);
+  S.clicks++;
+  let x = e.clientX, y = e.clientY;
+  if(!x && !y){ const r = e.currentTarget.getBoundingClientRect(); x=r.left+r.width/2; y=r.top+r.height/2; }
+  floatText(x, y, "+"+fmt(C.clickVal));
+  sparks(x, y);
+  if(!reduce){
+    const svg = $("#pencilSvg");
+    svg.animate([{transform:"scale(1)"},{transform:"scale(.92) rotate(-3deg)"},{transform:"scale(1)"}],{duration:110});
+  }
+});
+
+let goldenIn = 35 + Math.random()*40, goldenEl = null;
+function spawnGolden(){
+  const b = document.createElement("button");
+  b.className = "golden"; b.textContent = "✏️";
+  b.style.left = (6+Math.random()*82)+"vw";
+  b.style.top = (12+Math.random()*70)+"vh";
+  b.onclick = ()=>{
+    const C = calc(), r = Math.random();
+    const pow = S.up.goldPow || 1;
+    if(r < 0.38){ B.frenzy = 28; say("Frenzy! 7× production.", 8); }
+    else if(r < 0.72){
+      const g = Math.max(C.pps * C.val * 400 * pow, 30);
+      S.cash += g; S.total += g;
+      say("Bulk order +"+money(g), 7);
+    } else { B.click = 14; say("Click Storm! ×11 clicks.", 7); }
+    b.remove(); goldenEl = null;
+  };
+  document.body.appendChild(b); goldenEl = b;
+  setTimeout(()=>{ if(goldenEl===b){ b.remove(); goldenEl=null; } }, 12000);
+}
+
+/* ===================== PRESTIGE ===================== */
+$("#doAscend").onclick = ()=>{
+  if(S.made < 1e11) return;
+  const gain = Math.floor(Math.pow(S.made / 1e11, 0.5));
+  if(!confirm(`Ascend and gain ${gain} Cosmic Graphite?\n\nThis resets pencils, cash, helpers, and most progress.\nGraphite and ascension bonuses are permanent.`)) return;
+  const keep = {essence: S.essence + gain, ascensions: S.ascensions + 1};
+  S = fresh();
+  S.essence = keep.essence;
+  S.ascensions = keep.ascensions;
+  // keep some late unlocks feeling earned via essence
+  B.frenzy = 0; B.click = 0; upKey = ""; openSys = null;
+  save();
+  say(`Ascension complete. ${gain} Cosmic Graphite acquired. The factory is reborn.`, 12);
+  setSys(null);
+};
+
+/* ===================== LOOP ===================== */
+let last = performance.now(), saveT=0, newsT=0, stockT=0, autoT=0;
+function say(t, hold){ $("#ticker").textContent = t; newsHold = hold || 7; }
+function rotateNews(){
+  if(newsHold > 0) return;
+  const pool = NEWS.filter(n => S.made >= n[0]);
+  const recent = pool.slice(-4);
+  $("#ticker").textContent = recent[Math.floor(Math.random()*recent.length)][1];
+}
+
 setInterval(()=>{
-  const now=performance.now();
-  const dt=Math.min((now-last)/1000,60); last=now;
-  const C=calc();
-  earn(C.pps*dt,C);
-  S.cash += C.stockDiv * dt;
-  S.total += C.stockDiv * dt;
-  B.frenzy=Math.max(0,B.frenzy-dt); B.click=Math.max(0,B.click-dt);
-  if(S.labCurrent){
-    const p = LAB_PROJECTS.find(x=>x.id===S.labCurrent);
-    let speed = 1;
-    if(S.up.labSpeed) speed *= 1.5;
-    S.labProgress += dt * speed;
-    if(p && S.labProgress >= p.time){
-      p.effect();
-      S.labDone[p.id] = 1;
-      S.labRP += 1;
-      say("Research complete: "+p.name+" — "+p.desc, 10);
-      S.labCurrent = null;
-      S.labProgress = 0;
+  const now = performance.now();
+  const dt = Math.min((now-last)/1000, 30);
+  last = now;
+  const C = calc();
+
+  earn(C.pps * dt, C);
+  S.cash += C.div * dt;
+  S.total += C.div * dt;
+
+  // auto click from research
+  if(S.lab.autoClick > 0){
+    earn(C.clickVal * S.lab.autoClick * dt, C);
+  }
+
+  B.frenzy = Math.max(0, B.frenzy - dt);
+  B.click = Math.max(0, B.click - dt);
+
+  // lab progress
+  if(S.lab.current){
+    const p = LAB.find(x=>x.id===S.lab.current);
+    S.lab.prog += dt;
+    if(p && S.lab.prog >= p.time){
+      p.run(S);
+      p.done = true;
+      S.bought["lab_"+p.id] = true;
+      say("Research complete: "+p.name+" — "+p.desc, 9);
+      S.lab.current = null;
+      S.lab.prog = 0;
     }
   }
+
+  // stock tick
   stockT += dt;
-  if(stockT >= 3){
+  if(stockT >= 2.2){
     stockT = 0;
-    const drift = (Math.random()-0.48)*0.06 + Math.min(C.pps/1e8, 0.03);
-    S.stockPrice = Math.max(0.2, S.stockPrice * (1+drift));
-    S.stockHist.push(S.stockPrice);
-    if(S.stockHist.length > 12) S.stockHist.shift();
+    const stab = S.lab.stockStab || 1;
+    S.stocks.forEach(st=>{
+      const force = (Math.random()-0.47) * st.vol * 0.08 * stab + Math.min(C.pps/5e9, 0.02);
+      st.price = Math.max(0.15, st.price * (1 + force));
+      st.hist.push(st.price);
+      if(st.hist.length > 14) st.hist.shift();
+    });
   }
-  if(newsHold>0) newsHold-=dt;
-  newsT+=dt; if(newsT>=9){ newsT=0; rotateNews(); }
-  if(!goldenEl){ goldenIn-=dt; if(goldenIn<=0){ spawnGolden(); goldenIn=45+Math.random()*60; } }
-  saveT+=dt; if(saveT>=5){ saveT=0; save(); }
+
+  // auto trader
+  autoT += dt;
+  if(S.up.autoTrade && autoT > 4){
+    autoT = 0;
+    let cheapest = S.stocks[0];
+    S.stocks.forEach(st=>{ if(st.price < cheapest.price) cheapest = st; });
+    if(S.cash > cheapest.price * 3){
+      S.cash -= cheapest.price;
+      cheapest.owned++;
+    }
+  }
+
+  if(newsHold > 0) newsHold -= dt;
+  newsT += dt;
+  if(newsT >= 8){ newsT=0; rotateNews(); }
+
+  if(!goldenEl){
+    goldenIn -= dt * (S.up.goldRate || 1);
+    if(goldenIn <= 0){ spawnGolden(); goldenIn = 40 + Math.random()*55; }
+  }
+
+  saveT += dt;
+  if(saveT >= 4){ saveT=0; save(); }
+
   render();
-},100);
-window.addEventListener("beforeunload",save);
+}, 100);
 
-/* ---------- Controls ---------- */
-$("#mode").addEventListener("click",e=>{
-  const b=e.target.closest("button"); if(!b) return;
-  mode=b.dataset.m;
-  document.querySelectorAll("#mode button").forEach(x=>x.classList.toggle("on",x===b));
-});
-$("#reset").addEventListener("click",()=>{
-  if(confirm("Reset the factory and start over? This can't be undone.")){
-    S=fresh(); B.frenzy=0; B.click=0; upKey=""; openSys=null; save();
-    say("A fresh start. The first pencil is on the house.");
-    setSys(null);
-  }
-});
-
-/* ---------- Particles ---------- */
-function spawnParticles(){
-  if(S.made < 1e10) return;
-  if(document.querySelectorAll(".particle").length > 18) return;
+/* particles */
+function spawnPt(){
+  if(S.made < 5e8 || reduce) return;
+  if(document.querySelectorAll(".pt").length > 16) return;
   const p = document.createElement("div");
-  p.className = "particle";
-  const size = 1+Math.random()*2;
-  p.style.width = size+"px"; p.style.height = size+"px";
-  p.style.left = Math.random()*100+"vw";
-  p.style.bottom = "-5px";
-  p.style.animationDuration = (8+Math.random()*14)+"s";
+  p.className = "pt";
+  const sz = 1 + Math.random()*2.2;
+  p.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}vw;bottom:-4px;background:${Math.random()>.5?"#fff":"var(--accent)"};opacity:.4;animation-duration:${9+Math.random()*12}s`;
   document.body.appendChild(p);
   setTimeout(()=>p.remove(), 22000);
 }
-setInterval(spawnParticles, 1200);
+setInterval(spawnPt, 900);
 
-/* ---------- Init ---------- */
-buildHelpers();
-(function offline(){
-  const secs=Math.min((Date.now()-S.last)/1000, 8*3600);
-  if(secs>30){
-    const C=calc(), gain=C.pps*secs*0.5;
-    if(gain>=1){ earn(gain,C); say("While you were away, your crew made "+fmt(gain)+" pencils.",12); return; }
+/* controls */
+$("#mode").addEventListener("click", e=>{
+  const b = e.target.closest("button"); if(!b) return;
+  mode = b.dataset.m;
+  $$("#mode button").forEach(x=>x.classList.toggle("on", x===b));
+});
+$("#reset").onclick = ()=>{
+  if(confirm("Hard reset everything including Cosmic Graphite?")){
+    S = fresh(); B.frenzy=0; B.click=0; upKey=""; openSys=null; save();
+    say("The factory is ash. Begin again.", 8);
+    setSys(null);
   }
-  rotateNews(); say(NEWS[0][1],6);
+};
+
+/* offline */
+(function(){
+  const secs = Math.min((Date.now()-S.last)/1000, 6*3600);
+  if(secs > 45){
+    const C = calc();
+    const gain = C.pps * secs * 0.4;
+    if(gain >= 1){ earn(gain, C); say("While away, the works produced "+fmt(gain)+" pencils.", 11); }
+  } else {
+    rotateNews();
+    say(NEWS[0][1], 5);
+  }
 })();
+
+buildHelpers();
 render();
 setSys(null);
 </script>
