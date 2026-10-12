@@ -6,75 +6,198 @@
 <title>Pencil Factory</title>
 <style>
 :root{
-  --paper:#e9eff3; --grid:#cbd8e0; --ink:#2b2f33; --yellow:#f6c026; --yellow-d:#d99a0b;
-  --pink:#e8838f; --metal:#aab2b8; --wood:#e4b67a; --red:#d9534f; --card:#fbfcfc; --soft:#fff3c4;
+  --paper:#f3ecd9;
+  --paper-dark:#e8dfc4;
+  --grid:#c9bda0;
+  --ink:#2a2218;
+  --ink-soft:#5c4f3d;
+  --yellow:#d4a017;
+  --yellow-d:#b8860b;
+  --yellow-l:#f0d78c;
+  --pink:#c75b63;
+  --metal:#8a8e92;
+  --wood:#c4a06a;
+  --wood-d:#8b6914;
+  --red:#9b2c2c;
+  --card:#faf6eb;
+  --soft:#f5e6b8;
+  --brass:#b8973a;
+  --shadow:#2a2218;
 }
 *{box-sizing:border-box}
 body{
   margin:0; min-height:100vh; color:var(--ink);
-  font-family:"Trebuchet MS","Segoe UI",Helvetica,Arial,sans-serif;
+  font-family:Georgia,"Times New Roman",Times,serif;
   background-color:var(--paper);
-  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
-  background-size:24px 24px;
+  background-image:
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;
+  line-height:1.45;
 }
-header{max-width:1200px;margin:0 auto;padding:18px 16px 0}
-h1{font-family:Georgia,"Rockwell","Roboto Slab",serif;font-size:34px;margin:0;letter-spacing:-.5px}
-#ticker{margin-top:8px;padding:8px 12px;background:var(--ink);color:#f3f5f2;border-radius:4px;font-size:15px;min-height:38px}
-.wrap{max-width:1200px;margin:0 auto;padding:16px;display:grid;gap:16px;
-  grid-template-columns:minmax(280px,1fr) minmax(300px,1.1fr) minmax(280px,1fr);align-items:start}
+header{
+  max-width:1180px;margin:0 auto;padding:22px 18px 0;
+  border-bottom:3px double var(--ink);
+  margin-bottom:6px;
+}
+h1{
+  font-family:Georgia,"Palatino Linotype","Book Antiqua",serif;
+  font-size:36px;margin:0;letter-spacing:1px;
+  font-weight:normal;text-transform:uppercase;
+  color:var(--ink);
+}
+h1::after{
+  content:"";display:block;width:120px;height:3px;
+  background:var(--yellow);margin-top:8px;
+}
+#ticker{
+  margin-top:12px;padding:10px 14px;
+  background:var(--ink);color:var(--paper);
+  border:1px solid var(--brass);
+  font-size:15px;min-height:40px;
+  font-style:italic;letter-spacing:.2px;
+}
+.wrap{
+  max-width:1180px;margin:0 auto;padding:18px;
+  display:grid;gap:18px;
+  grid-template-columns:minmax(280px,1fr) minmax(300px,1.1fr) minmax(280px,1fr);
+  align-items:start;
+}
 @media(max-width:920px){.wrap{grid-template-columns:1fr}}
-.panel{background:var(--card);border:2px solid var(--ink);border-radius:4px;padding:14px 16px;box-shadow:4px 4px 0 var(--ink)}
-.panel h2{font-family:Georgia,"Rockwell",serif;margin:0 0 12px;font-size:20px;border-bottom:3px solid var(--yellow);display:inline-block}
+.panel{
+  background:var(--card);
+  border:3px solid var(--ink);
+  border-radius:2px;
+  padding:16px 18px;
+  box-shadow:5px 5px 0 var(--shadow);
+  position:relative;
+}
+.panel::before{
+  content:"";position:absolute;top:6px;left:6px;right:6px;bottom:6px;
+  border:1px solid var(--grid);pointer-events:none;
+}
+.panel h2{
+  font-family:Georgia,"Palatino Linotype",serif;
+  margin:0 0 14px;font-size:18px;
+  letter-spacing:1.5px;text-transform:uppercase;
+  border-bottom:2px solid var(--yellow);
+  display:inline-block;padding-bottom:3px;
+  font-weight:normal;
+}
 .scroll{max-height:72vh;overflow-y:auto;padding:2px 6px 2px 2px}
 @media(max-width:920px){.scroll{max-height:none}}
-
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px}
-.stat small{display:block;font-size:13px;color:#59626a}
-.stat b{font-family:Georgia,serif;font-size:28px;display:block;line-height:1.1}
-.stat.big b{font-size:34px}
-.rates{font-size:14px;color:#59626a;margin:4px 0 8px}
-
-.make{display:block;width:100%;margin:10px 0;padding:14px 8px 10px;background:var(--soft);border:2px solid var(--ink);border-radius:4px;
-  cursor:pointer;font:inherit;color:inherit;text-align:center;user-select:none;-webkit-tap-highlight-color:transparent}
-.make:hover{background:#ffeba0}
-.make svg{width:100%;max-width:300px;height:auto;display:block;margin:0 auto 6px}
-.make span{font-family:Georgia,serif;font-size:22px;font-weight:bold}
-.make:focus-visible,.item:focus-visible,.mode button:focus-visible,.golden:focus-visible,.reset:focus-visible{outline:3px solid var(--red);outline-offset:2px}
-
-#buffs{min-height:26px;font-size:14px;display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
-.buff{background:var(--yellow);border:2px solid var(--ink);border-radius:4px;padding:2px 8px;font-weight:bold}
-.floor{display:flex;flex-wrap:wrap;gap:2px 10px;font-size:20px;min-height:30px;line-height:1.3}
-.floor-empty{font-size:14px;color:#59626a}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px}
+.stat small{
+  display:block;font-size:12px;color:var(--ink-soft);
+  text-transform:uppercase;letter-spacing:1px;
+  font-family:Georgia,serif;
+}
+.stat b{
+  font-family:Georgia,serif;font-size:28px;display:block;line-height:1.15;
+  font-weight:normal;
+}
+.stat.big b{font-size:32px}
+.rates{
+  font-size:13px;color:var(--ink-soft);margin:6px 0 10px;
+  border-top:1px solid var(--grid);padding-top:8px;
+}
+.make{
+  display:block;width:100%;margin:12px 0;padding:16px 10px 12px;
+  background:var(--soft);
+  border:3px solid var(--ink);
+  border-radius:2px;
+  cursor:pointer;font:inherit;color:inherit;
+  text-align:center;user-select:none;-webkit-tap-highlight-color:transparent;
+  box-shadow:3px 3px 0 var(--shadow);
+  transition:background .15s, transform .1s;
+}
+.make:hover{background:var(--yellow-l)}
+.make:active{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--shadow)}
+.make svg{width:100%;max-width:300px;height:auto;display:block;margin:0 auto 8px}
+.make span{
+  font-family:Georgia,serif;font-size:20px;
+  letter-spacing:1px;text-transform:uppercase;
+}
+.make:focus-visible,.item:focus-visible,.mode button:focus-visible,.golden:focus-visible,.reset:focus-visible{
+  outline:3px solid var(--red);outline-offset:2px;
+}
+#buffs{min-height:28px;font-size:13px;display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.buff{
+  background:var(--yellow);border:2px solid var(--ink);
+  border-radius:2px;padding:3px 10px;
+  font-weight:bold;letter-spacing:.5px;
+  box-shadow:2px 2px 0 var(--shadow);
+}
+.floor{
+  display:flex;flex-wrap:wrap;gap:3px 12px;
+  font-size:22px;min-height:32px;line-height:1.35;
+  padding:8px 0;border-top:1px solid var(--grid);
+}
+.floor-empty{font-size:13px;color:var(--ink-soft);font-style:italic}
 .floor span.grp{white-space:nowrap}
-
-.mode{display:flex;gap:6px;margin-bottom:10px;align-items:center;font-size:14px}
-.mode button{font:inherit;border:2px solid var(--ink);background:#fff;border-radius:4px;padding:3px 12px;cursor:pointer}
-.mode button.on{background:var(--yellow);font-weight:bold}
-
-.item{display:flex;gap:10px;align-items:center;width:100%;text-align:left;font:inherit;color:inherit;
-  border:2px solid var(--ink);background:#fff;padding:8px 10px;margin-bottom:8px;border-radius:4px;cursor:pointer}
+.mode{
+  display:flex;gap:6px;margin-bottom:12px;align-items:center;
+  font-size:13px;text-transform:uppercase;letter-spacing:.5px;
+}
+.mode button{
+  font:inherit;border:2px solid var(--ink);
+  background:var(--card);border-radius:2px;
+  padding:4px 14px;cursor:pointer;
+  box-shadow:2px 2px 0 var(--shadow);
+}
+.mode button.on{
+  background:var(--yellow);font-weight:bold;
+}
+.mode button:hover{background:var(--yellow-l)}
+.item{
+  display:flex;gap:12px;align-items:center;width:100%;
+  text-align:left;font:inherit;color:inherit;
+  border:2px solid var(--ink);background:var(--card);
+  padding:10px 12px;margin-bottom:9px;border-radius:2px;
+  cursor:pointer;box-shadow:2px 2px 0 var(--shadow);
+  transition:background .12s;
+}
 .item.afford{background:var(--soft)}
-.item.afford:hover{background:#ffeba0}
-.item:not(.afford){opacity:.6;cursor:not-allowed}
-.ico{font-size:26px;width:34px;text-align:center;flex:none}
+.item.afford:hover{background:var(--yellow-l)}
+.item:not(.afford){opacity:.55;cursor:not-allowed}
+.ico{font-size:26px;width:36px;text-align:center;flex:none}
 .mid{flex:1;min-width:0}
-.mid b{display:block;font-size:15px}
-.mid small{display:block;font-size:12.5px;color:#59626a;line-height:1.3}
+.mid b{display:block;font-size:15px;font-weight:normal;letter-spacing:.3px}
+.mid small{display:block;font-size:12px;color:var(--ink-soft);line-height:1.35;font-style:italic}
 .right{text-align:right;flex:none}
-.own{display:block;font-family:Georgia,serif;font-size:22px;font-weight:bold}
-.cost{font-size:13px;font-weight:bold}
-.empty{font-size:14px;color:#59626a}
-
-.reset{margin-top:14px;font:inherit;font-size:13px;background:none;border:2px solid var(--ink);border-radius:4px;padding:4px 10px;cursor:pointer}
-
-.fl{position:fixed;pointer-events:none;font-family:Georgia,serif;font-weight:bold;font-size:20px;color:var(--ink);
-  text-shadow:0 0 4px #fff,0 0 4px #fff;animation:up 1s ease-out forwards;z-index:50}
+.own{
+  display:block;font-family:Georgia,serif;font-size:22px;
+  font-weight:normal;
+}
+.cost{font-size:13px;font-weight:bold;color:var(--wood-d)}
+.empty{font-size:13px;color:var(--ink-soft);font-style:italic;padding:8px 0}
+.reset{
+  margin-top:16px;font:inherit;font-size:12px;
+  background:none;border:2px solid var(--ink);
+  border-radius:2px;padding:5px 12px;cursor:pointer;
+  text-transform:uppercase;letter-spacing:1px;
+  color:var(--ink-soft);
+}
+.reset:hover{background:var(--paper-dark);color:var(--ink)}
+.fl{
+  position:fixed;pointer-events:none;
+  font-family:Georgia,serif;font-weight:bold;font-size:20px;
+  color:var(--ink);
+  text-shadow:0 0 4px #fff,0 0 4px #fff;
+  animation:up 1s ease-out forwards;z-index:50;
+}
 @keyframes up{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-60px)}}
-
-.golden{position:fixed;z-index:60;border:none;background:none;cursor:pointer;font-size:52px;line-height:1;
-  filter:drop-shadow(0 0 10px #ffd400) drop-shadow(0 0 4px #fff);animation:pulse 1.2s ease-in-out infinite}
+.golden{
+  position:fixed;z-index:60;border:none;background:none;
+  cursor:pointer;font-size:52px;line-height:1;
+  filter:drop-shadow(0 0 10px #d4a017) drop-shadow(0 0 4px #fff);
+  animation:pulse 1.2s ease-in-out infinite;
+}
 @keyframes pulse{50%{transform:scale(1.18) rotate(8deg)}}
-@media(prefers-reduced-motion:reduce){.golden{animation:none}.fl{animation-duration:.01s}}
+@media(prefers-reduced-motion:reduce){
+  .golden{animation:none}
+  .fl{animation-duration:.01s}
+}
 </style>
 </head>
 <body>
@@ -82,7 +205,6 @@ h1{font-family:Georgia,"Rockwell","Roboto Slab",serif;font-size:34px;margin:0;le
   <h1>Pencil Factory</h1>
   <div id="ticker" aria-live="polite"></div>
 </header>
-
 <div class="wrap">
   <section class="panel" aria-label="Production">
     <h2>Production</h2>
@@ -93,27 +215,26 @@ h1{font-family:Georgia,"Rockwell","Roboto Slab",serif;font-size:34px;margin:0;le
     <div class="rates" id="rates"></div>
     <button class="make" id="make" aria-label="Make a pencil">
       <svg viewBox="0 0 320 80" id="pencil" aria-hidden="true">
-        <g stroke="#2b2f33" stroke-width="3" stroke-linejoin="round">
-          <rect x="6" y="14" width="34" height="52" rx="9" fill="#e8838f"/>
-          <rect x="40" y="14" width="26" height="52" fill="#aab2b8"/>
-          <rect x="66" y="14" width="190" height="52" fill="#f6c026"/>
-          <polygon points="256,14 256,66 306,40" fill="#e4b67a"/>
-          <polygon points="291,33 291,47 306,40" fill="#2b2f33"/>
+        <g stroke="#2a2218" stroke-width="3" stroke-linejoin="round">
+          <rect x="6" y="14" width="34" height="52" rx="9" fill="#c75b63"/>
+          <rect x="40" y="14" width="26" height="52" fill="#8a8e92"/>
+          <rect x="66" y="14" width="190" height="52" fill="#d4a017"/>
+          <polygon points="256,14 256,66 306,40" fill="#c4a06a"/>
+          <polygon points="291,33 291,47 306,40" fill="#2a2218"/>
         </g>
-        <rect x="67.5" y="15.5" width="187" height="11" fill="#f9d75f"/>
-        <rect x="67.5" y="53.5" width="187" height="11" fill="#d99a0b"/>
-        <line x1="40" y1="30" x2="66" y2="30" stroke="#2b2f33" stroke-width="2"/>
-        <line x1="40" y1="50" x2="66" y2="50" stroke="#2b2f33" stroke-width="2"/>
-        <text x="130" y="46" font-family="Georgia,serif" font-size="17" font-weight="bold" fill="#2b2f33">No. 2</text>
+        <rect x="67.5" y="15.5" width="187" height="11" fill="#e8c84a"/>
+        <rect x="67.5" y="53.5" width="187" height="11" fill="#b8860b"/>
+        <line x1="40" y1="30" x2="66" y2="30" stroke="#2a2218" stroke-width="2"/>
+        <line x1="40" y1="50" x2="66" y2="50" stroke="#2a2218" stroke-width="2"/>
+        <text x="130" y="46" font-family="Georgia,serif" font-size="17" font-weight="bold" fill="#2a2218">No. 2</text>
       </svg>
       <span>Make a pencil</span>
     </button>
     <div id="buffs"></div>
-    <h2>Factory floor</h2>
+    <h2>Factory Floor</h2>
     <div class="floor" id="floor"></div>
-    <button class="reset" id="reset">Reset game</button>
+    <button class="reset" id="reset">Reset Factory</button>
   </section>
-
   <section class="panel" aria-label="Helpers">
     <h2>Helpers</h2>
     <div class="mode" id="mode">Buy:
@@ -123,17 +244,14 @@ h1{font-family:Georgia,"Rockwell","Roboto Slab",serif;font-size:34px;margin:0;le
     </div>
     <div class="scroll" id="helpers"></div>
   </section>
-
   <section class="panel" aria-label="Upgrades">
     <h2>Upgrades</h2>
     <div class="scroll" id="upgrades"></div>
   </section>
 </div>
-
 <script>
 "use strict";
 const KEY = "pencilFactory_v1";
-
 /* ---------- Data ---------- */
 const H = [
   {name:"Intern",            desc:"Sharpens and assembles. Unpaid.",           cost:15,     pps:0.1,   ico:"🧑‍🎓"},
@@ -147,31 +265,24 @@ const H = [
   {name:"Lunar Factory",     desc:"Low gravity, high output.",                 cost:5.1e9,  pps:260000,ico:"🌙"},
   {name:"Pencil Dimension",  desc:"A universe where everything is a pencil.",  cost:7.5e10, pps:1.6e6, ico:"🌀"}
 ];
-
 const U = [];
 function add(id,name,desc,cost,kind,val,extra){ U.push(Object.assign({id,name,desc,cost,kind,val},extra||{})); }
-
 [[100,"Sharper Point"],[500,"Comfy Grip"],[5000,"Two-Handed Clicking"],[50000,"Triple Espresso"],[5e6,"Click Mastery"]]
   .forEach((a,i)=>add("click"+i,a[1],"Each click makes twice as many pencils.",a[0],"click",2));
-
 [[10000,0.02,"Foreman's Handshake"],[1e6,0.03,"Floor Manager Badge"],[1e8,0.05,"Executive Pen"]]
   .forEach((a,i)=>add("pct"+i,a[2],"Each click also makes "+Math.round(a[1]*100)+"% of your pencils per second.",a[0],"pct",a[1]));
-
 [[1000,1.5,"Pink Erasers","Pencils sell for 50% more."],[25000,1.5,"Brand Logo","Pencils sell for 50% more."],
  [1e6,2,"Bulk Contracts","Pencils sell for twice as much."],[2.5e8,2,"School Supply Deal","Pencils sell for twice as much."],
  [2e10,3,"Golden Standard","Pencils sell for three times as much."]]
   .forEach((a,i)=>add("val"+i,a[2],a[3],a[0],"value",a[1]));
-
 [[5000,1.25,"Radio Playing Music","All production is 25% faster."],[2e5,1.25,"Coffee Machine","All production is 25% faster."],
  [3e7,1.5,"Staff Break Room","All production is 50% faster."],[5e9,2,"Four-Day Work Week","All production is twice as fast."]]
   .forEach((a,i)=>add("glob"+i,a[2],a[3],a[0],"global",a[1]));
-
 const TIERS = [{thr:1,mult:10,name:"Better Tools"},{thr:10,mult:100,name:"Overtime"},
                {thr:25,mult:1000,name:"Efficiency Study"},{thr:50,mult:10000,name:"Mass Production"}];
 H.forEach((h,i)=>TIERS.forEach((t,k)=>
   add("h"+i+"_"+k,h.name+": "+t.name,"Output of every "+h.name+" doubles. (Needs "+t.thr+" owned)",h.cost*t.mult,"helper",2,{h:i,thr:t.thr})));
 U.sort((a,b)=>a.cost-b.cost);
-
 const NEWS = [
   [0,"Welcome to the factory. The first pencil is on the house."],
   [0,"Tip: the shiny pencils that float by are worth a click."],
@@ -188,7 +299,6 @@ const NEWS = [
   [1e13,"Gravity is now measured in pencils."],
   [1e15,"The pencil dimension has applied for a trade agreement."]
 ];
-
 /* ---------- State ---------- */
 function fresh(){ return {made:0,cash:0,total:0,owned:H.map(()=>0),up:{},clicks:0,last:Date.now()}; }
 function load(){
@@ -202,7 +312,6 @@ function save(){ S.last = Date.now(); try{ localStorage.setItem(KEY,JSON.stringi
 let S = load();
 const B = {frenzy:0, click:0};   // active buff timers (seconds)
 let mode = "1";
-
 /* ---------- Helpers ---------- */
 const $ = s => document.querySelector(s);
 const SUF = ["","K","M","B","T","Qa","Qi","Sx","Sp","Oc","No","Dc"];
@@ -214,7 +323,6 @@ function fmt(n){
   return v.toFixed(v<10?2:v<100?1:0)+SUF[e];
 }
 function money(n){ return n<1000 ? "$"+n.toFixed(2) : "$"+fmt(n); }
-
 function calc(){
   let clickMult=1, pct=0, valMult=1, gMult=1;
   const hm = H.map(()=>1);
@@ -232,9 +340,7 @@ function calc(){
   const clickVal = clickMult*(B.click>0?10:1) + pct*pps;
   return {pps,clickVal,valMult,hm,gMult};
 }
-
 function earn(n,C){ S.made+=n; const c=n*C.valMult; S.cash+=c; S.total+=c; }
-
 function costN(i,n){
   const r=1.15;
   return Math.ceil(H[i].cost*Math.pow(r,S.owned[i])*(Math.pow(r,n)-1)/(r-1));
@@ -243,7 +349,6 @@ function qty(i){
   if(mode==="max"){ let n=0; while(n<500 && costN(i,n+1)<=S.cash) n++; return Math.max(n,1); }
   return parseInt(mode,10);
 }
-
 /* ---------- Ticker ---------- */
 let newsHold = 0;
 function say(t,hold){ $("#ticker").textContent=t; newsHold=hold||8; }
@@ -253,7 +358,6 @@ function rotateNews(){
   const recent = pool.slice(-3);
   $("#ticker").textContent = recent[Math.floor(Math.random()*recent.length)][1];
 }
-
 /* ---------- Building the UI ---------- */
 const helperEls = [];
 function buildHelpers(){
@@ -273,7 +377,6 @@ function buyHelper(i){
   if(S.cash<c) return;
   S.cash-=c; S.owned[i]+=n; save();
 }
-
 let upKey="";
 function visibleUpgrades(){
   return U.filter(u=>{
@@ -304,14 +407,12 @@ function renderUpgrades(){
     el.classList.toggle("afford", S.cash>=u.cost);
   });
 }
-
 function render(){
   const C=calc();
   $("#cash").textContent=money(S.cash);
   $("#made").textContent=fmt(Math.floor(S.made));
   $("#rates").textContent=fmt(C.pps)+" pencils/sec  ·  "+money(C.valMult)+" per pencil  ·  "+money(C.pps*C.valMult)+"/sec";
   document.title=fmt(Math.floor(S.made))+" pencils - Pencil Factory";
-
   H.forEach((h,i)=>{
     const e=helperEls[i];
     const show = i===0 || S.owned[i]>0 || S.owned[i-1]>0 || S.total>=h.cost*0.3;
@@ -323,20 +424,17 @@ function render(){
     e.el.classList.toggle("afford", S.cash>=c);
   });
   renderUpgrades();
-
   // buffs
   let bt="";
-  if(B.frenzy>0) bt+='<span class="buff">Frenzy x7 · '+Math.ceil(B.frenzy)+'s</span>';
-  if(B.click>0)  bt+='<span class="buff">Click rush x10 · '+Math.ceil(B.click)+'s</span>';
+  if(B.frenzy>0) bt+='<span class="buff">Frenzy ×7 · '+Math.ceil(B.frenzy)+'s</span>';
+  if(B.click>0)  bt+='<span class="buff">Click Rush ×10 · '+Math.ceil(B.click)+'s</span>';
   if($("#buffs").dataset.t!==bt){ $("#buffs").innerHTML=bt; $("#buffs").dataset.t=bt; }
-
   // floor
   let fl="";
   H.forEach((h,i)=>{ if(S.owned[i]>0) fl+='<span class="grp" title="'+h.name+' x'+S.owned[i]+'">'+h.ico.repeat(Math.min(S.owned[i],8))+(S.owned[i]>8?"<small> +"+(S.owned[i]-8)+"</small>":"")+'</span>'; });
   if(!fl) fl='<span class="floor-empty">Empty. Buy a helper to fill it up.</span>';
   if($("#floor").dataset.t!==fl){ $("#floor").innerHTML=fl; $("#floor").dataset.t=fl; }
 }
-
 /* ---------- Clicking ---------- */
 const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 function floatText(x,y,t){
@@ -354,7 +452,6 @@ $("#make").addEventListener("click",e=>{
   floatText(x,y,"+"+fmt(C.clickVal));
   if(!reduce) $("#pencil").animate([{transform:"scale(1)"},{transform:"scale(.93) rotate(-2deg)"},{transform:"scale(1)"}],{duration:120});
 });
-
 /* ---------- Golden pencil ---------- */
 let goldenIn = 45+Math.random()*60, goldenEl=null;
 function spawnGolden(){
@@ -367,11 +464,10 @@ function spawnGolden(){
 }
 function clickGolden(){
   const C=calc(), r=Math.random();
-  if(r<0.45){ B.frenzy=30; say("Frenzy! Production is 7x for 30 seconds.",10); }
+  if(r<0.45){ B.frenzy=30; say("Frenzy! Production is 7× for 30 seconds.",10); }
   else if(r<0.8){ const g=Math.max(C.pps*C.valMult*600,20); S.cash+=g; S.total+=g; say("Big order! You got "+money(g)+" in bulk sales.",10); }
-  else { B.click=15; say("Click rush! Your clicks are 10x for 15 seconds.",10); }
+  else { B.click=15; say("Click rush! Your clicks are 10× for 15 seconds.",10); }
 }
-
 /* ---------- Main loop ---------- */
 let last=performance.now(), saveT=0, newsT=0;
 setInterval(()=>{
@@ -387,7 +483,6 @@ setInterval(()=>{
   render();
 },100);
 window.addEventListener("beforeunload",save);
-
 /* ---------- Controls ---------- */
 $("#mode").addEventListener("click",e=>{
   const b=e.target.closest("button"); if(!b) return;
@@ -399,7 +494,6 @@ $("#reset").addEventListener("click",()=>{
     S=fresh(); B.frenzy=0; B.click=0; upKey=""; save(); say("A fresh start. The first pencil is on the house.");
   }
 });
-
 /* ---------- Init ---------- */
 buildHelpers();
 (function offline(){
