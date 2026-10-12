@@ -6,23 +6,12 @@
 <title>Pencil Factory</title>
 <style>
 :root{
-  --paper:#f3ecd9;
-  --paper-dark:#e8dfc4;
-  --grid:#c9bda0;
-  --ink:#2a2218;
-  --ink-soft:#5c4f3d;
-  --yellow:#d4a017;
-  --yellow-d:#b8860b;
-  --yellow-l:#f0d78c;
-  --pink:#c75b63;
-  --metal:#8a8e92;
-  --wood:#c4a06a;
-  --wood-d:#8b6914;
-  --red:#9b2c2c;
-  --card:#faf6eb;
-  --soft:#f5e6b8;
-  --brass:#b8973a;
-  --shadow:#2a2218;
+  --paper:#f3ecd9; --paper-dark:#e8dfc4; --grid:#c9bda0;
+  --ink:#2a2218; --ink-soft:#5c4f3d;
+  --yellow:#d4a017; --yellow-d:#b8860b; --yellow-l:#f0d78c;
+  --pink:#c75b63; --metal:#8a8e92; --wood:#c4a06a; --wood-d:#8b6914;
+  --red:#9b2c2c; --card:#faf6eb; --soft:#f5e6b8; --brass:#b8973a;
+  --shadow:#2a2218; --accent:#d4a017;
 }
 *{box-sizing:border-box}
 body{
@@ -33,170 +22,315 @@ body{
     linear-gradient(var(--grid) 1px,transparent 1px),
     linear-gradient(90deg,var(--grid) 1px,transparent 1px);
   background-size:28px 28px;
+  background-attachment:fixed;
   line-height:1.45;
+  transition:background-color 2s,color 1.5s;
+}
+body.theme-space{
+  background-image:
+    radial-gradient(ellipse at 20% 30%,rgba(80,60,140,.35) 0%,transparent 50%),
+    radial-gradient(ellipse at 80% 70%,rgba(40,80,160,.3) 0%,transparent 45%),
+    radial-gradient(2px 2px at 10% 20%,#fff 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 30% 60%,#dde 0%,transparent 100%),
+    radial-gradient(1px 1px at 70% 40%,#fff 0%,transparent 100%),
+    radial-gradient(2px 2px at 90% 80%,#cde 0%,transparent 100%),
+    radial-gradient(1px 1px at 50% 10%,#fff 0%,transparent 100%),
+    linear-gradient(180deg,#0b0a1a 0%,#1a1430 40%,#0d1528 100%);
+  background-size:auto;
+  color:#e8e4f0;
+}
+body.theme-quantum{
+  background-image:
+    radial-gradient(ellipse at 50% 50%,rgba(0,200,180,.12) 0%,transparent 60%),
+    radial-gradient(ellipse at 20% 80%,rgba(180,40,200,.15) 0%,transparent 50%),
+    radial-gradient(1px 1px at 15% 25%,#0ff 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 85% 15%,#f0f 0%,transparent 100%),
+    radial-gradient(1px 1px at 45% 75%,#0ff 0%,transparent 100%),
+    linear-gradient(160deg,#050510 0%,#0a1020 50%,#100818 100%);
+  color:#d0f0f0;
+}
+body.theme-cosmic{
+  background-image:
+    radial-gradient(ellipse at 30% 20%,rgba(255,180,50,.2) 0%,transparent 40%),
+    radial-gradient(ellipse at 70% 60%,rgba(100,50,200,.25) 0%,transparent 50%),
+    radial-gradient(ellipse at 50% 90%,rgba(255,100,50,.15) 0%,transparent 40%),
+    radial-gradient(2px 2px at 12% 18%,#fff 0%,transparent 100%),
+    radial-gradient(1px 1px at 88% 22%,#ffd 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 55% 45%,#fff 0%,transparent 100%),
+    linear-gradient(180deg,#0a0612 0%,#1a0a20 50%,#120818 100%);
+  color:#f5e8d0;
 }
 header{
-  max-width:1180px;margin:0 auto;padding:22px 18px 0;
+  max-width:1280px;margin:0 auto;padding:20px 16px 0;
   border-bottom:3px double var(--ink);
-  margin-bottom:6px;
+  margin-bottom:4px;
+  transition:border-color 1.5s;
+}
+body.theme-space header,body.theme-quantum header,body.theme-cosmic header{
+  border-color:rgba(180,160,220,.4);
 }
 h1{
   font-family:Georgia,"Palatino Linotype","Book Antiqua",serif;
-  font-size:36px;margin:0;letter-spacing:1px;
+  font-size:34px;margin:0;letter-spacing:1.5px;
   font-weight:normal;text-transform:uppercase;
-  color:var(--ink);
+  color:var(--ink);transition:color 1.5s;
 }
+body.theme-space h1,body.theme-quantum h1,body.theme-cosmic h1{color:#f0e8ff}
 h1::after{
-  content:"";display:block;width:120px;height:3px;
-  background:var(--yellow);margin-top:8px;
+  content:"";display:block;width:110px;height:3px;
+  background:var(--accent);margin-top:7px;
+  transition:background 1.5s,width 1s;
 }
+body.theme-space h1::after{background:#8af;width:160px}
+body.theme-quantum h1::after{background:#0fd;width:200px}
+body.theme-cosmic h1::after{background:#f90;width:240px}
 #ticker{
-  margin-top:12px;padding:10px 14px;
+  margin-top:10px;padding:9px 14px;
   background:var(--ink);color:var(--paper);
   border:1px solid var(--brass);
-  font-size:15px;min-height:40px;
+  font-size:14.5px;min-height:38px;
   font-style:italic;letter-spacing:.2px;
+  transition:background 1.5s,border-color 1.5s,color 1.5s;
 }
+body.theme-space #ticker{background:#12102a;border-color:#668;color:#d8d0f0}
+body.theme-quantum #ticker{background:#081820;border-color:#0a8;color:#c0f0e8}
+body.theme-cosmic #ticker{background:#1a0c18;border-color:#a60;color:#f0d8b0}
 .wrap{
-  max-width:1180px;margin:0 auto;padding:18px;
-  display:grid;gap:18px;
-  grid-template-columns:minmax(280px,1fr) minmax(300px,1.1fr) minmax(280px,1fr);
+  max-width:1280px;margin:0 auto;padding:16px;
+  display:grid;gap:16px;
+  grid-template-columns:minmax(270px,1fr) minmax(290px,1.15fr) minmax(270px,1fr);
   align-items:start;
 }
-@media(max-width:920px){.wrap{grid-template-columns:1fr}}
+@media(max-width:980px){.wrap{grid-template-columns:1fr}}
 .panel{
   background:var(--card);
   border:3px solid var(--ink);
   border-radius:2px;
-  padding:16px 18px;
+  padding:14px 16px;
   box-shadow:5px 5px 0 var(--shadow);
   position:relative;
+  transition:background 1.5s,border-color 1.5s,box-shadow 1.5s,color 1.5s;
+}
+body.theme-space .panel{
+  background:rgba(20,18,40,.92);border-color:#668;
+  box-shadow:5px 5px 0 #0a0820,0 0 20px rgba(100,80,200,.15);
+  color:#e0d8f0;
+}
+body.theme-quantum .panel{
+  background:rgba(8,16,28,.94);border-color:#0a8;
+  box-shadow:5px 5px 0 #041018,0 0 24px rgba(0,200,180,.12);
+  color:#c8f0e8;
+}
+body.theme-cosmic .panel{
+  background:rgba(18,10,20,.94);border-color:#a60;
+  box-shadow:5px 5px 0 #100810,0 0 28px rgba(255,140,40,.12);
+  color:#f0e0c0;
 }
 .panel::before{
-  content:"";position:absolute;top:6px;left:6px;right:6px;bottom:6px;
+  content:"";position:absolute;top:5px;left:5px;right:5px;bottom:5px;
   border:1px solid var(--grid);pointer-events:none;
+  transition:border-color 1.5s;
 }
+body.theme-space .panel::before{border-color:rgba(100,90,160,.25)}
+body.theme-quantum .panel::before{border-color:rgba(0,160,140,.2)}
+body.theme-cosmic .panel::before{border-color:rgba(180,100,30,.25)}
 .panel h2{
   font-family:Georgia,"Palatino Linotype",serif;
-  margin:0 0 14px;font-size:18px;
+  margin:0 0 12px;font-size:17px;
   letter-spacing:1.5px;text-transform:uppercase;
-  border-bottom:2px solid var(--yellow);
-  display:inline-block;padding-bottom:3px;
-  font-weight:normal;
+  border-bottom:2px solid var(--accent);
+  display:inline-block;padding-bottom:2px;
+  font-weight:normal;transition:border-color 1.5s,color 1.5s;
 }
-.scroll{max-height:72vh;overflow-y:auto;padding:2px 6px 2px 2px}
-@media(max-width:920px){.scroll{max-height:none}}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px}
+body.theme-space .panel h2{border-color:#8af;color:#d8d0ff}
+body.theme-quantum .panel h2{border-color:#0fd;color:#a0fff0}
+body.theme-cosmic .panel h2{border-color:#f90;color:#ffd080}
+.scroll{max-height:68vh;overflow-y:auto;padding:2px 4px 2px 2px}
+@media(max-width:980px){.scroll{max-height:none}}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px}
 .stat small{
-  display:block;font-size:12px;color:var(--ink-soft);
+  display:block;font-size:11px;color:var(--ink-soft);
   text-transform:uppercase;letter-spacing:1px;
-  font-family:Georgia,serif;
 }
-.stat b{
-  font-family:Georgia,serif;font-size:28px;display:block;line-height:1.15;
-  font-weight:normal;
-}
-.stat.big b{font-size:32px}
+body.theme-space .stat small,body.theme-quantum .stat small,body.theme-cosmic .stat small{color:inherit;opacity:.65}
+.stat b{font-family:Georgia,serif;font-size:26px;display:block;line-height:1.12;font-weight:normal}
+.stat.big b{font-size:30px}
 .rates{
-  font-size:13px;color:var(--ink-soft);margin:6px 0 10px;
-  border-top:1px solid var(--grid);padding-top:8px;
+  font-size:12.5px;color:var(--ink-soft);margin:4px 0 8px;
+  border-top:1px solid var(--grid);padding-top:7px;
 }
+body.theme-space .rates,body.theme-quantum .rates,body.theme-cosmic .rates{border-color:rgba(150,140,180,.25);color:inherit;opacity:.75}
 .make{
-  display:block;width:100%;margin:12px 0;padding:16px 10px 12px;
+  display:block;width:100%;margin:10px 0;padding:14px 8px 10px;
   background:var(--soft);
   border:3px solid var(--ink);
   border-radius:2px;
   cursor:pointer;font:inherit;color:inherit;
   text-align:center;user-select:none;-webkit-tap-highlight-color:transparent;
   box-shadow:3px 3px 0 var(--shadow);
-  transition:background .15s, transform .1s;
+  transition:background .15s,transform .1s,border-color 1.5s,box-shadow 1.5s;
 }
+body.theme-space .make{background:rgba(40,30,80,.7);border-color:#88a;box-shadow:3px 3px 0 #0a0820}
+body.theme-quantum .make{background:rgba(0,40,50,.7);border-color:#0a8;box-shadow:3px 3px 0 #041018}
+body.theme-cosmic .make{background:rgba(50,25,10,.7);border-color:#c80;box-shadow:3px 3px 0 #100810}
 .make:hover{background:var(--yellow-l)}
+body.theme-space .make:hover{background:rgba(60,50,120,.85)}
+body.theme-quantum .make:hover{background:rgba(0,60,70,.85)}
+body.theme-cosmic .make:hover{background:rgba(70,35,15,.85)}
 .make:active{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--shadow)}
-.make svg{width:100%;max-width:300px;height:auto;display:block;margin:0 auto 8px}
-.make span{
-  font-family:Georgia,serif;font-size:20px;
-  letter-spacing:1px;text-transform:uppercase;
-}
-.make:focus-visible,.item:focus-visible,.mode button:focus-visible,.golden:focus-visible,.reset:focus-visible{
+.make svg{width:100%;max-width:290px;height:auto;display:block;margin:0 auto 6px}
+.make span{font-family:Georgia,serif;font-size:18px;letter-spacing:1px;text-transform:uppercase}
+.make:focus-visible,.item:focus-visible,.mode button:focus-visible,.golden:focus-visible,.reset:focus-visible,.sysbtn:focus-visible{
   outline:3px solid var(--red);outline-offset:2px;
 }
-#buffs{min-height:28px;font-size:13px;display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+#buffs{min-height:26px;font-size:12.5px;display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
 .buff{
   background:var(--yellow);border:2px solid var(--ink);
-  border-radius:2px;padding:3px 10px;
-  font-weight:bold;letter-spacing:.5px;
-  box-shadow:2px 2px 0 var(--shadow);
+  border-radius:2px;padding:2px 9px;font-weight:bold;letter-spacing:.4px;
+  box-shadow:2px 2px 0 var(--shadow);font-size:12px;
 }
+body.theme-space .buff{background:#46a;border-color:#88c;color:#eef}
+body.theme-quantum .buff{background:#086;border-color:#0ca;color:#eff}
+body.theme-cosmic .buff{background:#a50;border-color:#c80;color:#ffd}
 .floor{
-  display:flex;flex-wrap:wrap;gap:3px 12px;
-  font-size:22px;min-height:32px;line-height:1.35;
-  padding:8px 0;border-top:1px solid var(--grid);
+  display:flex;flex-wrap:wrap;gap:2px 10px;
+  font-size:20px;min-height:28px;line-height:1.3;
+  padding:6px 0;border-top:1px solid var(--grid);
 }
-.floor-empty{font-size:13px;color:var(--ink-soft);font-style:italic}
-.floor span.grp{white-space:nowrap}
-.mode{
-  display:flex;gap:6px;margin-bottom:12px;align-items:center;
-  font-size:13px;text-transform:uppercase;letter-spacing:.5px;
-}
+body.theme-space .floor,body.theme-quantum .floor,body.theme-cosmic .floor{border-color:rgba(150,140,180,.2)}
+.floor-empty{font-size:12.5px;color:var(--ink-soft);font-style:italic}
+.mode{display:flex;gap:5px;margin-bottom:10px;align-items:center;font-size:12.5px;text-transform:uppercase;letter-spacing:.4px}
 .mode button{
   font:inherit;border:2px solid var(--ink);
   background:var(--card);border-radius:2px;
-  padding:4px 14px;cursor:pointer;
-  box-shadow:2px 2px 0 var(--shadow);
-}
-.mode button.on{
-  background:var(--yellow);font-weight:bold;
-}
-.mode button:hover{background:var(--yellow-l)}
-.item{
-  display:flex;gap:12px;align-items:center;width:100%;
-  text-align:left;font:inherit;color:inherit;
-  border:2px solid var(--ink);background:var(--card);
-  padding:10px 12px;margin-bottom:9px;border-radius:2px;
-  cursor:pointer;box-shadow:2px 2px 0 var(--shadow);
+  padding:3px 12px;cursor:pointer;box-shadow:2px 2px 0 var(--shadow);
   transition:background .12s;
 }
+body.theme-space .mode button{background:rgba(30,25,55,.8);border-color:#668;color:#d0c8e8;box-shadow:2px 2px 0 #0a0820}
+body.theme-quantum .mode button{background:rgba(8,20,30,.8);border-color:#0a8;color:#b0e8e0;box-shadow:2px 2px 0 #041018}
+body.theme-cosmic .mode button{background:rgba(30,15,10,.8);border-color:#a60;color:#e8d0b0;box-shadow:2px 2px 0 #100810}
+.mode button.on{background:var(--yellow);font-weight:bold}
+body.theme-space .mode button.on{background:#46a;color:#fff}
+body.theme-quantum .mode button.on{background:#086;color:#fff}
+body.theme-cosmic .mode button.on{background:#a50;color:#fff}
+.item{
+  display:flex;gap:10px;align-items:center;width:100%;
+  text-align:left;font:inherit;color:inherit;
+  border:2px solid var(--ink);background:var(--card);
+  padding:8px 10px;margin-bottom:7px;border-radius:2px;
+  cursor:pointer;box-shadow:2px 2px 0 var(--shadow);
+  transition:background .12s,border-color 1s;
+}
+body.theme-space .item{background:rgba(25,22,50,.85);border-color:#557;box-shadow:2px 2px 0 #0a0820;color:#d8d0f0}
+body.theme-quantum .item{background:rgba(6,18,28,.9);border-color:#087;box-shadow:2px 2px 0 #041018;color:#c0e8e0}
+body.theme-cosmic .item{background:rgba(25,12,15,.9);border-color:#854;box-shadow:2px 2px 0 #100810;color:#f0d8b0}
 .item.afford{background:var(--soft)}
+body.theme-space .item.afford{background:rgba(40,35,90,.9)}
+body.theme-quantum .item.afford{background:rgba(0,40,50,.9)}
+body.theme-cosmic .item.afford{background:rgba(50,28,12,.9)}
 .item.afford:hover{background:var(--yellow-l)}
-.item:not(.afford){opacity:.55;cursor:not-allowed}
-.ico{font-size:26px;width:36px;text-align:center;flex:none}
+body.theme-space .item.afford:hover{background:rgba(55,50,110,.95)}
+body.theme-quantum .item.afford:hover{background:rgba(0,55,65,.95)}
+body.theme-cosmic .item.afford:hover{background:rgba(65,35,15,.95)}
+.item:not(.afford){opacity:.5;cursor:not-allowed}
+.ico{font-size:24px;width:34px;text-align:center;flex:none}
 .mid{flex:1;min-width:0}
-.mid b{display:block;font-size:15px;font-weight:normal;letter-spacing:.3px}
-.mid small{display:block;font-size:12px;color:var(--ink-soft);line-height:1.35;font-style:italic}
+.mid b{display:block;font-size:14px;font-weight:normal;letter-spacing:.3px}
+.mid small{display:block;font-size:11.5px;color:var(--ink-soft);line-height:1.3;font-style:italic}
+body.theme-space .mid small,body.theme-quantum .mid small,body.theme-cosmic .mid small{color:inherit;opacity:.65}
 .right{text-align:right;flex:none}
-.own{
-  display:block;font-family:Georgia,serif;font-size:22px;
-  font-weight:normal;
-}
-.cost{font-size:13px;font-weight:bold;color:var(--wood-d)}
-.empty{font-size:13px;color:var(--ink-soft);font-style:italic;padding:8px 0}
+.own{display:block;font-family:Georgia,serif;font-size:20px;font-weight:normal}
+.cost{font-size:12px;font-weight:bold;color:var(--wood-d)}
+body.theme-space .cost{color:#aaf}
+body.theme-quantum .cost{color:#6fd}
+body.theme-cosmic .cost{color:#fc8}
+.empty{font-size:12.5px;color:var(--ink-soft);font-style:italic;padding:6px 0}
 .reset{
-  margin-top:16px;font:inherit;font-size:12px;
+  margin-top:12px;font:inherit;font-size:11.5px;
   background:none;border:2px solid var(--ink);
-  border-radius:2px;padding:5px 12px;cursor:pointer;
-  text-transform:uppercase;letter-spacing:1px;
-  color:var(--ink-soft);
+  border-radius:2px;padding:4px 11px;cursor:pointer;
+  text-transform:uppercase;letter-spacing:1px;color:var(--ink-soft);
 }
-.reset:hover{background:var(--paper-dark);color:var(--ink)}
+body.theme-space .reset,body.theme-quantum .reset,body.theme-cosmic .reset{border-color:inherit;color:inherit;opacity:.6}
+.reset:hover{background:var(--paper-dark);color:var(--ink);opacity:1}
+/* Systems */
+.sysrow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.sysbtn{
+  font:inherit;border:2px solid var(--ink);background:var(--card);
+  border-radius:2px;padding:8px 6px;cursor:pointer;text-align:center;
+  box-shadow:2px 2px 0 var(--shadow);font-size:12.5px;letter-spacing:.3px;
+  transition:background .12s;
+}
+body.theme-space .sysbtn{background:rgba(30,25,55,.85);border-color:#668;color:#d0c8e8;box-shadow:2px 2px 0 #0a0820}
+body.theme-quantum .sysbtn{background:rgba(8,20,30,.85);border-color:#0a8;color:#b0e8e0;box-shadow:2px 2px 0 #041018}
+body.theme-cosmic .sysbtn{background:rgba(30,15,10,.85);border-color:#a60;color:#e8d0b0;box-shadow:2px 2px 0 #100810}
+.sysbtn:hover{background:var(--soft)}
+body.theme-space .sysbtn:hover{background:rgba(50,45,100,.9)}
+body.theme-quantum .sysbtn:hover{background:rgba(0,50,60,.9)}
+body.theme-cosmic .sysbtn:hover{background:rgba(55,30,12,.9)}
+.sysbtn.on{background:var(--yellow);font-weight:bold}
+body.theme-space .sysbtn.on{background:#46a;color:#fff}
+body.theme-quantum .sysbtn.on{background:#086;color:#fff}
+body.theme-cosmic .sysbtn.on{background:#a50;color:#fff}
+.syspanel{
+  display:none;margin-top:8px;padding:10px;
+  border:2px solid var(--ink);border-radius:2px;
+  background:var(--paper-dark);font-size:13px;
+}
+body.theme-space .syspanel{background:rgba(15,12,35,.9);border-color:#557}
+body.theme-quantum .syspanel{background:rgba(5,14,22,.9);border-color:#087}
+body.theme-cosmic .syspanel{background:rgba(20,10,12,.9);border-color:#854}
+.syspanel.open{display:block}
+.syspanel h3{margin:0 0 8px;font-size:14px;letter-spacing:1px;text-transform:uppercase;font-weight:normal}
+.syspanel .row{display:flex;justify-content:space-between;align-items:center;margin:5px 0;gap:8px}
+.syspanel button.act{
+  font:inherit;font-size:12px;border:2px solid var(--ink);
+  background:var(--soft);border-radius:2px;padding:3px 10px;cursor:pointer;
+}
+body.theme-space .syspanel button.act{background:rgba(50,40,100,.8);border-color:#668;color:#e0d8ff}
+body.theme-quantum .syspanel button.act{background:rgba(0,45,55,.8);border-color:#0a8;color:#c0f0e8}
+body.theme-cosmic .syspanel button.act{background:rgba(55,30,10,.8);border-color:#a60;color:#f0d8b0}
+.syspanel button.act:hover{filter:brightness(1.15)}
+.syspanel .chart{
+  height:48px;display:flex;align-items:flex-end;gap:2px;margin:8px 0 4px;
+}
+.syspanel .bar{flex:1;background:var(--yellow);border-radius:1px 1px 0 0;min-height:2px;transition:height .4s}
+body.theme-space .syspanel .bar{background:#68c}
+body.theme-quantum .syspanel .bar{background:#0cb}
+body.theme-cosmic .syspanel .bar{background:#e80}
+.goal{
+  margin-top:10px;padding:8px 10px;border:2px dashed var(--ink);
+  border-radius:2px;font-size:12.5px;text-align:center;
+  letter-spacing:.3px;
+}
+body.theme-space .goal{border-color:#668;color:#c8c0e8}
+body.theme-quantum .goal{border-color:#0a8;color:#a0e0d8}
+body.theme-cosmic .goal{border-color:#a60;color:#e8c890}
 .fl{
   position:fixed;pointer-events:none;
-  font-family:Georgia,serif;font-weight:bold;font-size:20px;
-  color:var(--ink);
-  text-shadow:0 0 4px #fff,0 0 4px #fff;
+  font-family:Georgia,serif;font-weight:bold;font-size:19px;
+  color:var(--ink);text-shadow:0 0 4px #fff,0 0 4px #fff;
   animation:up 1s ease-out forwards;z-index:50;
 }
+body.theme-space .fl,body.theme-quantum .fl,body.theme-cosmic .fl{color:#fff;text-shadow:0 0 6px #88f,0 0 4px #000}
 @keyframes up{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-60px)}}
 .golden{
   position:fixed;z-index:60;border:none;background:none;
-  cursor:pointer;font-size:52px;line-height:1;
+  cursor:pointer;font-size:50px;line-height:1;
   filter:drop-shadow(0 0 10px #d4a017) drop-shadow(0 0 4px #fff);
   animation:pulse 1.2s ease-in-out infinite;
 }
 @keyframes pulse{50%{transform:scale(1.18) rotate(8deg)}}
-@media(prefers-reduced-motion:reduce){
-  .golden{animation:none}
-  .fl{animation-duration:.01s}
+@media(prefers-reduced-motion:reduce){.golden{animation:none}.fl{animation-duration:.01s}}
+.particle{
+  position:fixed;pointer-events:none;border-radius:50%;
+  background:#fff;opacity:.4;z-index:1;
+  animation:drift linear infinite;
+}
+@keyframes drift{
+  0%{transform:translateY(0) translateX(0);opacity:.3}
+  50%{opacity:.6}
+  100%{transform:translateY(-100vh) translateX(20px);opacity:0}
 }
 </style>
 </head>
@@ -233,6 +367,7 @@ h1::after{
     <div id="buffs"></div>
     <h2>Factory Floor</h2>
     <div class="floor" id="floor"></div>
+    <div class="goal" id="goal">Goal: Make your first pencil</div>
     <button class="reset" id="reset">Reset Factory</button>
   </section>
   <section class="panel" aria-label="Helpers">
@@ -244,48 +379,123 @@ h1::after{
     </div>
     <div class="scroll" id="helpers"></div>
   </section>
-  <section class="panel" aria-label="Upgrades">
-    <h2>Upgrades</h2>
+  <section class="panel" aria-label="Upgrades & Systems">
+    <h2>Systems</h2>
+    <div class="sysrow">
+      <button class="sysbtn" id="btnStocks" data-sys="stocks">📈 Stocks</button>
+      <button class="sysbtn" id="btnAccel" data-sys="accel">⚡ Accelerator</button>
+      <button class="sysbtn" id="btnLab" data-sys="lab">🔬 Research</button>
+      <button class="sysbtn" id="btnShip" data-sys="ship">🚀 Logistics</button>
+    </div>
+    <div class="syspanel" id="panelStocks">
+      <h3>Pencil Stock Exchange</h3>
+      <div class="row"><span>PENCIL share price</span><b id="stockPrice">$1.00</b></div>
+      <div class="row"><span>Shares owned</span><b id="stockOwned">0</b></div>
+      <div class="row"><span>Dividend / sec</span><b id="stockDiv">$0</b></div>
+      <div class="chart" id="stockChart"></div>
+      <div class="row">
+        <button class="act" id="buyStock">Buy 1 share</button>
+        <button class="act" id="sellStock">Sell 1 share</button>
+      </div>
+      <small style="opacity:.7;display:block;margin-top:6px">Price drifts with production. Dividends scale with shares × price.</small>
+    </div>
+    <div class="syspanel" id="panelAccel">
+      <h3>Pencil Particle Accelerator</h3>
+      <div class="row"><span>Beam energy</span><b id="accelEnergy">0 GeV</b></div>
+      <div class="row"><span>Acceleration</span><b id="accelRate">1.00×</b></div>
+      <div class="row"><span>Coolant status</span><b id="accelCool">Stable</b></div>
+      <div class="row">
+        <button class="act" id="fireAccel">Fire beam (+energy)</button>
+      </div>
+      <small style="opacity:.7;display:block;margin-top:6px">Spend cash to charge the beam. Higher energy multiplies all production.</small>
+    </div>
+    <div class="syspanel" id="panelLab">
+      <h3>Research Laboratory</h3>
+      <div class="row"><span>Research points</span><b id="labRP">0</b></div>
+      <div class="row"><span>Active project</span><b id="labProject">None</b></div>
+      <div class="row"><span>Progress</span><b id="labProg">—</b></div>
+      <div id="labOptions"></div>
+      <small style="opacity:.7;display:block;margin-top:6px">Spend cash to start research. Completing projects unlocks permanent bonuses.</small>
+    </div>
+    <div class="syspanel" id="panelShip">
+      <h3>Interstellar Logistics</h3>
+      <div class="row"><span>Fleet size</span><b id="shipFleet">0</b></div>
+      <div class="row"><span>Reach</span><b id="shipReach">Local</b></div>
+      <div class="row"><span>Export bonus</span><b id="shipBonus">1.00×</b></div>
+      <div class="row">
+        <button class="act" id="buyShip">Launch freighter</button>
+      </div>
+      <small style="opacity:.7;display:block;margin-top:6px">Freighters expand your market. More reach = higher pencil value.</small>
+    </div>
+
+    <h2 style="margin-top:14px">Upgrades</h2>
     <div class="scroll" id="upgrades"></div>
   </section>
 </div>
 <script>
 "use strict";
-const KEY = "pencilFactory_v1";
+const KEY = "pencilFactory_v2";
 /* ---------- Data ---------- */
 const H = [
-  {name:"Intern",            desc:"Sharpens and assembles. Unpaid.",           cost:15,     pps:0.1,   ico:"🧑‍🎓"},
-  {name:"Sharpening Station",desc:"A crank, a blade, and a dream.",            cost:100,    pps:1,     ico:"🔧"},
-  {name:"Hand Lathe",        desc:"Turns raw wood into pencil bodies.",        cost:1100,   pps:8,     ico:"🪚"},
-  {name:"Cedar Mill",        desc:"Slices cedar into thin slats.",             cost:12000,  pps:47,    ico:"🪵"},
-  {name:"Graphite Mine",     desc:"Digs the lead so you don't have to.",       cost:130000, pps:260,   ico:"⛏️"},
-  {name:"Assembly Line",     desc:"Conveyor belts and loud machines.",         cost:1.4e6,  pps:1400,  ico:"🏭"},
-  {name:"Robot Crew",        desc:"Never tired. Never unionizes. Yet.",        cost:2e7,    pps:7800,  ico:"🤖"},
-  {name:"Cedar Plantation",  desc:"Trees grown to order.",                     cost:3.3e8,  pps:44000, ico:"🌲"},
-  {name:"Lunar Factory",     desc:"Low gravity, high output.",                 cost:5.1e9,  pps:260000,ico:"🌙"},
-  {name:"Pencil Dimension",  desc:"A universe where everything is a pencil.",  cost:7.5e10, pps:1.6e6, ico:"🌀"}
+  {name:"Intern",            desc:"Sharpens and assembles. Unpaid.",              cost:15,     pps:0.1,   ico:"🧑‍🎓"},
+  {name:"Sharpening Station",desc:"A crank, a blade, and a dream.",               cost:100,    pps:1,     ico:"🔧"},
+  {name:"Hand Lathe",        desc:"Turns raw wood into pencil bodies.",           cost:1100,   pps:8,     ico:"🪚"},
+  {name:"Cedar Mill",        desc:"Slices cedar into thin slats.",                cost:12000,  pps:47,    ico:"🪵"},
+  {name:"Graphite Mine",     desc:"Digs the lead so you don't have to.",          cost:130000, pps:260,   ico:"⛏️"},
+  {name:"Assembly Line",     desc:"Conveyor belts and loud machines.",            cost:1.4e6,  pps:1400,  ico:"🏭"},
+  {name:"Robot Crew",        desc:"Never tired. Never unionizes. Yet.",           cost:2e7,    pps:7800,  ico:"🤖"},
+  {name:"Cedar Plantation",  desc:"Trees grown to order.",                        cost:3.3e8,  pps:44000, ico:"🌲"},
+  {name:"Orbital Forge",     desc:"Zero-g extrusion in low Earth orbit.",         cost:5.1e9,  pps:260000,ico:"🛰️"},
+  {name:"Lunar Factory",     desc:"Low gravity, high output. Dusty.",             cost:7.5e10, pps:1.6e6, ico:"🌙"},
+  {name:"Asteroid Miner",    desc:"Harvests carbonaceous chondrites for lead.",   cost:1.2e12, pps:1e7,   ico:"☄️"},
+  {name:"Dyson Pencil",      desc:"A partial sphere that writes on the sun.",     cost:2e13,   pps:6.5e7, ico:"☀️"},
+  {name:"Galactic Press",    desc:"Prints pencils across spiral arms.",           cost:3.5e14, pps:4e8,   ico:"🌌"},
+  {name:"Quantum Lathe",     desc:"Spins wood in superposition. Somehow works.",  cost:6e15,   pps:2.5e9, ico:"⚛️"},
+  {name:"Pencil Dimension",  desc:"A universe where everything is a pencil.",     cost:1e17,   pps:1.6e10,ico:"🌀"}
 ];
 const U = [];
 function add(id,name,desc,cost,kind,val,extra){ U.push(Object.assign({id,name,desc,cost,kind,val},extra||{})); }
-[[100,"Sharper Point"],[500,"Comfy Grip"],[5000,"Two-Handed Clicking"],[50000,"Triple Espresso"],[5e6,"Click Mastery"]]
+// Click
+[[100,"Sharper Point"],[500,"Comfy Grip"],[5000,"Two-Handed Clicking"],[50000,"Triple Espresso"],[5e6,"Click Mastery"],[2e9,"Neural Click Link"],[1e13,"Thought-Form Pencils"]]
   .forEach((a,i)=>add("click"+i,a[1],"Each click makes twice as many pencils.",a[0],"click",2));
-[[10000,0.02,"Foreman's Handshake"],[1e6,0.03,"Floor Manager Badge"],[1e8,0.05,"Executive Pen"]]
+// Pct of pps on click
+[[10000,0.02,"Foreman's Handshake"],[1e6,0.03,"Floor Manager Badge"],[1e8,0.05,"Executive Pen"],[5e11,0.08,"Cosmic Stylus"],[2e15,0.12,"Omniscient Click"]]
   .forEach((a,i)=>add("pct"+i,a[2],"Each click also makes "+Math.round(a[1]*100)+"% of your pencils per second.",a[0],"pct",a[1]));
+// Value
 [[1000,1.5,"Pink Erasers","Pencils sell for 50% more."],[25000,1.5,"Brand Logo","Pencils sell for 50% more."],
  [1e6,2,"Bulk Contracts","Pencils sell for twice as much."],[2.5e8,2,"School Supply Deal","Pencils sell for twice as much."],
- [2e10,3,"Golden Standard","Pencils sell for three times as much."]]
+ [2e10,3,"Golden Standard","Pencils sell for three times as much."],[5e13,3,"Interstellar Brand","Pencils sell for three times as much."],
+ [1e16,5,"Universal Currency","Pencils are now legal tender everywhere."]]
   .forEach((a,i)=>add("val"+i,a[2],a[3],a[0],"value",a[1]));
+// Global
 [[5000,1.25,"Radio Playing Music","All production is 25% faster."],[2e5,1.25,"Coffee Machine","All production is 25% faster."],
- [3e7,1.5,"Staff Break Room","All production is 50% faster."],[5e9,2,"Four-Day Work Week","All production is twice as fast."]]
+ [3e7,1.5,"Staff Break Room","All production is 50% faster."],[5e9,2,"Four-Day Work Week","All production is twice as fast."],
+ [8e12,2,"Time Dilation Shifts","All production is twice as fast."],[3e16,3,"Causal Loop Factory","All production is three times as fast."]]
   .forEach((a,i)=>add("glob"+i,a[2],a[3],a[0],"global",a[1]));
-const TIERS = [{thr:1,mult:10,name:"Better Tools"},{thr:10,mult:100,name:"Overtime"},
-               {thr:25,mult:1000,name:"Efficiency Study"},{thr:50,mult:10000,name:"Mass Production"}];
+// Unique unlocks & flavor
+add("stockUnlock","IPO Filing","Unlock the Pencil Stock Exchange.",25000,"unlock","stocks");
+add("accelUnlock","Particle Budget","Unlock the Pencil Particle Accelerator.",5e6,"unlock","accel");
+add("labUnlock","Research Grant","Unlock the Research Laboratory.",2e5,"unlock","lab");
+add("shipUnlock","Export License","Unlock Interstellar Logistics.",1e9,"unlock","ship");
+add("stockDiv","Dividend Policy","Stock dividends are twice as generous.",5e7,"stockDiv",2);
+add("accelEff","Superconducting Magnets","Accelerator energy is 50% more effective.",2e10,"accelEff",1.5);
+add("labSpeed","Graduate Students","Research progresses 50% faster.",1e8,"labSpeed",1.5);
+add("shipRange","Warp Couriers","Logistics reach expands faster.",5e12,"shipRange",1.5);
+// Helper tiers
+const TIERS = [
+  {thr:1,mult:10,name:"Better Tools"},
+  {thr:10,mult:100,name:"Overtime"},
+  {thr:25,mult:1000,name:"Efficiency Study"},
+  {thr:50,mult:10000,name:"Mass Production"},
+  {thr:100,mult:1e5,name:"Singularity Protocol"}
+];
 H.forEach((h,i)=>TIERS.forEach((t,k)=>
   add("h"+i+"_"+k,h.name+": "+t.name,"Output of every "+h.name+" doubles. (Needs "+t.thr+" owned)",h.cost*t.mult,"helper",2,{h:i,thr:t.thr})));
 U.sort((a,b)=>a.cost-b.cost);
+
 const NEWS = [
   [0,"Welcome to the factory. The first pencil is on the house."],
-  [0,"Tip: the shiny pencils that float by are worth a click."],
+  [0,"Tip: golden pencils that float by are worth a click."],
   [10,"Pencil number 10. Management is cautiously optimistic."],
   [100,"A local school just ordered a box of your pencils."],
   [1000,"Your pencils are now being chewed in three counties."],
@@ -293,39 +503,97 @@ const NEWS = [
   [1e5,"Somewhere, a forest looks nervous."],
   [1e6,"You now supply most of the pencils in the country."],
   [1e7,"Standardized tests are scheduled around your production."],
-  [1e8,"Libraries are keeping your pencils in the emergency kit."],
+  [1e8,"Libraries keep your pencils in the emergency kit."],
   [1e9,"Every student on Earth owns at least one of your pencils."],
+  [5e9,"First orbital forge comes online. Gravity is optional."],
   [1e11,"Astronomers report the Moon looks slightly more yellow."],
+  [1e12,"Mars colony places a bulk order. They want the erasers pink."],
   [1e13,"Gravity is now measured in pencils."],
-  [1e15,"The pencil dimension has applied for a trade agreement."]
+  [1e14,"A Dyson swarm segment begins writing on the solar wind."],
+  [1e15,"The pencil dimension has applied for a trade agreement."],
+  [1e16,"Galactic council debates whether pencils are a weapon."],
+  [1e17,"Observable universe census: 51% pencil by volume."],
+  [1e18,"Reality's terms of service have been updated to include graphite."]
 ];
+
+const GOALS = [
+  {thr:0,      text:"Goal: Make your first pencil"},
+  {thr:100,    text:"Goal: Supply the local school"},
+  {thr:1e4,    text:"Goal: Dominate the county fair"},
+  {thr:1e6,    text:"Goal: Become a national brand"},
+  {thr:1e8,    text:"Goal: Supply every desk on Earth"},
+  {thr:1e10,   text:"Goal: Reach low Earth orbit"},
+  {thr:1e12,   text:"Goal: Colonize the Moon with graphite"},
+  {thr:1e14,   text:"Goal: Write on the Sun"},
+  {thr:1e16,   text:"Goal: Span the Milky Way"},
+  {thr:1e17,   text:"Goal: Conquer the Observable Universe"},
+  {thr:1e18,   text:"Goal: Redefine reality in No. 2"}
+];
+
+const LAB_PROJECTS = [
+  {id:"graphite", name:"Improved Graphite", cost:5e4, time:60, desc:"+15% all production", effect:()=>{S.labBonus.prod*=1.15}},
+  {id:"eraser",   name:"Self-Healing Erasers", cost:2e6, time:120, desc:"+20% pencil value", effect:()=>{S.labBonus.val*=1.2}},
+  {id:"wood",     name:"Instant Cedar", cost:5e8, time:180, desc:"+25% helper output", effect:()=>{S.labBonus.helper*=1.25}},
+  {id:"quantum",  name:"Quantum Lead", cost:1e12, time:300, desc:"+30% all production", effect:()=>{S.labBonus.prod*=1.3}},
+  {id:"reality",  name:"Reality Ink", cost:5e15, time:480, desc:"+50% everything", effect:()=>{S.labBonus.prod*=1.5;S.labBonus.val*=1.5;S.labBonus.helper*=1.5}}
+];
+
 /* ---------- State ---------- */
-function fresh(){ return {made:0,cash:0,total:0,owned:H.map(()=>0),up:{},clicks:0,last:Date.now()}; }
+function fresh(){
+  return {
+    made:0,cash:0,total:0,owned:H.map(()=>0),up:{},clicks:0,last:Date.now(),
+    stocks:0, stockPrice:1, stockHist:[1,1,1,1,1,1,1,1],
+    accelEnergy:0,
+    labRP:0, labCurrent:null, labProgress:0, labDone:{},
+    labBonus:{prod:1,val:1,helper:1},
+    ships:0
+  };
+}
 function load(){
   try{
     const r = JSON.parse(localStorage.getItem(KEY));
-    if(r){ const f = Object.assign(fresh(),r); while(f.owned.length<H.length) f.owned.push(0); return f; }
+    if(r){
+      const f = Object.assign(fresh(),r);
+      while(f.owned.length<H.length) f.owned.push(0);
+      if(!f.labBonus) f.labBonus={prod:1,val:1,helper:1};
+      if(!f.stockHist) f.stockHist=[1,1,1,1,1,1,1,1];
+      if(!f.labDone) f.labDone={};
+      return f;
+    }
   }catch(e){}
   return fresh();
 }
 function save(){ S.last = Date.now(); try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} }
 let S = load();
-const B = {frenzy:0, click:0};   // active buff timers (seconds)
+const B = {frenzy:0, click:0};
 let mode = "1";
+let openSys = null;
+
 /* ---------- Helpers ---------- */
 const $ = s => document.querySelector(s);
-const SUF = ["","K","M","B","T","Qa","Qi","Sx","Sp","Oc","No","Dc"];
+const SUF = ["","K","M","B","T","Qa","Qi","Sx","Sp","Oc","No","Dc","Ud","Dd","Td","Qad","Qid","Sxd","Spd","Ocd","Nod","Vg"];
 function fmt(n){
-  if(!isFinite(n)) return "∞";
+  if(!isFinite(n)||n<0) return "∞";
   if(n<1000) return (n<10 ? n.toFixed(1).replace(/\.0$/,"") : String(Math.floor(n)));
   const e = Math.min(Math.floor(Math.log10(n)/3), SUF.length-1);
   const v = n/Math.pow(10,3*e);
   return v.toFixed(v<10?2:v<100?1:0)+SUF[e];
 }
 function money(n){ return n<1000 ? "$"+n.toFixed(2) : "$"+fmt(n); }
+
+function unlocked(sys){
+  if(S.up[sys+"Unlock"]) return true;
+  if(sys==="stocks" && S.total>=20000) return true;
+  if(sys==="lab" && S.total>=1e5) return true;
+  if(sys==="accel" && S.total>=3e6) return true;
+  if(sys==="ship" && S.total>=5e8) return true;
+  return false;
+}
+
 function calc(){
   let clickMult=1, pct=0, valMult=1, gMult=1;
   const hm = H.map(()=>1);
+  let stockDivMult=1, accelEff=1;
   for(const u of U){
     if(!S.up[u.id]) continue;
     if(u.kind==="click") clickMult*=u.val;
@@ -333,12 +601,19 @@ function calc(){
     else if(u.kind==="value") valMult*=u.val;
     else if(u.kind==="global") gMult*=u.val;
     else if(u.kind==="helper") hm[u.h]*=u.val;
+    else if(u.kind==="stockDiv") stockDivMult*=u.val;
+    else if(u.kind==="accelEff") accelEff*=u.val;
   }
   let base=0;
   H.forEach((h,i)=>{ base += S.owned[i]*h.pps*hm[i]; });
-  const pps = base*gMult*(B.frenzy>0?7:1);
-  const clickVal = clickMult*(B.click>0?10:1) + pct*pps;
-  return {pps,clickVal,valMult,hm,gMult};
+  base *= S.labBonus.helper;
+  const accelMult = 1 + (S.accelEnergy/100)*accelEff;
+  const shipMult = 1 + S.ships*0.08;
+  const pps = base * gMult * S.labBonus.prod * accelMult * (B.frenzy>0?7:1);
+  const clickVal = (clickMult*(B.click>0?10:1) + pct*pps);
+  valMult *= S.labBonus.val * shipMult;
+  const stockDiv = S.stocks * S.stockPrice * 0.002 * stockDivMult;
+  return {pps,clickVal,valMult,hm,gMult,accelMult,shipMult,stockDiv};
 }
 function earn(n,C){ S.made+=n; const c=n*C.valMult; S.cash+=c; S.total+=c; }
 function costN(i,n){
@@ -349,15 +624,89 @@ function qty(i){
   if(mode==="max"){ let n=0; while(n<500 && costN(i,n+1)<=S.cash) n++; return Math.max(n,1); }
   return parseInt(mode,10);
 }
+
+/* ---------- Theme ---------- */
+function updateTheme(){
+  const m = S.made;
+  document.body.classList.remove("theme-space","theme-quantum","theme-cosmic");
+  if(m >= 1e16) document.body.classList.add("theme-cosmic");
+  else if(m >= 1e13) document.body.classList.add("theme-quantum");
+  else if(m >= 1e10) document.body.classList.add("theme-space");
+  let g = GOALS[0];
+  for(const goal of GOALS) if(S.made >= goal.thr) g = goal;
+  const next = GOALS.find(x=>x.thr > S.made);
+  $("#goal").textContent = next ? g.text + "  →  next: "+fmt(next.thr) : g.text;
+}
+
 /* ---------- Ticker ---------- */
 let newsHold = 0;
 function say(t,hold){ $("#ticker").textContent=t; newsHold=hold||8; }
 function rotateNews(){
   if(newsHold>0) return;
   const pool = NEWS.filter(n=>S.made>=n[0]);
-  const recent = pool.slice(-3);
+  const recent = pool.slice(-4);
   $("#ticker").textContent = recent[Math.floor(Math.random()*recent.length)][1];
 }
+
+/* ---------- Systems UI ---------- */
+function setSys(name){
+  openSys = openSys===name ? null : name;
+  ["stocks","accel","lab","ship"].forEach(s=>{
+    const btn = $("#btn"+s.charAt(0).toUpperCase()+s.slice(1));
+    const pan = $("#panel"+s.charAt(0).toUpperCase()+s.slice(1));
+    if(btn) btn.classList.toggle("on", openSys===s);
+    if(pan) pan.classList.toggle("open", openSys===s);
+  });
+}
+
+function renderStocks(C){
+  $("#stockPrice").textContent = money(S.stockPrice);
+  $("#stockOwned").textContent = fmt(S.stocks);
+  $("#stockDiv").textContent = money(C.stockDiv)+"/s";
+  const chart = $("#stockChart");
+  if(chart.children.length !== S.stockHist.length){
+    chart.innerHTML = S.stockHist.map(()=>'<div class="bar"></div>').join("");
+  }
+  const max = Math.max(...S.stockHist, 0.01);
+  chart.querySelectorAll(".bar").forEach((b,i)=>{
+    b.style.height = Math.max(4, (S.stockHist[i]/max)*48) + "px";
+  });
+}
+function renderAccel(C){
+  $("#accelEnergy").textContent = fmt(S.accelEnergy)+" GeV";
+  $("#accelRate").textContent = C.accelMult.toFixed(2)+"×";
+  $("#accelCool").textContent = S.accelEnergy>500 ? "Critical" : S.accelEnergy>200 ? "Warm" : "Stable";
+}
+function renderLab(){
+  $("#labRP").textContent = fmt(S.labRP);
+  if(S.labCurrent){
+    const p = LAB_PROJECTS.find(x=>x.id===S.labCurrent);
+    $("#labProject").textContent = p ? p.name : "—";
+    const pct = Math.min(100, (S.labProgress/(p?p.time:1))*100);
+    $("#labProg").textContent = pct.toFixed(0)+"%";
+  } else {
+    $("#labProject").textContent = "None";
+    $("#labProg").textContent = "—";
+  }
+  const box = $("#labOptions");
+  let html = "";
+  LAB_PROJECTS.forEach(p=>{
+    if(S.labDone[p.id]) return;
+    const busy = !!S.labCurrent;
+    const can = S.cash >= p.cost && !busy;
+    html += `<div class="row"><span>${p.name} <small style="opacity:.7">(${p.desc})</small></span>
+      <button class="act" data-lab="${p.id}" ${can?"":"disabled"} style="${can?"":"opacity:.5"}">${money(p.cost)}</button></div>`;
+  });
+  if(!html) html = '<div class="empty">All research complete.</div>';
+  if(box.dataset.h !== html){ box.innerHTML = html; box.dataset.h = html; }
+}
+function renderShip(C){
+  $("#shipFleet").textContent = S.ships;
+  const reaches = ["Local","Continental","Planetary","Orbital","Interplanetary","Interstellar","Galactic","Universal"];
+  $("#shipReach").textContent = reaches[Math.min(S.ships, reaches.length-1)] || "Universal";
+  $("#shipBonus").textContent = C.shipMult.toFixed(2)+"×";
+}
+
 /* ---------- Building the UI ---------- */
 const helperEls = [];
 function buildHelpers(){
@@ -381,7 +730,9 @@ let upKey="";
 function visibleUpgrades(){
   return U.filter(u=>{
     if(S.up[u.id]) return false;
-    return u.kind==="helper" ? S.owned[u.h]>=u.thr : S.total>=u.cost*0.25;
+    if(u.kind==="unlock") return S.total >= u.cost*0.15;
+    if(u.kind==="helper") return S.owned[u.h]>=u.thr;
+    return S.total>=u.cost*0.2;
   });
 }
 function renderUpgrades(){
@@ -390,7 +741,7 @@ function renderUpgrades(){
   const box=$("#upgrades");
   if(key!==upKey){
     upKey=key; box.innerHTML="";
-    if(!vis.length){ box.innerHTML='<div class="empty">No upgrades yet. Keep making pencils and they will show up here.</div>'; }
+    if(!vis.length){ box.innerHTML='<div class="empty">No upgrades available. Keep producing.</div>'; }
     vis.forEach(u=>{
       const b=document.createElement("button");
       b.className="item"; b.dataset.id=u.id;
@@ -404,37 +755,49 @@ function renderUpgrades(){
   }
   box.querySelectorAll(".item").forEach(el=>{
     const u=U.find(x=>x.id===el.dataset.id);
-    el.classList.toggle("afford", S.cash>=u.cost);
+    if(u) el.classList.toggle("afford", S.cash>=u.cost);
   });
 }
 function render(){
   const C=calc();
   $("#cash").textContent=money(S.cash);
   $("#made").textContent=fmt(Math.floor(S.made));
-  $("#rates").textContent=fmt(C.pps)+" pencils/sec  ·  "+money(C.valMult)+" per pencil  ·  "+money(C.pps*C.valMult)+"/sec";
-  document.title=fmt(Math.floor(S.made))+" pencils - Pencil Factory";
+  $("#rates").textContent=fmt(C.pps)+" /sec  ·  "+money(C.valMult)+" each  ·  "+money(C.pps*C.valMult + C.stockDiv)+"/sec";
+  document.title=fmt(Math.floor(S.made))+" pencils — Pencil Factory";
   H.forEach((h,i)=>{
     const e=helperEls[i];
-    const show = i===0 || S.owned[i]>0 || S.owned[i-1]>0 || S.total>=h.cost*0.3;
+    const show = i===0 || S.owned[i]>0 || S.owned[i-1]>0 || S.total>=h.cost*0.25;
     e.el.style.display = show ? "" : "none";
     const n=qty(i), c=costN(i,n);
     e.own.textContent=S.owned[i];
-    e.cost.textContent=(n>1?"x"+n+": ":"")+money(c);
-    e.rate.textContent=fmt(h.pps*C.hm[i]*C.gMult)+" pencils/sec each";
+    e.cost.textContent=(n>1?"×"+n+": ":"")+money(c);
+    e.rate.textContent=fmt(h.pps*C.hm[i]*C.gMult*S.labBonus.helper*(1+(S.accelEnergy/100)))+" /sec each";
     e.el.classList.toggle("afford", S.cash>=c);
   });
   renderUpgrades();
-  // buffs
+  updateTheme();
   let bt="";
   if(B.frenzy>0) bt+='<span class="buff">Frenzy ×7 · '+Math.ceil(B.frenzy)+'s</span>';
   if(B.click>0)  bt+='<span class="buff">Click Rush ×10 · '+Math.ceil(B.click)+'s</span>';
   if($("#buffs").dataset.t!==bt){ $("#buffs").innerHTML=bt; $("#buffs").dataset.t=bt; }
-  // floor
   let fl="";
-  H.forEach((h,i)=>{ if(S.owned[i]>0) fl+='<span class="grp" title="'+h.name+' x'+S.owned[i]+'">'+h.ico.repeat(Math.min(S.owned[i],8))+(S.owned[i]>8?"<small> +"+(S.owned[i]-8)+"</small>":"")+'</span>'; });
+  H.forEach((h,i)=>{ if(S.owned[i]>0) fl+='<span class="grp" title="'+h.name+' ×'+S.owned[i]+'">'+h.ico.repeat(Math.min(S.owned[i],6))+(S.owned[i]>6?"<small>+"+(S.owned[i]-6)+"</small>":"")+'</span>'; });
   if(!fl) fl='<span class="floor-empty">Empty. Buy a helper to fill it up.</span>';
   if($("#floor").dataset.t!==fl){ $("#floor").innerHTML=fl; $("#floor").dataset.t=fl; }
+  if(openSys==="stocks") renderStocks(C);
+  if(openSys==="accel") renderAccel(C);
+  if(openSys==="lab") renderLab();
+  if(openSys==="ship") renderShip(C);
+  ["stocks","accel","lab","ship"].forEach(s=>{
+    const btn = $("#btn"+s.charAt(0).toUpperCase()+s.slice(1));
+    if(btn){
+      const ok = unlocked(s);
+      btn.style.opacity = ok ? "1" : ".4";
+      btn.style.pointerEvents = ok ? "" : "none";
+    }
+  });
 }
+
 /* ---------- Clicking ---------- */
 const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
 function floatText(x,y,t){
@@ -452,8 +815,9 @@ $("#make").addEventListener("click",e=>{
   floatText(x,y,"+"+fmt(C.clickVal));
   if(!reduce) $("#pencil").animate([{transform:"scale(1)"},{transform:"scale(.93) rotate(-2deg)"},{transform:"scale(1)"}],{duration:120});
 });
+
 /* ---------- Golden pencil ---------- */
-let goldenIn = 45+Math.random()*60, goldenEl=null;
+let goldenIn = 40+Math.random()*50, goldenEl=null;
 function spawnGolden(){
   const b=document.createElement("button");
   b.className="golden"; b.textContent="✏️"; b.setAttribute("aria-label","Golden pencil bonus");
@@ -464,25 +828,90 @@ function spawnGolden(){
 }
 function clickGolden(){
   const C=calc(), r=Math.random();
-  if(r<0.45){ B.frenzy=30; say("Frenzy! Production is 7× for 30 seconds.",10); }
-  else if(r<0.8){ const g=Math.max(C.pps*C.valMult*600,20); S.cash+=g; S.total+=g; say("Big order! You got "+money(g)+" in bulk sales.",10); }
-  else { B.click=15; say("Click rush! Your clicks are 10× for 15 seconds.",10); }
+  if(r<0.4){ B.frenzy=30; say("Frenzy! Production is 7× for 30 seconds.",10); }
+  else if(r<0.75){ const g=Math.max(C.pps*C.valMult*500,25); S.cash+=g; S.total+=g; say("Big order! +"+money(g)+" in bulk sales.",10); }
+  else { B.click=15; say("Click rush! Clicks are 10× for 15 seconds.",10); }
 }
+
+/* ---------- System actions ---------- */
+$("#btnStocks").addEventListener("click",()=>setSys("stocks"));
+$("#btnAccel").addEventListener("click",()=>setSys("accel"));
+$("#btnLab").addEventListener("click",()=>setSys("lab"));
+$("#btnShip").addEventListener("click",()=>setSys("ship"));
+
+$("#buyStock").addEventListener("click",()=>{
+  const price = S.stockPrice;
+  if(S.cash < price) return;
+  S.cash -= price; S.stocks += 1; save();
+});
+$("#sellStock").addEventListener("click",()=>{
+  if(S.stocks < 1) return;
+  S.stocks -= 1; S.cash += S.stockPrice; save();
+});
+$("#fireAccel").addEventListener("click",()=>{
+  const cost = 50 + S.accelEnergy*8;
+  if(S.cash < cost) return;
+  S.cash -= cost;
+  S.accelEnergy += 5 + Math.floor(S.accelEnergy*0.02);
+  save();
+});
+$("#buyShip").addEventListener("click",()=>{
+  const cost = 1e9 * Math.pow(3.2, S.ships);
+  if(S.cash < cost) return;
+  S.cash -= cost; S.ships += 1; save();
+});
+$("#labOptions").addEventListener("click",e=>{
+  const btn = e.target.closest("[data-lab]");
+  if(!btn || S.labCurrent) return;
+  const p = LAB_PROJECTS.find(x=>x.id===btn.dataset.lab);
+  if(!p || S.cash < p.cost || S.labDone[p.id]) return;
+  S.cash -= p.cost;
+  S.labCurrent = p.id;
+  S.labProgress = 0;
+  save();
+  renderLab();
+});
+
 /* ---------- Main loop ---------- */
-let last=performance.now(), saveT=0, newsT=0;
+let last=performance.now(), saveT=0, newsT=0, stockT=0;
 setInterval(()=>{
   const now=performance.now();
   const dt=Math.min((now-last)/1000,60); last=now;
   const C=calc();
   earn(C.pps*dt,C);
+  S.cash += C.stockDiv * dt;
+  S.total += C.stockDiv * dt;
   B.frenzy=Math.max(0,B.frenzy-dt); B.click=Math.max(0,B.click-dt);
+  if(S.labCurrent){
+    const p = LAB_PROJECTS.find(x=>x.id===S.labCurrent);
+    let speed = 1;
+    if(S.up.labSpeed) speed *= 1.5;
+    S.labProgress += dt * speed;
+    if(p && S.labProgress >= p.time){
+      p.effect();
+      S.labDone[p.id] = 1;
+      S.labRP += 1;
+      say("Research complete: "+p.name+" — "+p.desc, 10);
+      S.labCurrent = null;
+      S.labProgress = 0;
+    }
+  }
+  stockT += dt;
+  if(stockT >= 3){
+    stockT = 0;
+    const drift = (Math.random()-0.48)*0.06 + Math.min(C.pps/1e8, 0.03);
+    S.stockPrice = Math.max(0.2, S.stockPrice * (1+drift));
+    S.stockHist.push(S.stockPrice);
+    if(S.stockHist.length > 12) S.stockHist.shift();
+  }
   if(newsHold>0) newsHold-=dt;
   newsT+=dt; if(newsT>=9){ newsT=0; rotateNews(); }
-  if(!goldenEl){ goldenIn-=dt; if(goldenIn<=0){ spawnGolden(); goldenIn=50+Math.random()*70; } }
+  if(!goldenEl){ goldenIn-=dt; if(goldenIn<=0){ spawnGolden(); goldenIn=45+Math.random()*60; } }
   saveT+=dt; if(saveT>=5){ saveT=0; save(); }
   render();
 },100);
 window.addEventListener("beforeunload",save);
+
 /* ---------- Controls ---------- */
 $("#mode").addEventListener("click",e=>{
   const b=e.target.closest("button"); if(!b) return;
@@ -491,9 +920,28 @@ $("#mode").addEventListener("click",e=>{
 });
 $("#reset").addEventListener("click",()=>{
   if(confirm("Reset the factory and start over? This can't be undone.")){
-    S=fresh(); B.frenzy=0; B.click=0; upKey=""; save(); say("A fresh start. The first pencil is on the house.");
+    S=fresh(); B.frenzy=0; B.click=0; upKey=""; openSys=null; save();
+    say("A fresh start. The first pencil is on the house.");
+    setSys(null);
   }
 });
+
+/* ---------- Particles ---------- */
+function spawnParticles(){
+  if(S.made < 1e10) return;
+  if(document.querySelectorAll(".particle").length > 18) return;
+  const p = document.createElement("div");
+  p.className = "particle";
+  const size = 1+Math.random()*2;
+  p.style.width = size+"px"; p.style.height = size+"px";
+  p.style.left = Math.random()*100+"vw";
+  p.style.bottom = "-5px";
+  p.style.animationDuration = (8+Math.random()*14)+"s";
+  document.body.appendChild(p);
+  setTimeout(()=>p.remove(), 22000);
+}
+setInterval(spawnParticles, 1200);
+
 /* ---------- Init ---------- */
 buildHelpers();
 (function offline(){
@@ -505,6 +953,7 @@ buildHelpers();
   rotateNews(); say(NEWS[0][1],6);
 })();
 render();
+setSys(null);
 </script>
 </body>
 </html>
