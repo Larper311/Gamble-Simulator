@@ -2,88 +2,372 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pencil Factory — Realistic</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pencil Factory — Autumn Workshop</title>
 <style>
-:root{
-  --bg:#f0ebe0;--card:#faf7f0;--ink:#1a1612;--muted:#6b5e4e;
-  --acc:#b8860b;--acc2:#d4a017;--good:#2d6a4f;--bad:#9b2226;--pink:#c45a62;
-  --border:#1a1612;--shadow:rgba(26,22,18,.25);
+:root {
+  --bg: #f3e9d8;
+  --card: #faf3e6;
+  --ink: #2c2118;
+  --muted: #7a654e;
+  --acc: #c4782a;
+  --acc2: #e09a45;
+  --good: #3d6b4f;
+  --bad: #a33c2e;
+  --border: #3a2e22;
+  --shadow: rgba(60, 40, 20, 0.22);
 }
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-  min-height:100vh;font-family:Georgia,"Palatino Linotype",serif;color:var(--ink);
-  background:var(--bg);
-  background-image:linear-gradient(rgba(160,140,100,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(160,140,100,.18) 1px,transparent 1px);
-  background-size:28px 28px;
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  min-height: 100vh;
+  font-family: Georgia, "Palatino Linotype", serif;
+  color: var(--ink);
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse at 20% 30%, rgba(210, 140, 60, 0.18), transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(180, 90, 40, 0.12), transparent 45%),
+    linear-gradient(160deg, #f7efe0 0%, #efe0c8 40%, #e8d4b0 100%);
+  background-size: 100% 100%, 100% 100%, 200% 200%;
+  animation: bgShift 90s ease-in-out infinite alternate;
+  overflow-x: hidden;
 }
-header{max-width:1400px;margin:0 auto;padding:12px 14px 0;border-bottom:3px double var(--border)}
-h1{font-size:clamp(18px,3vw,26px);font-weight:400;letter-spacing:1.2px;text-transform:uppercase}
-h1 small{display:block;font-size:.62em;color:var(--acc);margin-top:2px}
-#ticker{margin-top:7px;padding:6px 10px;background:var(--ink);color:var(--bg);border:1px solid var(--acc);font-size:12.5px;font-style:italic;min-height:32px}
-.wrap{max-width:1400px;margin:0 auto;padding:10px;display:grid;gap:10px;grid-template-columns:minmax(280px,1fr) minmax(320px,1.2fr) minmax(300px,1fr);align-items:start}
-@media(max-width:1100px){.wrap{grid-template-columns:1fr}}
-.panel{background:var(--card);border:3px solid var(--border);border-radius:3px;padding:10px 12px;box-shadow:4px 4px 0 var(--shadow);position:relative}
-.panel::before{content:"";position:absolute;inset:3px;border:1px solid color-mix(in srgb,var(--border) 25%,transparent);pointer-events:none}
-.panel h2{font-size:13px;letter-spacing:1.1px;text-transform:uppercase;font-weight:400;border-bottom:2px solid var(--acc);display:inline-block;padding-bottom:2px;margin-bottom:8px}
-.scroll{max-height:52vh;overflow-y:auto;padding-right:3px}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px}
-.stat small{display:block;font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px}
-.stat b{font-size:18px;font-weight:400;line-height:1.1;word-break:break-all}
-.stat.big b{font-size:22px}
-.rates{font-size:11px;color:var(--muted);border-top:1px solid color-mix(in srgb,var(--border) 30%,transparent);padding-top:4px;margin:2px 0 6px}
-.make{display:block;width:100%;margin:6px 0;padding:10px 6px 8px;background:color-mix(in srgb,var(--acc) 14%,var(--card));border:3px solid var(--border);border-radius:3px;cursor:pointer;font:inherit;color:inherit;text-align:center;box-shadow:3px 3px 0 var(--shadow);user-select:none;transition:transform .07s,background .12s}
-.make:hover{background:color-mix(in srgb,var(--acc) 26%,var(--card))}
-.make:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--shadow)}
-.make svg{width:100%;max-width:240px;height:auto;display:block;margin:0 auto 4px}
-.make span{font-size:14px;letter-spacing:1px;text-transform:uppercase}
-.mode{display:flex;gap:4px;margin-bottom:6px;align-items:center;font-size:11px;text-transform:uppercase}
-.mode button,.sysbtn,.act{font:inherit;border:2px solid var(--border);background:var(--card);border-radius:2px;padding:3px 9px;cursor:pointer;box-shadow:2px 2px 0 var(--shadow);color:inherit}
-.mode button.on,.sysbtn.on{background:var(--acc);color:var(--bg);font-weight:700}
-.item{display:flex;gap:7px;align-items:center;width:100%;text-align:left;font:inherit;color:inherit;border:2px solid var(--border);background:var(--card);padding:5px 7px;margin-bottom:4px;border-radius:2px;cursor:pointer;box-shadow:2px 2px 0 var(--shadow)}
-.item.afford{background:color-mix(in srgb,var(--acc) 12%,var(--card))}
-.item:not(.afford){opacity:.4;cursor:not-allowed}
-.ico{font-size:18px;width:26px;text-align:center;flex:none}
-.mid{flex:1;min-width:0}
-.mid b{display:block;font-size:12.5px;font-weight:400}
-.mid small{display:block;font-size:10px;color:var(--muted);line-height:1.2}
-.right{text-align:right;flex:none}
-.own{display:block;font-size:15px}
-.cost{font-size:10.5px;font-weight:700;color:var(--acc)}
-.empty{font-size:11px;color:var(--muted);font-style:italic;padding:4px 0}
-.reset{margin-top:8px;font:inherit;font-size:10px;background:none;border:2px solid var(--border);border-radius:2px;padding:3px 8px;cursor:pointer;text-transform:uppercase;color:var(--muted)}
-.sysrow{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:6px}
-.sysbtn{padding:5px 2px;font-size:11px;text-align:center}
-.syspanel{display:none;margin:6px 0;padding:8px;border:2px solid var(--border);border-radius:2px;background:color-mix(in srgb,var(--bg) 65%,var(--card));font-size:11.5px}
-.syspanel.open{display:block}
-.syspanel h3{font-size:11.5px;letter-spacing:.9px;text-transform:uppercase;font-weight:400;margin-bottom:6px;color:var(--acc)}
-.syspanel .row{display:flex;justify-content:space-between;align-items:center;margin:3px 0;gap:4px;flex-wrap:wrap}
-.syspanel .act{padding:2px 7px;font-size:10.5px}
-.meter{height:12px;background:rgba(0,0,0,.15);border:2px solid var(--border);border-radius:2px;overflow:hidden;margin:5px 0}
-.meter>div{height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));width:0%;transition:width .25s}
-.fl{position:fixed;pointer-events:none;font-weight:700;font-size:16px;color:var(--ink);text-shadow:0 0 4px #fff,0 0 6px var(--acc);animation:up .95s ease-out forwards;z-index:80}
-@keyframes up{to{opacity:0;transform:translateY(-55px)}}
-.money-pop{position:fixed;pointer-events:none;font-weight:700;font-size:15px;z-index:90;animation:moneyUp 1.1s ease-out forwards}
-@keyframes moneyUp{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-60px) scale(1.15)}}
-.order{border:2px solid var(--border);padding:6px 8px;margin-bottom:5px;border-radius:2px;background:var(--card);font-size:11px}
-.order.good{border-color:var(--good)}
-.order button{margin-top:4px;margin-right:4px}
-.slider-row{display:flex;align-items:center;gap:8px;margin:4px 0}
-input[type=range]{flex:1}
-.demand-bar{height:10px;background:#ddd;border:1px solid var(--border);border-radius:2px;overflow:hidden;margin:3px 0}
-.demand-bar>div{height:100%;background:var(--good);transition:width .3s}
-.neg{color:var(--bad)}
-.pos{color:var(--good)}
-button:focus-visible,.item:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+
+@keyframes bgShift {
+  0% { background-position: 0% 0%, 0% 0%, 0% 0%; }
+  100% { background-position: 0% 0%, 0% 0%, 100% 50%; }
+}
+
+/* gentle floating leaves */
+.leaf {
+  position: fixed;
+  pointer-events: none;
+  font-size: 18px;
+  opacity: 0.35;
+  z-index: 0;
+  animation: fall linear infinite;
+}
+@keyframes fall {
+  0% { transform: translateY(-10vh) rotate(0deg); opacity: 0.4; }
+  100% { transform: translateY(110vh) rotate(360deg); opacity: 0.1; }
+}
+
+header {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 14px 16px 0;
+  border-bottom: 3px double var(--border);
+  position: relative;
+  z-index: 2;
+}
+h1 {
+  font-size: clamp(20px, 3.2vw, 28px);
+  font-weight: 400;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+h1 small {
+  display: block;
+  font-size: 0.62em;
+  color: var(--acc);
+  margin-top: 3px;
+  letter-spacing: 1px;
+}
+#ticker {
+  margin-top: 8px;
+  padding: 7px 12px;
+  background: var(--ink);
+  color: #f5e9d5;
+  border: 1px solid var(--acc);
+  font-size: 13px;
+  font-style: italic;
+  min-height: 34px;
+}
+
+.wrap {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 12px;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: minmax(290px, 1fr) minmax(340px, 1.25fr) minmax(300px, 1fr);
+  align-items: start;
+  position: relative;
+  z-index: 2;
+}
+@media (max-width: 1100px) {
+  .wrap { grid-template-columns: 1fr; }
+}
+
+.panel {
+  background: var(--card);
+  border: 3px solid var(--border);
+  border-radius: 4px;
+  padding: 12px 14px;
+  box-shadow: 5px 5px 0 var(--shadow);
+  position: relative;
+}
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid color-mix(in srgb, var(--border) 22%, transparent);
+  pointer-events: none;
+  border-radius: 2px;
+}
+.panel h2 {
+  font-size: 13.5px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  font-weight: 400;
+  border-bottom: 2px solid var(--acc);
+  display: inline-block;
+  padding-bottom: 2px;
+  margin-bottom: 9px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+.stat small {
+  display: block;
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+}
+.stat b {
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.15;
+  word-break: break-all;
+}
+.stat.big b { font-size: 23px; }
+.pos { color: var(--good); }
+.neg { color: var(--bad); }
+
+.rates {
+  font-size: 11.5px;
+  color: var(--muted);
+  border-top: 1px solid color-mix(in srgb, var(--border) 28%, transparent);
+  padding-top: 5px;
+  margin: 3px 0 8px;
+}
+
+.make {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  padding: 11px 6px 9px;
+  background: color-mix(in srgb, var(--acc) 15%, var(--card));
+  border: 3px solid var(--border);
+  border-radius: 3px;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  text-align: center;
+  box-shadow: 3px 3px 0 var(--shadow);
+  user-select: none;
+  transition: transform 0.07s, background 0.12s;
+}
+.make:hover { background: color-mix(in srgb, var(--acc) 28%, var(--card)); }
+.make:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 var(--shadow); }
+.make svg {
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  display: block;
+  margin: 0 auto 5px;
+}
+.make span {
+  font-size: 14.5px;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+}
+
+.slider-row { display: flex; align-items: center; gap: 10px; margin: 5px 0; }
+input[type=range] { flex: 1; accent-color: var(--acc); }
+
+.demand-bar {
+  height: 11px;
+  background: #e5d5b8;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 4px 0 6px;
+}
+.demand-bar > div {
+  height: 100%;
+  background: var(--good);
+  transition: width 0.35s ease;
+}
+
+.meter {
+  height: 13px;
+  background: rgba(0,0,0,0.12);
+  border: 2px solid var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 5px 0;
+}
+.meter > div {
+  height: 100%;
+  background: linear-gradient(90deg, var(--acc), var(--acc2));
+  width: 0%;
+  transition: width 0.25s;
+}
+
+.mode {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 7px;
+  align-items: center;
+  font-size: 11.5px;
+  text-transform: uppercase;
+}
+.mode button, .sysbtn, .act {
+  font: inherit;
+  border: 2px solid var(--border);
+  background: var(--card);
+  border-radius: 2px;
+  padding: 3px 10px;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--shadow);
+  color: inherit;
+}
+.mode button.on, .sysbtn.on {
+  background: var(--acc);
+  color: #fff;
+  font-weight: 700;
+}
+
+.item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  border: 2px solid var(--border);
+  background: var(--card);
+  padding: 6px 8px;
+  margin-bottom: 5px;
+  border-radius: 2px;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--shadow);
+}
+.item.afford { background: color-mix(in srgb, var(--acc) 13%, var(--card)); }
+.item:not(.afford) { opacity: 0.42; cursor: not-allowed; }
+.ico { font-size: 19px; width: 28px; text-align: center; flex: none; }
+.mid { flex: 1; min-width: 0; }
+.mid b { display: block; font-size: 13px; font-weight: 400; }
+.mid small { display: block; font-size: 10.5px; color: var(--muted); line-height: 1.25; }
+.right { text-align: right; flex: none; }
+.own { display: block; font-size: 16px; }
+.cost { font-size: 11px; font-weight: 700; color: var(--acc); }
+
+.order {
+  border: 2px solid var(--border);
+  padding: 7px 9px;
+  margin-bottom: 6px;
+  border-radius: 3px;
+  background: var(--card);
+  font-size: 12px;
+}
+.order.can { border-color: var(--good); background: color-mix(in srgb, var(--good) 8%, var(--card)); }
+.order button { margin-top: 5px; margin-right: 5px; }
+
+.sysrow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  margin-bottom: 7px;
+}
+.sysbtn { padding: 6px 3px; font-size: 11.5px; text-align: center; }
+.syspanel {
+  display: none;
+  margin: 7px 0;
+  padding: 9px;
+  border: 2px solid var(--border);
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--bg) 60%, var(--card));
+  font-size: 12px;
+}
+.syspanel.open { display: block; }
+.syspanel h3 {
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 400;
+  margin-bottom: 7px;
+  color: var(--acc);
+}
+.syspanel .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 4px 0;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.scroll { max-height: 42vh; overflow-y: auto; padding-right: 4px; }
+.empty { font-size: 12px; color: var(--muted); font-style: italic; padding: 6px 0; }
+
+.reset {
+  margin-top: 10px;
+  font: inherit;
+  font-size: 10.5px;
+  background: none;
+  border: 2px solid var(--border);
+  border-radius: 2px;
+  padding: 3px 9px;
+  cursor: pointer;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.fl, .money-pop {
+  position: fixed;
+  pointer-events: none;
+  font-weight: 700;
+  z-index: 100;
+  text-shadow: 0 0 5px #fff;
+}
+.fl {
+  font-size: 16px;
+  color: var(--ink);
+  animation: up 0.95s ease-out forwards;
+}
+.money-pop {
+  font-size: 15px;
+  animation: moneyUp 1.15s ease-out forwards;
+}
+@keyframes up { to { opacity: 0; transform: translateY(-52px); } }
+@keyframes moneyUp {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-65px) scale(1.12); }
+}
+
+button:focus-visible, .item:focus-visible {
+  outline: 3px solid #c45a62;
+  outline-offset: 2px;
+}
 </style>
 </head>
 <body>
 <header>
-  <h1>Pencil Factory <small id="era">Small Workshop</small></h1>
-  <div id="ticker">Local demand is quiet. Set a fair price.</div>
+  <h1>Pencil Factory <small id="era">Autumn Workshop</small></h1>
+  <div id="ticker">The cedar smells good this morning. Set a fair price and the orders will come.</div>
 </header>
+
 <div class="wrap">
-  <!-- LEFT: Production + Pricing + Inventory -->
+  <!-- LEFT -->
   <section class="panel">
     <h2>Production</h2>
     <div class="stats">
@@ -97,43 +381,48 @@ button:focus-visible,.item:focus-visible{outline:3px solid var(--pink);outline-o
     <div class="rates" id="rates"></div>
 
     <button class="make" id="make">
-      <svg viewBox="0 0 300 72"><g stroke="currentColor" stroke-width="2.2" stroke-linejoin="round">
-        <rect x="5" y="12" width="30" height="48" rx="7" fill="#c45a62"/><rect x="35" y="12" width="24" height="48" fill="#8a9098"/>
-        <rect x="59" y="12" width="175" height="48" fill="#d4a017"/><polygon points="234,12 234,60 280,36" fill="#c4a06a"/>
-        <polygon points="268,30 268,42 280,36" fill="currentColor"/></g>
-        <rect x="60" y="13.5" width="173" height="9" fill="#e8c84a"/><rect x="60" y="49.5" width="173" height="9" fill="#b8860b"/>
+      <svg viewBox="0 0 300 72">
+        <g stroke="currentColor" stroke-width="2.2" stroke-linejoin="round">
+          <rect x="5" y="12" width="30" height="48" rx="7" fill="#c45a62"/>
+          <rect x="35" y="12" width="24" height="48" fill="#8a9098"/>
+          <rect x="59" y="12" width="175" height="48" fill="#d4a017"/>
+          <polygon points="234,12 234,60 280,36" fill="#c4a06a"/>
+          <polygon points="268,30 268,42 280,36" fill="currentColor"/>
+        </g>
+        <rect x="60" y="13.5" width="173" height="9" fill="#e8c84a"/>
+        <rect x="60" y="49.5" width="173" height="9" fill="#b8860b"/>
         <text x="118" y="42" font-family="Georgia" font-size="15" font-weight="bold" fill="currentColor">No. 2</text>
       </svg>
       <span>Forge Pencil</span>
     </button>
 
-    <h2 style="margin-top:10px">Pricing & Demand</h2>
-    <div class="row" style="font-size:12px;margin-bottom:4px">
-      <span>Your price</span>
-      <b id="priceDisp">$0.25</b>
+    <h2 style="margin-top:12px">Pricing & Demand</h2>
+    <div style="font-size:13px;margin-bottom:3px">
+      Your price: <b id="priceDisp">$0.25</b>
     </div>
     <div class="slider-row">
-      <input type="range" id="priceSlider" min="5" max="5000" value="25" step="5">
+      <input type="range" id="priceSlider" min="5" max="8000" value="25" step="5">
     </div>
-    <div style="font-size:11px;margin:3px 0">Market avg: <b id="marketPrice">$0.22</b></div>
-    <div style="font-size:11px">Demand at your price: <b id="demandPct">100%</b></div>
+    <div style="font-size:12px">Market average: <b id="marketPrice">$0.22</b></div>
+    <div style="font-size:12px;margin-top:4px">Demand at your price: <b id="demandPct">100%</b></div>
     <div class="demand-bar"><div id="demandBar" style="width:100%"></div></div>
-    <div style="font-size:11px;margin-top:4px">Projected daily sales: <b id="projSales">0</b></div>
+    <div style="font-size:12px">Projected sales: <b id="projSales">0</b> / day</div>
 
-    <h2 style="margin-top:10px">Warehouse</h2>
-    <div style="font-size:12px">Capacity: <b id="cap">500</b> · Used: <b id="used">0</b></div>
+    <h2 style="margin-top:12px">Warehouse</h2>
+    <div style="font-size:12px">Capacity <b id="cap">600</b> · Used <b id="used">0</b></div>
     <div class="meter"><div id="capBar"></div></div>
-    <div style="font-size:11px;color:var(--muted)" id="invWarn"></div>
+    <div style="font-size:11.5px;color:var(--muted)" id="invWarn"></div>
   </section>
 
-  <!-- MIDDLE: Orders + Workforce -->
+  <!-- MIDDLE -->
   <section class="panel">
     <h2>Order Board</h2>
-    <div id="orders" class="scroll" style="max-height:280px"></div>
-    <div class="empty" id="noOrders">No open orders right now.</div>
+    <div id="orders" class="scroll" style="max-height:260px"></div>
+    <div class="empty" id="noOrders">Waiting for orders…</div>
 
-    <h2 style="margin-top:12px">Workforce</h2>
-    <div class="mode" id="mode">Qty:
+    <h2 style="margin-top:14px">Workforce</h2>
+    <div class="mode" id="mode">
+      Qty:
       <button data-m="1" class="on">1</button>
       <button data-m="10">10</button>
       <button data-m="100">100</button>
@@ -142,504 +431,636 @@ button:focus-visible,.item:focus-visible{outline:3px solid var(--pink);outline-o
     <div class="scroll" id="helpers"></div>
   </section>
 
-  <!-- RIGHT: Systems + Finance -->
+  <!-- RIGHT -->
   <section class="panel">
-    <h2>Command</h2>
+    <h2>Office</h2>
     <div class="sysrow">
-      <button class="sysbtn" id="bFinance">📊 Finance</button>
-      <button class="sysbtn" id="bMarket">📈 Market</button>
-      <button class="sysbtn" id="bQC">🔍 Quality</button>
-      <button class="sysbtn" id="bStocks">📉 Stocks</button>
+      <button class="sysbtn" id="bFinance">Finance</button>
+      <button class="sysbtn" id="bMarket">Market</button>
+      <button class="sysbtn" id="bQC">Quality</button>
+      <button class="sysbtn" id="bStocks">Stocks</button>
     </div>
 
     <div class="syspanel" id="pFinance">
       <h3>Financial Snapshot</h3>
       <div class="row"><span>Cash</span><b id="finCash">$0</b></div>
       <div class="row"><span>All-time Earned</span><b id="finEarned" class="pos">$0</b></div>
-      <div class="row"><span>All-time Lost / Costs</span><b id="finLost" class="neg">$0</b></div>
-      <div class="row"><span>Net Worth</span><b id="finNet">$0</b></div>
-      <div class="row"><span>Reputation</span><b id="rep">50</b></div>
+      <div class="row"><span>All-time Lost</span><b id="finLost" class="neg">$0</b></div>
+      <div class="row"><span>Net (cash + stock)</span><b id="finNet">$0</b></div>
+      <div class="row"><span>Reputation</span><b id="rep">52</b></div>
     </div>
 
     <div class="syspanel" id="pMarket">
-      <h3>Market & Competitors</h3>
-      <div class="row"><span>Market demand level</span><b id="mDemand">Normal</b></div>
+      <h3>Market Watch</h3>
       <div class="row"><span>Season</span><b id="season">Regular</b></div>
-      <div id="compNews" style="font-size:11px;margin-top:6px;color:var(--muted)"></div>
+      <div class="row"><span>Demand mood</span><b id="mDemand">Steady</b></div>
+      <div id="compNews" style="font-size:11.5px;margin-top:6px;color:var(--muted);font-style:italic"></div>
     </div>
 
     <div class="syspanel" id="pQC">
       <h3>Quality Control</h3>
-      <div class="row"><span>Strictness</span><b id="qcVal">50%</b></div>
-      <input type="range" id="qcSlider" min="10" max="95" value="50" style="width:100%">
-      <div style="font-size:11px;margin-top:4px">Higher = better reputation, lower yield</div>
-      <div class="row"><span>Current yield</span><b id="yield">92%</b></div>
+      <div class="row"><span>Strictness</span><b id="qcVal">45%</b></div>
+      <input type="range" id="qcSlider" min="15" max="92" value="45" style="width:100%;margin:4px 0">
+      <div style="font-size:11.5px;color:var(--muted)">Higher strictness = better reputation, fewer sellable pencils</div>
+      <div class="row" style="margin-top:6px"><span>Current yield</span><b id="yield">88%</b></div>
     </div>
 
     <div class="syspanel" id="pStocks">
       <h3>Stationery Stocks</h3>
       <div id="stockList"></div>
-      <div class="row" style="margin-top:6px">
+      <div class="row" style="margin-top:8px">
         <button class="act" id="buy1">Buy 1</button>
         <button class="act" id="sell1">Sell 1</button>
       </div>
-      <div class="row"><span>Portfolio</span><b id="port">$0</b></div>
+      <div class="row"><span>Portfolio value</span><b id="port">$0</b></div>
     </div>
 
-    <h2 style="margin-top:10px">Upgrades</h2>
-    <div class="scroll" id="ups"></div>
+    <h2 style="margin-top:12px">Upgrades</h2>
+    <div class="scroll" id="ups" style="max-height:28vh"></div>
     <button class="reset" id="reset">Hard Reset</button>
   </section>
 </div>
 
 <script>
 "use strict";
-const KEY = "pf_real_v1";
+
+const KEY = "pf_autumn_v2";
 const $ = s => document.querySelector(s);
 const $$ = s => document.querySelectorAll(s);
 
-const MAX = 1e15;
-function safe(n){ if(typeof n!=="number"||!isFinite(n)||n<0) return 0; return Math.min(n,MAX); }
-function fmt(n){ n=safe(n); if(n<1000) return n<10?n.toFixed(1).replace(/\.0$/,""):Math.floor(n); const e=Math.min(Math.floor(Math.log10(n)/3),8); const v=n/Math.pow(10,3*e); return v.toFixed(v<10?2:1)+["","K","M","B","T","Qa","Qi","Sx","Sp"][e]; }
-function money(n){ n=safe(n); return n<1000?"$"+n.toFixed(2):"$"+fmt(n); }
+function safe(n) {
+  if (typeof n !== "number" || !isFinite(n) || n < 0) return 0;
+  return Math.min(n, 1e14);
+}
+function fmt(n) {
+  n = safe(n);
+  if (n < 1000) return n < 10 ? n.toFixed(1).replace(/\.0$/, "") : Math.floor(n).toString();
+  const units = ["", "K", "M", "B", "T", "Qa"];
+  const e = Math.min(Math.floor(Math.log10(n) / 3), units.length - 1);
+  const v = n / Math.pow(10, 3 * e);
+  return v.toFixed(v < 10 ? 2 : 1) + units[e];
+}
+function money(n) {
+  n = safe(n);
+  return n < 1000 ? "$" + n.toFixed(2) : "$" + fmt(n);
+}
 
-const H = [
-  {n:"Apprentice",d:"Learns the craft.",c:40,p:0.15,i:"🧑‍🔧"},
-  {n:"Sharpening Bench",d:"Basic tools.",c:280,p:0.9,i:"🔧"},
-  {n:"Hand Lathe",d:"Shapes the wood.",c:3200,p:5.5,i:"🪚"},
-  {n:"Cedar Saw",d:"Cuts blanks.",c:2.5e4,p:32,i:"🪵"},
-  {n:"Graphite Mixer",d:"Consistent cores.",c:2.8e5,p:180,i:"⚗️"},
-  {n:"Assembly Line",d:"Faster output.",c:3.5e6,p:950,i:"🏭"},
-  {n:"Auto Lathe",d:"Reliable machines.",c:4.5e7,p:5200,i:"🤖"},
-  {n:"Quality Press",d:"Better finish.",c:6e8,p:2.8e4,i:"🖨️"},
-  {n:"Regional Plant",d:"Serious volume.",c:9e9,p:1.5e5,i:"🏢"},
-  {n:"National Works",d:"Major capacity.",c:1.5e11,p:8e5,i:"🏛️"}
+const HELPERS = [
+  { n: "Apprentice", d: "Still learning the grain.", c: 45, p: 0.18, i: "🧑‍🔧" },
+  { n: "Sharpening Bench", d: "Crank and patience.", c: 320, p: 1.1, i: "🔧" },
+  { n: "Hand Lathe", d: "Hexagonal soul.", c: 3800, p: 6.5, i: "🪚" },
+  { n: "Cedar Saw", d: "Smells like the forest.", c: 3.2e4, p: 38, i: "🪵" },
+  { n: "Graphite Mixer", d: "Even cores.", c: 3.5e5, p: 210, i: "⚗️" },
+  { n: "Assembly Line", d: "Rhythm of the workshop.", c: 4.2e6, p: 1100, i: "🏭" },
+  { n: "Auto Lathe", d: "Quiet and steady.", c: 5.5e7, p: 6200, i: "🤖" },
+  { n: "Finishing Press", d: "Smooth and proud.", c: 7e8, p: 3.4e4, i: "🖨️" },
+  { n: "Regional Plant", d: "Serious volume.", c: 1.1e10, p: 1.9e5, i: "🏢" },
+  { n: "National Works", d: "Known across the country.", c: 1.8e11, p: 1.1e6, i: "🏛️" }
 ];
 
-const STK = [
-  {s:"PNCL",name:"Pencil Co",b:12,v:0.04},
-  {s:"WOOD",name:"Cedar Holdings",b:28,v:0.05},
-  {s:"GRAF",name:"Graphite Ltd",b:45,v:0.06},
-  {s:"OFFC",name:"Office Supply",b:65,v:0.035}
+const STOCKS = [
+  { s: "PNCL", name: "Pencil Co", b: 14 },
+  { s: "CEDR", name: "Cedar Holdings", b: 31 },
+  { s: "GRAF", name: "Graphite Ltd", b: 48 },
+  { s: "OFFC", name: "Office Supply", b: 67 }
 ];
 
-function fresh(){
+function fresh() {
   return {
-    cash:80, inv:0, made:0, totalEarned:0, totalLost:0,
-    owned:H.map(()=>0), hMult:H.map(()=>1),
-    price:0.25, marketPrice:0.22,
-    rep:50, qc:50, cap:500,
-    orders:[], lastOrder:0,
-    stocks:STK.map(x=>({s:x.s,o:0,p:x.b,h:[x.b]})),
-    bought:{}, last:Date.now(),
-    season:"Regular", demandMod:1
+    cash: 95,
+    inv: 0,
+    made: 0,
+    totalEarned: 0,
+    totalLost: 0,
+    owned: HELPERS.map(() => 0),
+    hMult: HELPERS.map(() => 1),
+    price: 0.25,
+    marketPrice: 0.22,
+    rep: 52,
+    qc: 45,
+    cap: 600,
+    orders: [],
+    stocks: STOCKS.map(x => ({ s: x.s, o: 0, p: x.b })),
+    bought: {},
+    last: Date.now(),
+    demandMod: 1
   };
 }
 
-function load(){
-  try{
-    const r=JSON.parse(localStorage.getItem(KEY));
-    if(!r) return fresh();
-    const f=Object.assign(fresh(),r);
-    f.owned=f.owned.map(x=>Math.floor(safe(x)));
-    f.hMult=f.hMult.map(x=>safe(x)||1);
-    f.cash=safe(f.cash); f.inv=safe(f.inv);
-    f.totalEarned=safe(f.totalEarned); f.totalLost=safe(f.totalLost);
-    return f;
-  }catch(e){return fresh();}
+function load() {
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return fresh();
+    const data = JSON.parse(raw);
+    const s = Object.assign(fresh(), data);
+    s.owned = (s.owned || []).map(x => Math.floor(safe(x)));
+    while (s.owned.length < HELPERS.length) s.owned.push(0);
+    s.hMult = (s.hMult || []).map(x => safe(x) || 1);
+    while (s.hMult.length < HELPERS.length) s.hMult.push(1);
+    s.cash = safe(s.cash);
+    s.inv = safe(s.inv);
+    s.totalEarned = safe(s.totalEarned);
+    s.totalLost = safe(s.totalLost);
+    s.rep = Math.max(15, Math.min(100, s.rep || 52));
+    s.qc = Math.max(15, Math.min(92, s.qc || 45));
+    s.cap = safe(s.cap) || 600;
+    s.price = safe(s.price) || 0.25;
+    s.marketPrice = safe(s.marketPrice) || 0.22;
+    if (!Array.isArray(s.orders)) s.orders = [];
+    if (!s.stocks || s.stocks.length !== STOCKS.length) {
+      s.stocks = STOCKS.map(x => ({ s: x.s, o: 0, p: x.b }));
+    }
+    return s;
+  } catch (e) {
+    return fresh();
+  }
 }
-function save(){ S.last=Date.now(); try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){} }
-let S=load();
-let mode="1", open=null, sel=0;
 
-/* ===== CORE CALCULATIONS ===== */
-function demandPercent(price){
-  const ratio = price / Math.max(S.marketPrice,0.05);
-  if(ratio <= 0.7) return Math.min(160, 100 + (0.7-ratio)*120);
-  if(ratio <= 1.0) return 100 - (ratio-0.7)*30;
-  if(ratio <= 2.0) return 70 * Math.pow(0.55, ratio-1);
-  if(ratio <= 5.0) return 12 * Math.pow(0.4, (ratio-2)/3);
-  if(ratio <= 20)  return 1.2 * Math.pow(0.35, (ratio-5)/15);
-  return Math.max(0.0001, 0.05 / ratio);
+function save() {
+  S.last = Date.now();
+  try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {}
 }
 
-function calc(){
-  let base=0;
-  for(let i=0;i<H.length;i++) base += S.owned[i] * H[i].p * S.hMult[i];
-  const yield = 0.55 + (100-S.qc)/100*0.42; // higher QC = lower yield
-  const pps = base * yield * (0.7 + S.rep/200);
+let S = load();
+let mode = "1";
+let openPanel = null;
+let selectedStock = 0;
+
+/* ---------- CORE MATH ---------- */
+function demandPercent(price) {
+  const ratio = price / Math.max(S.marketPrice, 0.05);
+  if (ratio <= 0.65) return Math.min(155, 100 + (0.65 - ratio) * 140);
+  if (ratio <= 1.05) return 100 - (ratio - 0.65) * 35;
+  if (ratio <= 2.2) return 68 * Math.pow(0.52, ratio - 1);
+  if (ratio <= 6) return 11 * Math.pow(0.38, (ratio - 2.2) / 3.8);
+  if (ratio <= 25) return 0.9 * Math.pow(0.32, (ratio - 6) / 19);
+  return Math.max(0.00005, 0.04 / ratio);
+}
+
+function calc() {
+  let base = 0;
+  for (let i = 0; i < HELPERS.length; i++) {
+    base += S.owned[i] * HELPERS[i].p * S.hMult[i];
+  }
+  const yield = 0.52 + ((100 - S.qc) / 100) * 0.45;
+  const pps = base * yield * (0.65 + S.rep / 180);
   const demPct = demandPercent(S.price);
-  const dailyPotential = 80 + S.rep*1.8 + base*40;
-  const proj = dailyPotential * (demPct/100) * S.demandMod;
-  return {pps:safe(pps), demPct, proj:safe(proj), yield};
+  const dailyPotential = 70 + S.rep * 2.1 + base * 48;
+  const proj = dailyPotential * (demPct / 100) * S.demandMod;
+  return { pps: safe(pps), demPct, proj: safe(proj), yield };
 }
 
-function earn(amount, reason){
-  amount=safe(amount);
-  if(amount<=0) return;
-  S.cash=safe(S.cash+amount);
-  S.totalEarned=safe(S.totalEarned+amount);
-  floatMoney(amount, true);
+function earn(amount) {
+  amount = safe(amount);
+  if (amount <= 0) return;
+  S.cash = safe(S.cash + amount);
+  S.totalEarned = safe(S.totalEarned + amount);
+  popMoney(amount, true);
 }
 
-function lose(amount, reason){
-  amount=safe(amount);
-  if(amount<=0) return;
-  S.cash=safe(Math.max(0,S.cash-amount));
-  S.totalLost=safe(S.totalLost+amount);
-  floatMoney(amount, false);
+function lose(amount) {
+  amount = safe(amount);
+  if (amount <= 0) return;
+  const actual = Math.min(S.cash, amount);
+  S.cash = safe(S.cash - actual);
+  S.totalLost = safe(S.totalLost + actual);
+  popMoney(actual, false);
 }
 
-function floatMoney(amount, isGain){
-  const el=document.createElement("div");
-  el.className="money-pop";
-  el.textContent=(isGain?"+":"-")+money(amount);
-  el.style.color=isGain?"var(--good)":"var(--bad)";
-  el.style.left=(40+Math.random()*40)+"vw";
-  el.style.top=(30+Math.random()*30)+"vh";
+function popMoney(amount, isGain) {
+  const el = document.createElement("div");
+  el.className = "money-pop";
+  el.textContent = (isGain ? "+" : "−") + money(amount);
+  el.style.color = isGain ? "var(--good)" : "var(--bad)";
+  el.style.left = (25 + Math.random() * 50) + "vw";
+  el.style.top = (25 + Math.random() * 40) + "vh";
   document.body.appendChild(el);
-  setTimeout(()=>el.remove(),1100);
+  setTimeout(() => el.remove(), 1200);
 }
 
-/* ===== ORDERS ===== */
-function generateOrder(){
-  if(S.orders.length>=6) return;
-  const types=["School District","Office Supply","Art Store","Promotional","Export Inquiry","Stationery Chain"];
-  const type=types[Math.floor(Math.random()*types.length)];
-  const baseQty=Math.floor(40+Math.random()*180+S.rep*2);
-  const maxPrice=S.marketPrice*(0.85+Math.random()*0.5)*(0.9+S.rep/300);
-  const deadline=Date.now()+ (18+Math.random()*40)*1000;
+function floatText(x, y, text) {
+  const el = document.createElement("div");
+  el.className = "fl";
+  el.textContent = text;
+  el.style.left = (x - 12) + "px";
+  el.style.top = (y - 18) + "px";
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 950);
+}
+
+/* ---------- ORDERS ---------- */
+function generateOrder() {
+  if (S.orders.length >= 5) return;
+  const types = ["School District", "Local Office", "Art Supply", "Promotional Order", "Stationery Shop", "Regional Chain"];
+  const type = types[Math.floor(Math.random() * types.length)];
+  const qty = Math.floor(35 + Math.random() * 160 + S.rep * 1.8);
+  const maxPrice = +(S.marketPrice * (0.82 + Math.random() * 0.55) * (0.88 + S.rep / 280)).toFixed(2);
+  const deadline = Date.now() + (22 + Math.random() * 38) * 1000;
+
   S.orders.push({
-    id:Date.now()+Math.random(),
-    type, qty:baseQty,
-    maxPrice: +maxPrice.toFixed(2),
-    deadline,
-    status:"open"
+    id: "o" + Date.now() + Math.floor(Math.random() * 999),
+    type,
+    qty,
+    maxPrice,
+    deadline
   });
 }
 
-function acceptOrder(id){
-  const o=S.orders.find(x=>x.id===id);
-  if(!o||o.status!=="open") return;
-  if(S.inv < o.qty){
-    say("Not enough inventory to fulfill this order.");
+function acceptOrder(id) {
+  const idx = S.orders.findIndex(o => o.id === id);
+  if (idx === -1) return;
+  const o = S.orders[idx];
+  if (S.inv < o.qty) {
+    say("Not enough pencils in the warehouse for this order.");
     return;
   }
-  o.status="accepted";
-  S.inv-=o.qty;
-  const revenue=o.qty*Math.min(S.price,o.maxPrice);
-  earn(revenue,"contract");
-  S.rep=Math.min(100,S.rep+1.2);
-  say(`Delivered ${o.qty} pencils to ${o.type}. +${money(revenue)}`);
-  S.orders=S.orders.filter(x=>x.id!==id);
+  S.inv = safe(S.inv - o.qty);
+  const unit = Math.min(S.price, o.maxPrice);
+  const revenue = o.qty * unit;
+  earn(revenue);
+  S.rep = Math.min(100, S.rep + 1.4);
+  say(`Delivered ${fmt(o.qty)} pencils to ${o.type}. +${money(revenue)}`);
+  S.orders.splice(idx, 1);
+  save();
 }
 
-function rejectOrder(id){
-  S.orders=S.orders.filter(x=>x.id!==id);
+function rejectOrder(id) {
+  S.orders = S.orders.filter(o => o.id !== id);
 }
 
-/* ===== RENDER ===== */
-const hEls=[];
-function buildH(){
-  const box=$("#helpers");
-  box.innerHTML="";
-  H.forEach((h,i)=>{
-    const b=document.createElement("button");
-    b.className="item";
-    b.innerHTML=`<span class="ico">${h.i}</span><span class="mid"><b>${h.n}</b><small>${h.d}</small></span><span class="right"><span class="own">0</span><span class="cost"></span></span>`;
-    b.onclick=()=>{
-      const n=qty(i),c=costN(i,n);
-      if(S.cash<c) return;
-      lose(c,"hire");
-      S.owned[i]+=n;
+/* ---------- HELPERS ---------- */
+function costOf(i, n) {
+  n = Math.min(Math.max(1, n | 0), 150);
+  const r = 1.155;
+  const owned = S.owned[i] || 0;
+  const base = HELPERS[i].c * Math.pow(r, owned);
+  if (n === 1) return Math.ceil(base);
+  return Math.ceil(base * (Math.pow(r, n) - 1) / (r - 1));
+}
+
+function qtyFor(i) {
+  if (mode === "max") {
+    let n = 0;
+    while (n < 60 && costOf(i, n + 1) <= S.cash) n++;
+    return Math.max(1, n);
+  }
+  return parseInt(mode, 10) || 1;
+}
+
+const helperEls = [];
+function buildHelpers() {
+  const box = $("#helpers");
+  box.innerHTML = "";
+  HELPERS.forEach((h, i) => {
+    const btn = document.createElement("button");
+    btn.className = "item";
+    btn.innerHTML = `
+      <span class="ico">${h.i}</span>
+      <span class="mid"><b>${h.n}</b><small>${h.d}</small></span>
+      <span class="right"><span class="own">0</span><span class="cost"></span></span>`;
+    btn.addEventListener("click", () => {
+      const n = qtyFor(i);
+      const c = costOf(i, n);
+      if (S.cash < c) return;
+      lose(c);
+      S.owned[i] = (S.owned[i] || 0) + n;
       save();
-    };
-    box.appendChild(b);
-    hEls.push({el:b,own:b.querySelector(".own"),cost:b.querySelector(".cost")});
+      render();
+    });
+    box.appendChild(btn);
+    helperEls.push({
+      el: btn,
+      own: btn.querySelector(".own"),
+      cost: btn.querySelector(".cost")
+    });
   });
 }
 
-function costN(i,n){
-  n=Math.min(Math.max(1,n|0),200);
-  const r=1.16;
-  const owned=S.owned[i]||0;
-  const base=H[i].c*Math.pow(r,owned);
-  if(n===1) return Math.ceil(base);
-  return Math.ceil(base*(Math.pow(r,n)-1)/(r-1));
-}
-function qty(i){
-  if(mode==="max"){
-    let n=0; while(n<80&&costN(i,n+1)<=S.cash) n++;
-    return Math.max(1,n);
-  }
-  return parseInt(mode)||1;
-}
+/* ---------- RENDER ---------- */
+function render() {
+  const C = calc();
 
-function renderOrders(){
-  const box=$("#orders");
-  if(!S.orders.length){
-    box.innerHTML="";
-    $("#noOrders").style.display="block";
-    return;
-  }
-  $("#noOrders").style.display="none";
-  let html="";
-  S.orders.forEach(o=>{
-    const left=Math.max(0,(o.deadline-Date.now())/1000);
-    html+=`<div class="order ${S.inv>=o.qty?"good":""}">
-      <b>${o.type}</b> · ${o.qty} pcs · max ${money(o.maxPrice)} each<br>
-      <small>Deadline: ${left.toFixed(0)}s · Your price: ${money(S.price)}</small><br>
-      <button class="act" onclick="acceptOrder(${o.id})">Accept</button>
-      <button class="act" onclick="rejectOrder(${o.id})">Reject</button>
-    </div>`;
-  });
-  box.innerHTML=html;
-}
+  $("#cash").textContent = money(S.cash);
+  $("#inv").textContent = fmt(Math.floor(S.inv));
+  $("#earned").textContent = money(S.totalEarned);
+  $("#lost").textContent = money(S.totalLost);
+  $("#rates").textContent = `${fmt(C.pps)}/s production · Yield ${(C.yield * 100).toFixed(0)}%`;
 
-function render(){
-  const C=calc();
-  $("#cash").textContent=money(S.cash);
-  $("#inv").textContent=fmt(Math.floor(S.inv));
-  $("#earned").textContent=money(S.totalEarned);
-  $("#lost").textContent=money(S.totalLost);
-  $("#rates").textContent=`${fmt(C.pps)}/s production · Yield ${ (C.yield*100).toFixed(0)}%`;
+  $("#priceDisp").textContent = money(S.price);
+  $("#marketPrice").textContent = money(S.marketPrice);
+  const demTxt = C.demPct < 0.01 ? C.demPct.toFixed(4) + "%" : C.demPct.toFixed(1) + "%";
+  $("#demandPct").textContent = demTxt;
+  const bar = $("#demandBar");
+  bar.style.width = Math.min(100, C.demPct) + "%";
+  bar.style.background = C.demPct > 45 ? "var(--good)" : C.demPct > 12 ? "var(--acc)" : "var(--bad)";
+  $("#projSales").textContent = fmt(C.proj);
 
-  $("#priceDisp").textContent=money(S.price);
-  $("#marketPrice").textContent=money(S.marketPrice);
-  $("#demandPct").textContent=C.demPct<0.01?C.demPct.toFixed(4)+"%":C.demPct.toFixed(1)+"%";
-  $("#demandBar").style.width=Math.min(100,C.demPct)+"%";
-  $("#demandBar").style.background=C.demPct>40?"var(--good)":C.demPct>10?"var(--acc)":"var(--bad)";
-  $("#projSales").textContent=fmt(C.proj)+"/day";
+  $("#cap").textContent = fmt(S.cap);
+  $("#used").textContent = fmt(Math.floor(S.inv));
+  $("#capBar").style.width = Math.min(100, (S.inv / S.cap) * 100) + "%";
+  $("#invWarn").textContent = S.inv > S.cap * 0.92 ? "Warehouse nearly full — sell or expand storage" : "";
 
-  $("#cap").textContent=fmt(S.cap);
-  $("#used").textContent=fmt(S.inv);
-  $("#capBar").style.width=Math.min(100,(S.inv/S.cap)*100)+"%";
-  $("#invWarn").textContent=S.inv>S.cap*0.9?"Warehouse almost full — sales or storage needed":"";
+  $("#finCash").textContent = money(S.cash);
+  $("#finEarned").textContent = money(S.totalEarned);
+  $("#finLost").textContent = money(S.totalLost);
+  $("#finNet").textContent = money(S.cash + S.inv * S.price * 0.55);
+  $("#rep").textContent = Math.round(S.rep);
 
-  $("#finCash").textContent=money(S.cash);
-  $("#finEarned").textContent=money(S.totalEarned);
-  $("#finLost").textContent=money(S.totalLost);
-  $("#finNet").textContent=money(S.cash + S.inv*S.price*0.6);
-  $("#rep").textContent=S.rep.toFixed(0);
-
-  $("#qcVal").textContent=S.qc+"%";
-  $("#yield").textContent=(C.yield*100).toFixed(0)+"%";
+  $("#qcVal").textContent = S.qc + "%";
+  $("#yield").textContent = (C.yield * 100).toFixed(0) + "%";
 
   // helpers
-  H.forEach((h,i)=>{
-    const e=hEls[i];
-    const show=i===0||S.owned[i]>0||(i>0&&S.owned[i-1]>0)||S.totalEarned>=h.c*0.2;
-    e.el.style.display=show?"":"none";
-    const n=qty(i),c=costN(i,n);
-    e.own.textContent=S.owned[i]||0;
-    e.cost.textContent=(n>1?"×"+n+" ":"")+money(c);
-    e.el.classList.toggle("afford",S.cash>=c);
+  HELPERS.forEach((h, i) => {
+    const e = helperEls[i];
+    const show = i === 0 || S.owned[i] > 0 || (i > 0 && S.owned[i - 1] > 0) || S.totalEarned >= h.c * 0.18;
+    e.el.style.display = show ? "" : "none";
+    const n = qtyFor(i);
+    const c = costOf(i, n);
+    e.own.textContent = S.owned[i] || 0;
+    e.cost.textContent = (n > 1 ? "×" + n + " " : "") + money(c);
+    e.el.classList.toggle("afford", S.cash >= c);
   });
 
   // era
-  let era="Small Workshop";
-  if(S.totalEarned>5e6) era="Regional Factory";
-  if(S.totalEarned>8e8) era="National Brand";
-  if(S.totalEarned>5e10) era="Market Leader";
-  $("#era").textContent=era;
+  let era = "Autumn Workshop";
+  if (S.totalEarned > 2e6) era = "Regional Maker";
+  if (S.totalEarned > 4e8) era = "Known Brand";
+  if (S.totalEarned > 3e10) era = "National Name";
+  $("#era").textContent = era;
 
   renderOrders();
   renderStocks();
-  renderUp();
+  renderUpgrades();
 }
 
-function renderStocks(){
-  const box=$("#stockList");
-  if(!box.children.length){
-    S.stocks.forEach((st,i)=>{
-      const r=document.createElement("div");
-      r.className="row";
-      r.style.cursor="pointer";
-      r.innerHTML=`<span>${st.s}</span><span class="pr"></span>`;
-      r.onclick=()=>sel=i;
-      box.appendChild(r);
+function renderOrders() {
+  const box = $("#orders");
+  const empty = $("#noOrders");
+  if (S.orders.length === 0) {
+    box.innerHTML = "";
+    empty.style.display = "block";
+    return;
+  }
+  empty.style.display = "none";
+  box.innerHTML = "";
+  S.orders.forEach(o => {
+    const left = Math.max(0, (o.deadline - Date.now()) / 1000);
+    const can = S.inv >= o.qty;
+    const div = document.createElement("div");
+    div.className = "order" + (can ? " can" : "");
+    div.innerHTML = `
+      <b>${o.type}</b> · ${fmt(o.qty)} pcs · max ${money(o.maxPrice)} each<br>
+      <small>Time left: ${left.toFixed(0)}s · Your price: ${money(S.price)}</small><br>`;
+    const acceptBtn = document.createElement("button");
+    acceptBtn.className = "act";
+    acceptBtn.textContent = "Accept";
+    acceptBtn.onclick = () => acceptOrder(o.id);
+    const rejectBtn = document.createElement("button");
+    rejectBtn.className = "act";
+    rejectBtn.textContent = "Reject";
+    rejectBtn.onclick = () => { rejectOrder(o.id); render(); };
+    div.appendChild(acceptBtn);
+    div.appendChild(rejectBtn);
+    box.appendChild(div);
+  });
+}
+
+function renderStocks() {
+  const box = $("#stockList");
+  if (box.children.length === 0) {
+    S.stocks.forEach((st, i) => {
+      const row = document.createElement("div");
+      row.className = "row";
+      row.style.cursor = "pointer";
+      row.style.padding = "3px 0";
+      row.innerHTML = `<span>${st.s}</span><span class="pr"></span>`;
+      row.onclick = () => { selectedStock = i; renderStocks(); };
+      box.appendChild(row);
     });
   }
-  let port=0;
-  S.stocks.forEach((st,i)=>{
-    const r=box.children[i];
-    r.querySelector(".pr").textContent=money(st.p)+" ×"+st.o;
-    port+=st.o*st.p;
+  let port = 0;
+  S.stocks.forEach((st, i) => {
+    const row = box.children[i];
+    row.style.outline = i === selectedStock ? "2px solid var(--acc)" : "none";
+    row.querySelector(".pr").textContent = money(st.p) + " ×" + st.o;
+    port += st.o * st.p;
   });
-  $("#port").textContent=money(port);
+  $("#port").textContent = money(port);
 }
 
-const UPS=[];
-function addU(id,n,d,c,fn){UPS.push({id,n,d,c,fn});}
-addU("cap1","Extra Shelving","Warehouse +400",1200,s=>{s.cap+=400;});
-addU("cap2","Storage Wing","Warehouse +2000",2.5e4,s=>{s.cap+=2000;});
-addU("rep1","Local Ads","Reputation +8",800,s=>{s.rep=Math.min(100,s.rep+8);});
-addU("rep2","School Samples","Reputation +12",1.8e4,s=>{s.rep=Math.min(100,s.rep+12);});
-addU("p1","Better Tools","All lines +25%",5e3,s=>{s.hMult=s.hMult.map(x=>x*1.25);});
-addU("p2","Process Improvement","All lines +35%",1.2e5,s=>{s.hMult=s.hMult.map(x=>x*1.35);});
-addU("m1","Market Research","Slightly higher market price",3e4,s=>{s.marketPrice*=1.08;});
+const UPGRADES = [
+  { id: "cap1", n: "Extra Shelving", d: "Warehouse +500", c: 1400, fn: s => { s.cap += 500; } },
+  { id: "cap2", n: "Storage Wing", d: "Warehouse +2200", c: 2.8e4, fn: s => { s.cap += 2200; } },
+  { id: "rep1", n: "Local Flyers", d: "Reputation +9", c: 950, fn: s => { s.rep = Math.min(100, s.rep + 9); } },
+  { id: "rep2", n: "School Samples", d: "Reputation +14", c: 2.2e4, fn: s => { s.rep = Math.min(100, s.rep + 14); } },
+  { id: "p1", n: "Better Tools", d: "All lines +22%", c: 6200, fn: s => { s.hMult = s.hMult.map(x => x * 1.22); } },
+  { id: "p2", n: "Process Polish", d: "All lines +30%", c: 1.5e5, fn: s => { s.hMult = s.hMult.map(x => x * 1.30); } },
+  { id: "m1", n: "Market Insight", d: "Slightly higher market price", c: 3.8e4, fn: s => { s.marketPrice *= 1.07; } }
+];
 
-function renderUp(){
-  const vis=UPS.filter(u=>!S.bought[u.id] && S.totalEarned>=u.c*0.12).sort((a,b)=>a.c-b.c);
-  const box=$("#ups");
-  box.innerHTML="";
-  if(!vis.length){box.innerHTML='<div class="empty">Keep producing & selling.</div>';return;}
-  vis.slice(0,12).forEach(u=>{
-    const b=document.createElement("button");
-    b.className="item"+(S.cash>=u.c?" afford":"");
-    b.innerHTML=`<span class="mid"><b>${u.n}</b><small>${u.d}</small></span><span class="right cost">${money(u.c)}</span>`;
-    b.onclick=()=>{
-      if(S.cash<u.c||S.bought[u.id])return;
-      lose(u.c,"upgrade");
-      S.bought[u.id]=1;
+function renderUpgrades() {
+  const vis = UPGRADES.filter(u => !S.bought[u.id] && S.totalEarned >= u.c * 0.11)
+    .sort((a, b) => a.c - b.c);
+  const box = $("#ups");
+  box.innerHTML = "";
+  if (vis.length === 0) {
+    box.innerHTML = '<div class="empty">Keep making and selling pencils.</div>';
+    return;
+  }
+  vis.slice(0, 10).forEach(u => {
+    const btn = document.createElement("button");
+    btn.className = "item" + (S.cash >= u.c ? " afford" : "");
+    btn.innerHTML = `<span class="mid"><b>${u.n}</b><small>${u.d}</small></span><span class="right cost">${money(u.c)}</span>`;
+    btn.onclick = () => {
+      if (S.cash < u.c || S.bought[u.id]) return;
+      lose(u.c);
+      S.bought[u.id] = 1;
       u.fn(S);
       save();
+      render();
     };
-    box.appendChild(b);
+    box.appendChild(btn);
   });
 }
 
-/* ===== EVENTS ===== */
-$("#priceSlider").oninput=e=>{
-  S.price=e.target.value/100;
+/* ---------- UI EVENTS ---------- */
+$("#priceSlider").addEventListener("input", e => {
+  S.price = Number(e.target.value) / 100;
   render();
-};
-$("#qcSlider").oninput=e=>{
-  S.qc=+e.target.value;
+});
+
+$("#qcSlider").addEventListener("input", e => {
+  S.qc = Number(e.target.value);
   render();
-};
+});
 
-$("#make").onclick=e=>{
-  const C=calc();
-  const gained=C.pps*0.35+0.4; // manual click stronger early
-  S.inv=safe(S.inv+gained);
-  S.made=safe(S.made+gained);
-  floatT(e.clientX||200,e.clientY||300,"+"+fmt(gained));
-};
+$("#make").addEventListener("click", e => {
+  const C = calc();
+  const gained = Math.max(0.5, C.pps * 0.4 + 0.6);
+  if (S.inv + gained > S.cap) {
+    say("Warehouse is full. Sell some pencils first.");
+    return;
+  }
+  S.inv = safe(S.inv + gained);
+  S.made = safe(S.made + gained);
+  const x = e.clientX || 200;
+  const y = e.clientY || 300;
+  floatText(x, y, "+" + fmt(gained));
+  render();
+});
 
-function floatT(x,y,t){
-  const el=document.createElement("div");
-  el.className="fl";el.textContent=t;
-  el.style.left=(x-10)+"px";el.style.top=(y-16)+"px";
-  document.body.appendChild(el);
-  setTimeout(()=>el.remove(),900);
-}
-
-function setOpen(name){
-  open=open===name?null:name;
-  ["Finance","Market","QC","Stocks"].forEach(n=>{
-    $("#p"+n).classList.toggle("open",open===n.toLowerCase()|| (n==="QC"&&open==="qc"));
-    $("#b"+n).classList.toggle("on",open===n.toLowerCase()||(n==="QC"&&open==="qc"));
+function setPanel(name) {
+  openPanel = openPanel === name ? null : name;
+  ["Finance", "Market", "QC", "Stocks"].forEach(n => {
+    const key = n.toLowerCase();
+    const panel = $("#p" + n);
+    const btn = $("#b" + n);
+    if (panel) panel.classList.toggle("open", openPanel === key);
+    if (btn) btn.classList.toggle("on", openPanel === key);
   });
 }
-$("#bFinance").onclick=()=>setOpen("finance");
-$("#bMarket").onclick=()=>setOpen("market");
-$("#bQC").onclick=()=>setOpen("qc");
-$("#bStocks").onclick=()=>setOpen("stocks");
 
-$("#buy1").onclick=()=>{
-  const st=S.stocks[sel];
-  if(S.cash<st.p)return;
-  lose(st.p,"stock");
+$("#bFinance").onclick = () => setPanel("finance");
+$("#bMarket").onclick = () => setPanel("market");
+$("#bQC").onclick = () => setPanel("qc");
+$("#bStocks").onclick = () => setPanel("stocks");
+
+$("#buy1").onclick = () => {
+  const st = S.stocks[selectedStock];
+  if (S.cash < st.p) return;
+  lose(st.p);
   st.o++;
   save();
+  render();
 };
-$("#sell1").onclick=()=>{
-  const st=S.stocks[sel];
-  if(st.o<1)return;
+$("#sell1").onclick = () => {
+  const st = S.stocks[selectedStock];
+  if (st.o < 1) return;
   st.o--;
-  earn(st.p,"stock");
+  earn(st.p);
   save();
+  render();
 };
 
-$("#mode").onclick=e=>{
-  const b=e.target.closest("button");
-  if(!b)return;
-  mode=b.dataset.m;
-  $$("#mode button").forEach(x=>x.classList.toggle("on",x===b));
-};
+$("#mode").addEventListener("click", e => {
+  const btn = e.target.closest("button");
+  if (!btn) return;
+  mode = btn.dataset.m;
+  $$("#mode button").forEach(b => b.classList.toggle("on", b === btn));
+  render();
+});
 
-$("#reset").onclick=()=>{
-  if(confirm("Hard reset everything?")){
-    S=fresh();
-    save();
+$("#reset").onclick = () => {
+  if (confirm("Really reset the whole workshop?")) {
+    localStorage.removeItem(KEY);
     location.reload();
   }
 };
 
-/* ===== MAIN LOOP ===== */
-let last=performance.now(), orderTimer=0, marketTimer=0;
-function say(t){ $("#ticker").textContent=t; }
+function say(msg) {
+  $("#ticker").textContent = msg;
+}
 
-setInterval(()=>{
-  const now=performance.now();
-  const dt=Math.min((now-last)/1000,2);
-  last=now;
-  const C=calc();
+/* ---------- MAIN LOOP ---------- */
+let last = performance.now();
+let orderTimer = 0;
+let marketTimer = 0;
+let saveTimer = 0;
 
-  // production into inventory
-  const produced=C.pps*dt;
-  if(S.inv+produced <= S.cap){
-    S.inv=safe(S.inv+produced);
-  }else{
-    // overflow loss
-    const overflow=S.inv+produced-S.cap;
-    S.inv=S.cap;
-    if(overflow>1) lose(overflow*S.price*0.15,"overflow");
+function tick(now) {
+  const dt = Math.min((now - last) / 1000, 1.5);
+  last = now;
+  const C = calc();
+
+  // production → inventory
+  const produced = C.pps * dt;
+  if (S.inv + produced <= S.cap) {
+    S.inv = safe(S.inv + produced);
+  } else {
+    const overflow = S.inv + produced - S.cap;
+    S.inv = S.cap;
+    if (overflow > 0.5) lose(overflow * S.price * 0.12);
   }
 
-  // passive market sales (small continuous sales based on demand)
-  const sellRate=(C.proj/86400)*dt; // daily to per-second
-  const canSell=Math.min(S.inv,sellRate);
-  if(canSell>0.01){
-    S.inv=safe(S.inv-canSell);
-    earn(canSell*S.price,"market");
+  // soft continuous market sales
+  const sellPerSec = (C.proj / 86400);
+  const sold = Math.min(S.inv, sellPerSec * dt);
+  if (sold > 0.02) {
+    S.inv = safe(S.inv - sold);
+    earn(sold * S.price);
   }
 
   // orders
-  orderTimer+=dt;
-  if(orderTimer>9+Math.random()*8){
-    orderTimer=0;
+  orderTimer += dt;
+  if (orderTimer > 8 + Math.random() * 7) {
+    orderTimer = 0;
     generateOrder();
   }
-  // expire old orders
-  S.orders=S.orders.filter(o=>{
-    if(Date.now()>o.deadline){
-      S.rep=Math.max(20,S.rep-2);
-      say("Missed an order deadline. Reputation hurt.");
+
+  // expire orders
+  const nowMs = Date.now();
+  S.orders = S.orders.filter(o => {
+    if (nowMs > o.deadline) {
+      S.rep = Math.max(18, S.rep - 2.2);
+      say("Missed a deadline. Reputation took a hit.");
       return false;
     }
     return true;
   });
 
-  // market price drift
-  marketTimer+=dt;
-  if(marketTimer>6){
-    marketTimer=0;
-    S.marketPrice=safe(S.marketPrice*(1+(Math.random()-0.48)*0.025));
-    S.stocks.forEach(st=>{
-      st.p=Math.max(3,st.p*(1+(Math.random()-0.47)*0.04));
+  // market drift
+  marketTimer += dt;
+  if (marketTimer > 5.5) {
+    marketTimer = 0;
+    S.marketPrice = safe(S.marketPrice * (1 + (Math.random() - 0.47) * 0.022));
+    S.stocks.forEach(st => {
+      st.p = Math.max(4, st.p * (1 + (Math.random() - 0.46) * 0.035));
     });
   }
 
-  // season
-  const hour=new Date().getHours();
-  if(hour>=8&&hour<=16){S.season="School hours";S.demandMod=1.25;}
-  else{S.season="Regular";S.demandMod=1;}
+  // season feel
+  const hour = new Date().getHours();
+  if (hour >= 7 && hour <= 17) {
+    S.demandMod = 1.22;
+    $("#season").textContent = "Busy hours";
+    $("#mDemand").textContent = "Strong";
+  } else {
+    S.demandMod = 1;
+    $("#season").textContent = "Quiet hours";
+    $("#mDemand").textContent = "Steady";
+  }
 
-  $("#season").textContent=S.season;
-  $("#mDemand").textContent=S.demandMod>1.1?"Strong":"Normal";
+  saveTimer += dt;
+  if (saveTimer > 8) {
+    saveTimer = 0;
+    save();
+  }
 
   render();
-  if(Math.random()<0.008) save();
-},120);
+  requestAnimationFrame(tick);
+}
 
-// initial
-buildH();
-$("#priceSlider").value=S.price*100;
-$("#qcSlider").value=S.qc;
+/* ---------- LEAVES ---------- */
+function spawnLeaf() {
+  const leaf = document.createElement("div");
+  leaf.className = "leaf";
+  leaf.textContent = ["🍁", "🍂", "🍃"][Math.floor(Math.random() * 3)];
+  leaf.style.left = Math.random() * 100 + "vw";
+  leaf.style.animationDuration = (14 + Math.random() * 18) + "s";
+  leaf.style.fontSize = (14 + Math.random() * 12) + "px";
+  document.body.appendChild(leaf);
+  setTimeout(() => leaf.remove(), 32000);
+}
+setInterval(spawnLeaf, 1800);
+for (let i = 0; i < 5; i++) setTimeout(spawnLeaf, i * 400);
+
+/* ---------- START ---------- */
+buildHelpers();
+$("#priceSlider").value = Math.round(S.price * 100);
+$("#qcSlider").value = S.qc;
 render();
-say("Welcome. Produce pencils, set a realistic price, and fulfill orders.");
+say("Welcome to the autumn workshop. Produce, set a real price, and fulfill orders.");
+requestAnimationFrame(tick);
 </script>
 </body>
 </html>
