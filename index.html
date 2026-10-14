@@ -3,146 +3,101 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pencil Factory</title>
+<title>Pencil Factory — Realistic</title>
 <style>
 :root{
-  --bg:#efe6d2;--card:#faf6eb;--ink:#1c1610;--muted:#6a5c48;
-  --acc:#c9920a;--acc2:#e0b040;--good:#2a7a4a;--bad:#b33;--pink:#c45a62;
-  --border:#1c1610;--shadow:rgba(28,22,16,.3);
+  --bg:#f0ebe0;--card:#faf7f0;--ink:#1a1612;--muted:#6b5e4e;
+  --acc:#b8860b;--acc2:#d4a017;--good:#2d6a4f;--bad:#9b2226;--pink:#c45a62;
+  --border:#1a1612;--shadow:rgba(26,22,18,.25);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{
   min-height:100vh;font-family:Georgia,"Palatino Linotype",serif;color:var(--ink);
   background:var(--bg);
-  background-image:linear-gradient(rgba(170,150,110,.22) 1px,transparent 1px),linear-gradient(90deg,rgba(170,150,110,.22) 1px,transparent 1px);
-  background-size:30px 30px;transition:background 1.5s,color 1s;
+  background-image:linear-gradient(rgba(160,140,100,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(160,140,100,.18) 1px,transparent 1px);
+  background-size:28px 28px;
 }
-body.space{
-  --bg:#0b0a18;--card:rgba(20,18,40,.95);--ink:#e4def0;--muted:#958db0;
-  --acc:#7b9cff;--acc2:#a8c0ff;--good:#5dcea0;--bad:#f66;--pink:#e070a0;
-  --border:#5a5088;--shadow:rgba(0,0,20,.55);
-  background-image:radial-gradient(ellipse at 20% 25%,rgba(80,60,150,.35),transparent 50%),
-    radial-gradient(ellipse at 80% 70%,rgba(40,70,160,.25),transparent 45%),
-    radial-gradient(1.5px 1.5px at 12% 20%,#fff,transparent),
-    radial-gradient(1px 1px at 70% 40%,#cde,transparent),
-    linear-gradient(180deg,#080616,#12102a 60%,#0a1020);
-}
-body.quantum{
-  --bg:#050810;--card:rgba(8,16,28,.96);--ink:#c8f0f0;--muted:#70a8a8;
-  --acc:#00d0c4;--acc2:#50f0e0;--good:#40e0a0;--bad:#f55;--pink:#d060e0;
-  --border:#0a8a80;--shadow:rgba(0,20,30,.6);
-  background-image:radial-gradient(ellipse at 50% 40%,rgba(0,180,160,.12),transparent 55%),
-    radial-gradient(1px 1px at 25% 30%,#0ff,transparent),
-    radial-gradient(1.5px 1.5px at 75% 20%,#f0f,transparent),
-    linear-gradient(160deg,#030510,#0a1525 60%,#0c0818);
-}
-body.cosmic{
-  --bg:#0a0610;--card:rgba(18,10,20,.96);--ink:#f5e6c8;--muted:#c0a070;
-  --acc:#f0a020;--acc2:#ffd070;--good:#80d060;--bad:#f55;--pink:#e07050;
-  --border:#a06020;--shadow:rgba(20,8,10,.6);
-  background-image:radial-gradient(ellipse at 30% 15%,rgba(255,150,40,.2),transparent 40%),
-    radial-gradient(ellipse at 70% 65%,rgba(120,40,180,.18),transparent 45%),
-    radial-gradient(2px 2px at 15% 25%,#fff,transparent),
-    linear-gradient(180deg,#08040e,#160a1a 50%,#100818);
-}
-header{max-width:1280px;margin:0 auto;padding:14px 12px 0;border-bottom:3px double var(--border)}
-h1{font-size:clamp(20px,3.5vw,30px);font-weight:400;letter-spacing:1.5px;text-transform:uppercase}
-h1 small{display:block;font-size:.65em;color:var(--acc);letter-spacing:1px;margin-top:2px}
-#ticker{margin-top:8px;padding:7px 11px;background:var(--ink);color:var(--bg);border:1px solid var(--acc);font-size:13px;font-style:italic;min-height:34px}
-body.space #ticker,body.quantum #ticker,body.cosmic #ticker{background:rgba(0,0,0,.5);color:var(--ink)}
-.wrap{max-width:1280px;margin:0 auto;padding:12px;display:grid;gap:12px;grid-template-columns:minmax(250px,1fr) minmax(270px,1.15fr) minmax(270px,1fr);align-items:start}
-@media(max-width:960px){.wrap{grid-template-columns:1fr}}
-.panel{background:var(--card);border:3px solid var(--border);border-radius:3px;padding:11px 13px;box-shadow:4px 4px 0 var(--shadow);position:relative}
-.panel::before{content:"";position:absolute;inset:4px;border:1px solid color-mix(in srgb,var(--border) 28%,transparent);pointer-events:none;border-radius:1px}
-.panel h2{font-size:14px;letter-spacing:1.3px;text-transform:uppercase;font-weight:400;border-bottom:2px solid var(--acc);display:inline-block;padding-bottom:2px;margin-bottom:9px}
-.scroll{max-height:58vh;overflow-y:auto;padding-right:3px}
-@media(max-width:960px){.scroll{max-height:none}}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:5px}
-.stat small{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px}
-.stat b{font-size:22px;font-weight:400;line-height:1.15;word-break:break-all}
-.stat.big b{font-size:26px}
-.rates{font-size:11.5px;color:var(--muted);border-top:1px solid color-mix(in srgb,var(--border) 35%,transparent);padding-top:5px;margin:3px 0 7px}
-.make{display:block;width:100%;margin:7px 0;padding:11px 6px 9px;background:color-mix(in srgb,var(--acc) 16%,var(--card));border:3px solid var(--border);border-radius:3px;cursor:pointer;font:inherit;color:inherit;text-align:center;box-shadow:3px 3px 0 var(--shadow);user-select:none;transition:transform .07s,background .12s}
-.make:hover{background:color-mix(in srgb,var(--acc) 28%,var(--card))}
+header{max-width:1400px;margin:0 auto;padding:12px 14px 0;border-bottom:3px double var(--border)}
+h1{font-size:clamp(18px,3vw,26px);font-weight:400;letter-spacing:1.2px;text-transform:uppercase}
+h1 small{display:block;font-size:.62em;color:var(--acc);margin-top:2px}
+#ticker{margin-top:7px;padding:6px 10px;background:var(--ink);color:var(--bg);border:1px solid var(--acc);font-size:12.5px;font-style:italic;min-height:32px}
+.wrap{max-width:1400px;margin:0 auto;padding:10px;display:grid;gap:10px;grid-template-columns:minmax(280px,1fr) minmax(320px,1.2fr) minmax(300px,1fr);align-items:start}
+@media(max-width:1100px){.wrap{grid-template-columns:1fr}}
+.panel{background:var(--card);border:3px solid var(--border);border-radius:3px;padding:10px 12px;box-shadow:4px 4px 0 var(--shadow);position:relative}
+.panel::before{content:"";position:absolute;inset:3px;border:1px solid color-mix(in srgb,var(--border) 25%,transparent);pointer-events:none}
+.panel h2{font-size:13px;letter-spacing:1.1px;text-transform:uppercase;font-weight:400;border-bottom:2px solid var(--acc);display:inline-block;padding-bottom:2px;margin-bottom:8px}
+.scroll{max-height:52vh;overflow-y:auto;padding-right:3px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px}
+.stat small{display:block;font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px}
+.stat b{font-size:18px;font-weight:400;line-height:1.1;word-break:break-all}
+.stat.big b{font-size:22px}
+.rates{font-size:11px;color:var(--muted);border-top:1px solid color-mix(in srgb,var(--border) 30%,transparent);padding-top:4px;margin:2px 0 6px}
+.make{display:block;width:100%;margin:6px 0;padding:10px 6px 8px;background:color-mix(in srgb,var(--acc) 14%,var(--card));border:3px solid var(--border);border-radius:3px;cursor:pointer;font:inherit;color:inherit;text-align:center;box-shadow:3px 3px 0 var(--shadow);user-select:none;transition:transform .07s,background .12s}
+.make:hover{background:color-mix(in srgb,var(--acc) 26%,var(--card))}
 .make:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--shadow)}
-.make svg{width:100%;max-width:260px;height:auto;display:block;margin:0 auto 5px}
-.make span{font-size:15px;letter-spacing:1px;text-transform:uppercase}
-#buffs{min-height:22px;display:flex;flex-wrap:wrap;gap:4px;margin:5px 0}
-.buff{background:var(--acc);color:var(--bg);border:2px solid var(--border);border-radius:2px;padding:2px 7px;font-size:11px;font-weight:700}
-.floor{display:flex;flex-wrap:wrap;gap:2px 7px;font-size:17px;min-height:24px;padding:5px 0;border-top:1px solid color-mix(in srgb,var(--border) 30%,transparent)}
-.floor-empty{font-size:11.5px;color:var(--muted);font-style:italic}
-.goal{margin-top:7px;padding:6px 8px;border:2px dashed var(--border);border-radius:2px;font-size:11.5px;text-align:center}
-.mode{display:flex;gap:4px;margin-bottom:7px;align-items:center;font-size:11.5px;text-transform:uppercase;letter-spacing:.3px}
-.mode button,.sysbtn,.act{font:inherit;border:2px solid var(--border);background:var(--card);border-radius:2px;padding:3px 10px;cursor:pointer;box-shadow:2px 2px 0 var(--shadow);color:inherit;transition:background .1s}
+.make svg{width:100%;max-width:240px;height:auto;display:block;margin:0 auto 4px}
+.make span{font-size:14px;letter-spacing:1px;text-transform:uppercase}
+.mode{display:flex;gap:4px;margin-bottom:6px;align-items:center;font-size:11px;text-transform:uppercase}
+.mode button,.sysbtn,.act{font:inherit;border:2px solid var(--border);background:var(--card);border-radius:2px;padding:3px 9px;cursor:pointer;box-shadow:2px 2px 0 var(--shadow);color:inherit}
 .mode button.on,.sysbtn.on{background:var(--acc);color:var(--bg);font-weight:700}
-.mode button:hover,.sysbtn:hover,.act:hover{filter:brightness(1.1)}
-.sysbtn:disabled{opacity:.35;pointer-events:none}
-.item{display:flex;gap:8px;align-items:center;width:100%;text-align:left;font:inherit;color:inherit;border:2px solid var(--border);background:var(--card);padding:6px 8px;margin-bottom:5px;border-radius:2px;cursor:pointer;box-shadow:2px 2px 0 var(--shadow)}
-.item.afford{background:color-mix(in srgb,var(--acc) 13%,var(--card))}
-.item.afford:hover{background:color-mix(in srgb,var(--acc) 24%,var(--card))}
-.item:not(.afford){opacity:.42;cursor:not-allowed}
-.ico{font-size:20px;width:30px;text-align:center;flex:none}
+.item{display:flex;gap:7px;align-items:center;width:100%;text-align:left;font:inherit;color:inherit;border:2px solid var(--border);background:var(--card);padding:5px 7px;margin-bottom:4px;border-radius:2px;cursor:pointer;box-shadow:2px 2px 0 var(--shadow)}
+.item.afford{background:color-mix(in srgb,var(--acc) 12%,var(--card))}
+.item:not(.afford){opacity:.4;cursor:not-allowed}
+.ico{font-size:18px;width:26px;text-align:center;flex:none}
 .mid{flex:1;min-width:0}
-.mid b{display:block;font-size:13px;font-weight:400}
-.mid small{display:block;font-size:10.5px;color:var(--muted);line-height:1.25;font-style:italic}
+.mid b{display:block;font-size:12.5px;font-weight:400}
+.mid small{display:block;font-size:10px;color:var(--muted);line-height:1.2}
 .right{text-align:right;flex:none}
-.own{display:block;font-size:17px}
-.cost{font-size:11px;font-weight:700;color:var(--acc)}
-.empty{font-size:11.5px;color:var(--muted);font-style:italic;padding:5px 0}
-.reset{margin-top:9px;font:inherit;font-size:10.5px;background:none;border:2px solid var(--border);border-radius:2px;padding:3px 9px;cursor:pointer;text-transform:uppercase;letter-spacing:.8px;color:var(--muted)}
-.reset:hover{color:var(--ink)}
-.sysrow{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:7px}
-.sysbtn{padding:6px 3px;font-size:11.5px;text-align:center}
-.syspanel{display:none;margin:7px 0;padding:9px;border:2px solid var(--border);border-radius:2px;background:color-mix(in srgb,var(--bg) 70%,var(--card));font-size:12px}
+.own{display:block;font-size:15px}
+.cost{font-size:10.5px;font-weight:700;color:var(--acc)}
+.empty{font-size:11px;color:var(--muted);font-style:italic;padding:4px 0}
+.reset{margin-top:8px;font:inherit;font-size:10px;background:none;border:2px solid var(--border);border-radius:2px;padding:3px 8px;cursor:pointer;text-transform:uppercase;color:var(--muted)}
+.sysrow{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:6px}
+.sysbtn{padding:5px 2px;font-size:11px;text-align:center}
+.syspanel{display:none;margin:6px 0;padding:8px;border:2px solid var(--border);border-radius:2px;background:color-mix(in srgb,var(--bg) 65%,var(--card));font-size:11.5px}
 .syspanel.open{display:block}
-.syspanel h3{font-size:12px;letter-spacing:1px;text-transform:uppercase;font-weight:400;margin-bottom:7px;color:var(--acc)}
-.syspanel .row{display:flex;justify-content:space-between;align-items:center;margin:3px 0;gap:5px;flex-wrap:wrap}
-.syspanel .act{padding:2px 8px;font-size:11px}
-.stock-list{display:flex;flex-direction:column;gap:5px;margin:6px 0}
-.stock-row{display:grid;grid-template-columns:48px 1fr 60px 58px;gap:5px;align-items:center;padding:4px 5px;border:1px solid color-mix(in srgb,var(--border) 45%,transparent);border-radius:2px;cursor:pointer}
-.stock-row.sel{outline:2px solid var(--acc)}
-.stock-row .sym{font-weight:700;font-size:11px}
-.stock-row .chg{font-size:10.5px}
-.stock-row .chg.up{color:var(--good)}.stock-row .chg.dn{color:var(--bad)}
-.mini-chart{height:24px;display:flex;align-items:flex-end;gap:1px}
-.mini-chart i{flex:1;background:var(--acc);border-radius:1px 1px 0 0;min-height:2px;opacity:.85;transition:height .3s}
-.meter{height:14px;background:rgba(0,0,0,.2);border:2px solid var(--border);border-radius:2px;overflow:hidden;margin:6px 0}
-.meter>div{height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));width:0%;transition:width .2s}
-.meter>div.hot{background:linear-gradient(90deg,#f40,#fc0)}
-.lab-opt{display:flex;justify-content:space-between;align-items:center;gap:5px;padding:4px 5px;margin:2px 0;border:1px solid color-mix(in srgb,var(--border) 35%,transparent);border-radius:2px;font-size:11px}
-.prog{height:5px;background:rgba(0,0,0,.18);border-radius:2px;margin:3px 0;overflow:hidden}
-.prog>div{height:100%;background:var(--acc);width:0%;transition:width .25s}
-.prestige{margin-top:8px;padding:8px;border:2px solid var(--acc);border-radius:3px;background:color-mix(in srgb,var(--acc) 9%,var(--card));text-align:center;display:none}
-.prestige h3{color:var(--acc);font-size:12px;letter-spacing:1px;margin-bottom:4px}
-.fl{position:fixed;pointer-events:none;font-weight:700;font-size:17px;color:var(--ink);text-shadow:0 0 4px #fff,0 0 5px var(--acc);animation:up .9s ease-out forwards;z-index:80}
-@keyframes up{to{opacity:0;transform:translateY(-50px)}}
-.golden{position:fixed;z-index:70;border:none;background:none;cursor:pointer;font-size:46px;filter:drop-shadow(0 0 10px var(--acc));animation:pulse 1.1s ease-in-out infinite}
-@keyframes pulse{50%{transform:scale(1.18) rotate(8deg)}}
-.pt{position:fixed;pointer-events:none;border-radius:50%;z-index:1;animation:drift linear forwards}
-@keyframes drift{to{transform:translateY(-105vh) translateX(20px);opacity:0}}
+.syspanel h3{font-size:11.5px;letter-spacing:.9px;text-transform:uppercase;font-weight:400;margin-bottom:6px;color:var(--acc)}
+.syspanel .row{display:flex;justify-content:space-between;align-items:center;margin:3px 0;gap:4px;flex-wrap:wrap}
+.syspanel .act{padding:2px 7px;font-size:10.5px}
+.meter{height:12px;background:rgba(0,0,0,.15);border:2px solid var(--border);border-radius:2px;overflow:hidden;margin:5px 0}
+.meter>div{height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));width:0%;transition:width .25s}
+.fl{position:fixed;pointer-events:none;font-weight:700;font-size:16px;color:var(--ink);text-shadow:0 0 4px #fff,0 0 6px var(--acc);animation:up .95s ease-out forwards;z-index:80}
+@keyframes up{to{opacity:0;transform:translateY(-55px)}}
+.money-pop{position:fixed;pointer-events:none;font-weight:700;font-size:15px;z-index:90;animation:moneyUp 1.1s ease-out forwards}
+@keyframes moneyUp{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-60px) scale(1.15)}}
+.order{border:2px solid var(--border);padding:6px 8px;margin-bottom:5px;border-radius:2px;background:var(--card);font-size:11px}
+.order.good{border-color:var(--good)}
+.order button{margin-top:4px;margin-right:4px}
+.slider-row{display:flex;align-items:center;gap:8px;margin:4px 0}
+input[type=range]{flex:1}
+.demand-bar{height:10px;background:#ddd;border:1px solid var(--border);border-radius:2px;overflow:hidden;margin:3px 0}
+.demand-bar>div{height:100%;background:var(--good);transition:width .3s}
+.neg{color:var(--bad)}
+.pos{color:var(--good)}
 button:focus-visible,.item:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
-@media(prefers-reduced-motion:reduce){.fl,.golden,.pt{animation:none!important}}
 </style>
 </head>
 <body>
 <header>
-  <h1>Pencil Factory <small id="era">Classic Works</small></h1>
-  <div id="ticker">The graphite awaits.</div>
+  <h1>Pencil Factory <small id="era">Small Workshop</small></h1>
+  <div id="ticker">Local demand is quiet. Set a fair price.</div>
 </header>
 <div class="wrap">
+  <!-- LEFT: Production + Pricing + Inventory -->
   <section class="panel">
     <h2>Production</h2>
     <div class="stats">
       <div class="stat big"><small>Cash</small><b id="cash">$0</b></div>
-      <div class="stat big"><small>Pencils</small><b id="made">0</b></div>
+      <div class="stat big"><small>Inventory</small><b id="inv">0</b></div>
     </div>
     <div class="stats">
-      <div class="stat"><small>Cosmic Graphite</small><b id="ess">0</b></div>
-      <div class="stat"><small>Ascensions</small><b id="asc">0</b></div>
+      <div class="stat"><small>All-time Earned</small><b id="earned" class="pos">$0</b></div>
+      <div class="stat"><small>All-time Lost</small><b id="lost" class="neg">$0</b></div>
     </div>
     <div class="rates" id="rates"></div>
+
     <button class="make" id="make">
-      <svg viewBox="0 0 300 72" id="psvg"><g stroke="currentColor" stroke-width="2.2" stroke-linejoin="round">
+      <svg viewBox="0 0 300 72"><g stroke="currentColor" stroke-width="2.2" stroke-linejoin="round">
         <rect x="5" y="12" width="30" height="48" rx="7" fill="#c45a62"/><rect x="35" y="12" width="24" height="48" fill="#8a9098"/>
         <rect x="59" y="12" width="175" height="48" fill="#d4a017"/><polygon points="234,12 234,60 280,36" fill="#c4a06a"/>
         <polygon points="268,30 268,42 280,36" fill="currentColor"/></g>
@@ -151,20 +106,33 @@ button:focus-visible,.item:focus-visible{outline:3px solid var(--pink);outline-o
       </svg>
       <span>Forge Pencil</span>
     </button>
-    <div id="buffs"></div>
-    <h2>Floor</h2>
-    <div class="floor" id="floor"></div>
-    <div class="goal" id="goal">Goal: The first mark</div>
-    <div class="prestige" id="presBox">
-      <h3>Ascend</h3>
-      <p id="presInfo" style="font-size:11px;margin-bottom:6px"></p>
-      <button class="act" id="ascendBtn">Ascend</button>
+
+    <h2 style="margin-top:10px">Pricing & Demand</h2>
+    <div class="row" style="font-size:12px;margin-bottom:4px">
+      <span>Your price</span>
+      <b id="priceDisp">$0.25</b>
     </div>
-    <button class="reset" id="reset">Hard Reset</button>
+    <div class="slider-row">
+      <input type="range" id="priceSlider" min="5" max="5000" value="25" step="5">
+    </div>
+    <div style="font-size:11px;margin:3px 0">Market avg: <b id="marketPrice">$0.22</b></div>
+    <div style="font-size:11px">Demand at your price: <b id="demandPct">100%</b></div>
+    <div class="demand-bar"><div id="demandBar" style="width:100%"></div></div>
+    <div style="font-size:11px;margin-top:4px">Projected daily sales: <b id="projSales">0</b></div>
+
+    <h2 style="margin-top:10px">Warehouse</h2>
+    <div style="font-size:12px">Capacity: <b id="cap">500</b> · Used: <b id="used">0</b></div>
+    <div class="meter"><div id="capBar"></div></div>
+    <div style="font-size:11px;color:var(--muted)" id="invWarn"></div>
   </section>
 
+  <!-- MIDDLE: Orders + Workforce -->
   <section class="panel">
-    <h2>Workforce</h2>
+    <h2>Order Board</h2>
+    <div id="orders" class="scroll" style="max-height:280px"></div>
+    <div class="empty" id="noOrders">No open orders right now.</div>
+
+    <h2 style="margin-top:12px">Workforce</h2>
     <div class="mode" id="mode">Qty:
       <button data-m="1" class="on">1</button>
       <button data-m="10">10</button>
@@ -174,319 +142,203 @@ button:focus-visible,.item:focus-visible{outline:3px solid var(--pink);outline-o
     <div class="scroll" id="helpers"></div>
   </section>
 
+  <!-- RIGHT: Systems + Finance -->
   <section class="panel">
     <h2>Command</h2>
     <div class="sysrow">
-      <button class="sysbtn" id="bStocks" disabled>📈 Exchange</button>
-      <button class="sysbtn" id="bBeam" disabled>⚡ Beam</button>
-      <button class="sysbtn" id="bLab" disabled>🔬 Lab</button>
-      <button class="sysbtn" id="bFleet" disabled>🚀 Fleet</button>
-      <button class="sysbtn" id="bRift" disabled>🌀 Rift</button>
-      <button class="sysbtn" id="bCasino" disabled>🎰 Casino</button>
+      <button class="sysbtn" id="bFinance">📊 Finance</button>
+      <button class="sysbtn" id="bMarket">📈 Market</button>
+      <button class="sysbtn" id="bQC">🔍 Quality</button>
+      <button class="sysbtn" id="bStocks">📉 Stocks</button>
+    </div>
+
+    <div class="syspanel" id="pFinance">
+      <h3>Financial Snapshot</h3>
+      <div class="row"><span>Cash</span><b id="finCash">$0</b></div>
+      <div class="row"><span>All-time Earned</span><b id="finEarned" class="pos">$0</b></div>
+      <div class="row"><span>All-time Lost / Costs</span><b id="finLost" class="neg">$0</b></div>
+      <div class="row"><span>Net Worth</span><b id="finNet">$0</b></div>
+      <div class="row"><span>Reputation</span><b id="rep">50</b></div>
+    </div>
+
+    <div class="syspanel" id="pMarket">
+      <h3>Market & Competitors</h3>
+      <div class="row"><span>Market demand level</span><b id="mDemand">Normal</b></div>
+      <div class="row"><span>Season</span><b id="season">Regular</b></div>
+      <div id="compNews" style="font-size:11px;margin-top:6px;color:var(--muted)"></div>
+    </div>
+
+    <div class="syspanel" id="pQC">
+      <h3>Quality Control</h3>
+      <div class="row"><span>Strictness</span><b id="qcVal">50%</b></div>
+      <input type="range" id="qcSlider" min="10" max="95" value="50" style="width:100%">
+      <div style="font-size:11px;margin-top:4px">Higher = better reputation, lower yield</div>
+      <div class="row"><span>Current yield</span><b id="yield">92%</b></div>
     </div>
 
     <div class="syspanel" id="pStocks">
-      <h3>Stock Exchange</h3>
-      <div class="stock-list" id="stockList"></div>
-      <div class="row"><span>Selected <b id="selSym">—</b></span></div>
-      <div class="row">
+      <h3>Stationery Stocks</h3>
+      <div id="stockList"></div>
+      <div class="row" style="margin-top:6px">
         <button class="act" id="buy1">Buy 1</button>
-        <button class="act" id="buy10">Buy 10</button>
         <button class="act" id="sell1">Sell 1</button>
-        <button class="act" id="sellAll">Sell All</button>
       </div>
       <div class="row"><span>Portfolio</span><b id="port">$0</b></div>
-      <div class="row"><span>Dividends</span><b id="divs">$0/s</b></div>
-    </div>
-
-    <div class="syspanel" id="pBeam">
-      <h3>Particle Beam</h3>
-      <div class="row"><span>Energy</span><b id="beamE">0 GeV</b></div>
-      <div class="meter"><div id="beamFill"></div></div>
-      <div class="row"><span>Multiplier</span><b id="beamM">1.00×</b></div>
-      <div class="row"><span>Status</span><b id="beamS">Cold</b></div>
-      <div class="row">
-        <button class="act" id="charge">Charge</button>
-        <button class="act" id="over">Overcharge</button>
-      </div>
-    </div>
-
-    <div class="syspanel" id="pLab">
-      <h3>Research Lab</h3>
-      <div class="row"><span>Project</span><b id="labN">None</b></div>
-      <div class="prog"><div id="labF"></div></div>
-      <div class="row"><span>Progress</span><b id="labP">—</b></div>
-      <div id="labList"></div>
-    </div>
-
-    <div class="syspanel" id="pFleet">
-      <h3>Logistics Fleet</h3>
-      <div class="row"><span>Freighters</span><b id="ships">0</b></div>
-      <div class="row"><span>Reach</span><b id="reach">Local</b></div>
-      <div class="row"><span>Value bonus</span><b id="shipM">1.00×</b></div>
-      <div class="row"><button class="act" id="buyShip">Launch Freighter</button></div>
-    </div>
-
-    <div class="syspanel" id="pRift">
-      <h3>Dimensional Rift</h3>
-      <div class="row"><span>Depth</span><b id="riftD">0</b></div>
-      <div class="row"><span>Bonus</span><b id="riftM">1.00×</b></div>
-      <div class="row"><button class="act" id="probe">Probe Deeper</button></div>
-    </div>
-
-    <div class="syspanel" id="pCasino">
-      <h3>Graphite Casino</h3>
-      <div class="row"><span>Last</span><b id="casLast">—</b></div>
-      <div class="row">
-        <button class="act" id="bet1">Bet 1%</button>
-        <button class="act" id="bet10">Bet 10%</button>
-        <button class="act" id="betAll">All-in</button>
-      </div>
     </div>
 
     <h2 style="margin-top:10px">Upgrades</h2>
     <div class="scroll" id="ups"></div>
+    <button class="reset" id="reset">Hard Reset</button>
   </section>
 </div>
 
 <script>
 "use strict";
-const KEY="pf_v4";
-const $=s=>document.querySelector(s);
-const $$=s=>document.querySelectorAll(s);
+const KEY = "pf_real_v1";
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
 
-/* ========== SAFE MATH ========== */
-const MAX=1e300;
-function safe(n){
-  if(typeof n!=="number" || !isFinite(n) || n<0) return 0;
-  return n>MAX ? MAX : n;
-}
-function safeMul(a,b){
-  a=safe(a); b=safe(b);
-  if(a===0||b===0) return 0;
-  if(a>MAX/Math.max(b,1e-300)) return MAX;
-  const r=a*b;
-  return isFinite(r) ? Math.min(r,MAX) : MAX;
-}
-function safePow(base,exp){
-  if(exp<=0) return 1;
-  if(base<=1) return Math.min(base,MAX);
-  exp=Math.min(exp,2000);
-  const log=exp*Math.log(base);
-  if(!isFinite(log) || log>690) return MAX;
-  return Math.min(Math.pow(base,exp), MAX);
-}
-const SUF=["","K","M","B","T","Qa","Qi","Sx","Sp","Oc","No","Dc","Ud","Dd","Td","Qad","Qid","Sxd","Spd","Ocd","Vg"];
-function fmt(n){
-  n=safe(n);
-  if(n<1000) return n<10 ? n.toFixed(1).replace(/\.0$/,"") : String(Math.floor(n));
-  const e=Math.min(Math.floor(Math.log10(Math.max(n,1))/3), SUF.length-1);
-  const v=n/Math.pow(10,3*e);
-  return v.toFixed(v<10?2:v<100?1:0)+SUF[e];
-}
-function money(n){
-  n=safe(n);
-  return n<1000 ? "$"+n.toFixed(2) : "$"+fmt(n);
-}
+const MAX = 1e15;
+function safe(n){ if(typeof n!=="number"||!isFinite(n)||n<0) return 0; return Math.min(n,MAX); }
+function fmt(n){ n=safe(n); if(n<1000) return n<10?n.toFixed(1).replace(/\.0$/,""):Math.floor(n); const e=Math.min(Math.floor(Math.log10(n)/3),8); const v=n/Math.pow(10,3*e); return v.toFixed(v<10?2:1)+["","K","M","B","T","Qa","Qi","Sx","Sp"][e]; }
+function money(n){ n=safe(n); return n<1000?"$"+n.toFixed(2):"$"+fmt(n); }
 
-/* ========== DATA ========== */
-const H=[
-  {n:"Intern",d:"Works for exposure.",c:25,p:0.1,i:"🧑‍🎓"},
-  {n:"Sharpening Bench",d:"A crank and a prayer.",c:180,p:0.8,i:"🔧"},
-  {n:"Hand Lathe",d:"Hexagonal destiny.",c:2200,p:6,i:"🪚"},
-  {n:"Cedar Mill",d:"The forest remembers.",c:2.8e4,p:38,i:"🪵"},
-  {n:"Graphite Pit",d:"Black dust.",c:3.5e5,p:210,i:"⛏️"},
-  {n:"Assembly Line",d:"Loud and proud.",c:4.5e6,p:1100,i:"🏭"},
-  {n:"Robot Crew",d:"Never sleeps.",c:6e7,p:6000,i:"🤖"},
-  {n:"Cedar Arcology",d:"Pre-sharpened trees.",c:1e9,p:3.2e4,i:"🌲"},
-  {n:"Orbital Forge",d:"Zero-g extrusion.",c:2e10,p:1.8e5,i:"🛰️"},
-  {n:"Lunar Works",d:"Dust is free.",c:4e11,p:1e6,i:"🌙"},
-  {n:"Asteroid Scribe",d:"Carves chondrites.",c:8e12,p:6e6,i:"☄️"},
-  {n:"Dyson Stylus",d:"Writes on sunlight.",c:2e14,p:4e7,i:"☀️"},
-  {n:"Galactic Press",d:"Spiral conveyors.",c:5e15,p:2.5e8,i:"🌌"},
-  {n:"Quantum Lathe",d:"Superposition wood.",c:1.2e17,p:1.8e9,i:"⚛️"},
-  {n:"Pencil Monad",d:"Closed graphite universe.",c:4e18,p:1.5e10,i:"🌀"}
+const H = [
+  {n:"Apprentice",d:"Learns the craft.",c:40,p:0.15,i:"🧑‍🔧"},
+  {n:"Sharpening Bench",d:"Basic tools.",c:280,p:0.9,i:"🔧"},
+  {n:"Hand Lathe",d:"Shapes the wood.",c:3200,p:5.5,i:"🪚"},
+  {n:"Cedar Saw",d:"Cuts blanks.",c:2.5e4,p:32,i:"🪵"},
+  {n:"Graphite Mixer",d:"Consistent cores.",c:2.8e5,p:180,i:"⚗️"},
+  {n:"Assembly Line",d:"Faster output.",c:3.5e6,p:950,i:"🏭"},
+  {n:"Auto Lathe",d:"Reliable machines.",c:4.5e7,p:5200,i:"🤖"},
+  {n:"Quality Press",d:"Better finish.",c:6e8,p:2.8e4,i:"🖨️"},
+  {n:"Regional Plant",d:"Serious volume.",c:9e9,p:1.5e5,i:"🏢"},
+  {n:"National Works",d:"Major capacity.",c:1.5e11,p:8e5,i:"🏛️"}
 ];
 
-const STK=[
-  {s:"PNCL",b:1,v:0.035},
-  {s:"GRAF",b:2.4,v:0.06},
-  {s:"CEDR",b:5,v:0.045},
-  {s:"ORBT",b:14,v:0.08},
-  {s:"VOID",b:45,v:0.12}
+const STK = [
+  {s:"PNCL",name:"Pencil Co",b:12,v:0.04},
+  {s:"WOOD",name:"Cedar Holdings",b:28,v:0.05},
+  {s:"GRAF",name:"Graphite Ltd",b:45,v:0.06},
+  {s:"OFFC",name:"Office Supply",b:65,v:0.035}
 ];
 
-const LAB=[
-  {id:"lead",n:"Stabilized Lead",c:1e5,t:80,d:"+20% production",fn:s=>{s.lab.prod=safeMul(s.lab.prod,1.2)}},
-  {id:"erase",n:"Self-Healing Erasers",c:1.5e6,t:120,d:"+25% value",fn:s=>{s.lab.val=safeMul(s.lab.val,1.25)}},
-  {id:"muscle",n:"Muscle Memory",c:5e7,t:160,d:"+0.5 auto-clicks/s",fn:s=>{s.lab.auto=0.5}},
-  {id:"insider",n:"Insider Graphite",c:3e8,t:140,d:"Stocks less volatile",fn:s=>{s.lab.stab=0.65}},
-  {id:"cryo",n:"Cryo Coils",c:1.2e10,t:200,d:"Beam +50% effective",fn:s=>{s.lab.beam=safeMul(s.lab.beam,1.5)}},
-  {id:"fold",n:"Foldspace Holds",c:6e11,t:240,d:"Fleet value +40%",fn:s=>{s.lab.ship=safeMul(s.lab.ship,1.4)}},
-  {id:"anchor",n:"Reality Anchors",c:1e14,t:300,d:"Rift probes cheaper",fn:s=>{s.lab.riftC=0.7}},
-  {id:"dice",n:"Loaded Dice",c:4e15,t:320,d:"Casino +5% win",fn:s=>{s.lab.cas=0.54}},
-  {id:"omni",n:"Omni-Graphite",c:3e17,t:400,d:"+45% everything",fn:s=>{s.lab.prod=safeMul(s.lab.prod,1.45);s.lab.val=safeMul(s.lab.val,1.45);s.lab.help=safeMul(s.lab.help,1.45)}}
-];
-
-const UPS=[];
-function addU(id,n,d,c,fn,need){UPS.push({id,n,d,c,fn,need:need||null})}
-addU("ipo","IPO Filing","Unlock Stock Exchange",5e4,s=>{s.sys.stocks=1});
-addU("beamU","Particle Charter","Unlock Particle Beam",3e6,s=>{s.sys.beam=1});
-addU("labU","Black Budget","Unlock Research Lab",4e5,s=>{s.sys.lab=1});
-addU("fleetU","Export Writ","Unlock Logistics Fleet",1e9,s=>{s.sys.fleet=1});
-addU("riftU","Horizon Permit","Unlock Dimensional Rift",8e12,s=>{s.sys.rift=1});
-addU("casU","Sin License","Unlock Casino",2e11,s=>{s.sys.casino=1});
-addU("c1","Callus","Clicks ×2",200,s=>{s.up.click=safeMul(s.up.click,2)});
-addU("c2","Two Hands","Clicks ×2",4e3,s=>{s.up.click=safeMul(s.up.click,2)});
-addU("c3","Caffeine","Clicks ×2",1.2e5,s=>{s.up.click=safeMul(s.up.click,2)});
-addU("c4","Neural Graft","Clicks ×2",6e7,s=>{s.up.click=safeMul(s.up.click,2)});
-addU("c5","Thought Form","Clicks ×3",1e13,s=>{s.up.click=safeMul(s.up.click,3)});
-addU("p1","Foreman Nod","Clicks +3% PPS",3e4,s=>{s.up.pct+=0.03});
-addU("p2","Board Seat","Clicks +5% PPS",4e7,s=>{s.up.pct+=0.05});
-addU("p3","Cosmic Stylus","Clicks +8% PPS",8e12,s=>{s.up.pct+=0.08});
-addU("v1","Pink Prestige","Value ×1.6",2500,s=>{s.up.val=safeMul(s.up.val,1.6)});
-addU("v2","Brand Myth","Value ×1.7",2e5,s=>{s.up.val=safeMul(s.up.val,1.7)});
-addU("v3","School Lock","Value ×2",1e8,s=>{s.up.val=safeMul(s.up.val,2)});
-addU("v4","Galactic Std","Value ×2.5",3e13,s=>{s.up.val=safeMul(s.up.val,2.5)});
-addU("v5","Reality Tender","Value ×3",2e17,s=>{s.up.val=safeMul(s.up.val,3)});
-addU("g1","Shop Radio","Prod ×1.3",1.2e4,s=>{s.up.glob=safeMul(s.up.glob,1.3)});
-addU("g2","Free Coffee","Prod ×1.35",5e5,s=>{s.up.glob=safeMul(s.up.glob,1.35)});
-addU("g3","4-Day Week","Prod ×1.6",3e8,s=>{s.up.glob=safeMul(s.up.glob,1.6)});
-addU("g4","Time Dilation","Prod ×2",1.2e13,s=>{s.up.glob=safeMul(s.up.glob,2)});
-addU("g5","Causal Loop","Prod ×2.5",6e16,s=>{s.up.glob=safeMul(s.up.glob,2.5)});
-addU("goldM","Golden Magnet","Goldens 40% more often",2e6,s=>{s.up.gRate=0.6});
-addU("goldP","Midas Core","Golden rewards ×2",8e9,s=>{s.up.gPow=2});
-addU("divB","Dividend Cult","Dividends ×2.2",4e8,s=>{s.up.div=safeMul(s.up.div,2.2)});
-addU("beamSafe","Failsafe","Overcharge never melts",1e12,s=>{s.up.safe=1});
-addU("autoT","Algo Trader","Auto-buys cheapest stock",6e13,s=>{s.up.auto=1});
-H.forEach((h,i)=>{
-  addU(h.n+"_a",h.n+": Tools","This line +50% output",h.c*15,s=>{s.hMult[i]=safeMul(s.hMult[i],1.5)},()=>S.owned[i]>=4);
-  addU(h.n+"_b",h.n+": Shift","This line +70% output",h.c*120,s=>{s.hMult[i]=safeMul(s.hMult[i],1.7)},()=>S.owned[i]>=15);
-  addU(h.n+"_c",h.n+": Singularity","This line ×2",h.c*900,s=>{s.hMult[i]=safeMul(s.hMult[i],2)},()=>S.owned[i]>=50);
-});
-
-const NEWS=[
-  [0,"The first pencil is free. Everything after has a price."],
-  [100,"A school in Ohio just ordered a box."],
-  [2e3,"Three counties now chew only your graphite."],
-  [2e4,"Number 3 Pencil Co. sued. You sharpened the complaint."],
-  [2e5,"Forests requested a meeting. You sent a pencil."],
-  [2e6,"National tests now schedule around your output."],
-  [2e8,"First orbital forge online. The sky looks yellower."],
-  [2e10,"Mars wants pink erasers. Non-negotiable."],
-  [2e12,"The Moon has a No. 2 core. Confirmed."],
-  [2e14,"A Dyson segment autographs solar flares."],
-  [2e16,"Galactic council calls pencils soft power."],
-  [1e18,"Universe census: 49% pencil by volume."],
-  [1e19,"Reality updated its terms. Graphite is now required."]
-];
-const GOALS=[
-  {t:0,x:"The first mark"},{t:200,x:"Supply the school"},{t:2e4,x:"Own the county"},
-  {t:2e6,x:"National brand"},{t:2e8,x:"Every desk on Earth"},{t:2e10,x:"Low Earth orbit"},
-  {t:2e12,x:"Lunar colony"},{t:2e14,x:"Write on the Sun"},{t:2e16,x:"Span the galaxy"},
-  {t:1e18,x:"Conquer the Observable Universe"},{t:1e19,x:"Become the medium of reality"}
-];
-
-/* ========== STATE ========== */
 function fresh(){
   return {
-    made:0,cash:0,total:0,clicks:0,last:Date.now(),
+    cash:80, inv:0, made:0, totalEarned:0, totalLost:0,
     owned:H.map(()=>0), hMult:H.map(()=>1),
-    up:{click:1,pct:0,val:1,glob:1,div:1,gRate:1,gPow:1,safe:0,auto:0},
-    sys:{stocks:0,beam:0,lab:0,fleet:0,rift:0,casino:0},
-    beam:0, ships:0, rift:0,
-    lab:{prod:1,val:1,help:1,auto:0,stab:1,beam:1,ship:1,riftC:1,cas:0.49,cur:null,prog:0,done:{}},
-    ess:0, asc:0, bought:{},
-    stocks:STK.map(x=>({s:x.s,o:0,p:x.b,h:Array(12).fill(x.b),v:x.v}))
+    price:0.25, marketPrice:0.22,
+    rep:50, qc:50, cap:500,
+    orders:[], lastOrder:0,
+    stocks:STK.map(x=>({s:x.s,o:0,p:x.b,h:[x.b]})),
+    bought:{}, last:Date.now(),
+    season:"Regular", demandMod:1
   };
 }
+
 function load(){
   try{
     const r=JSON.parse(localStorage.getItem(KEY));
     if(!r) return fresh();
     const f=Object.assign(fresh(),r);
-    while(f.owned.length<H.length) f.owned.push(0);
-    while(f.hMult.length<H.length) f.hMult.push(1);
-    f.made=safe(f.made); f.cash=safe(f.cash); f.total=safe(f.total);
-    f.beam=safe(f.beam); f.ships=(safe(f.ships)|0); f.rift=(safe(f.rift)|0);
-    f.ess=(safe(f.ess)|0); f.asc=(safe(f.asc)|0);
-    f.owned=f.owned.map(x=>Math.min(Math.floor(safe(x)),1e7));
-    f.hMult=f.hMult.map(x=>{const v=safe(x); return v>0?v:1});
-    if(!f.stocks||f.stocks.length!==STK.length)
-      f.stocks=STK.map(x=>({s:x.s,o:0,p:x.b,h:Array(12).fill(x.b),v:x.v}));
-    f.stocks.forEach(st=>{
-      st.p=safe(st.p)||1;
-      st.o=Math.floor(safe(st.o));
-      if(!Array.isArray(st.h)||st.h.length<4) st.h=Array(12).fill(st.p);
-      st.h=st.h.map(x=>safe(x)||st.p);
-    });
-    if(!f.lab) f.lab={prod:1,val:1,help:1,auto:0,stab:1,beam:1,ship:1,riftC:1,cas:0.49,cur:null,prog:0,done:{}};
-    ["prod","val","help","beam","ship"].forEach(k=>{ f.lab[k]=safe(f.lab[k])||1; });
-    if(!f.lab.done) f.lab.done={};
-    if(!f.bought) f.bought={};
-    if(!f.up) f.up={click:1,pct:0,val:1,glob:1,div:1,gRate:1,gPow:1,safe:0,auto:0};
-    ["click","val","glob","div"].forEach(k=>{ f.up[k]=safe(f.up[k])||1; });
+    f.owned=f.owned.map(x=>Math.floor(safe(x)));
+    f.hMult=f.hMult.map(x=>safe(x)||1);
+    f.cash=safe(f.cash); f.inv=safe(f.inv);
+    f.totalEarned=safe(f.totalEarned); f.totalLost=safe(f.totalLost);
     return f;
-  }catch(e){ return fresh(); }
+  }catch(e){return fresh();}
 }
-function save(){
-  S.last=Date.now();
-  // final sanitize before save
-  S.cash=safe(S.cash); S.made=safe(S.made); S.total=safe(S.total);
-  try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){}
-}
+function save(){ S.last=Date.now(); try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){} }
 let S=load();
-const Buff={frenzy:0,click:0};
-let mode="1", open=null, sel=0, newsHold=0, upKey="";
+let mode="1", open=null, sel=0;
 
-/* ========== CORE ========== */
-function essM(){ return 1 + S.ess * 0.12; }
+/* ===== CORE CALCULATIONS ===== */
+function demandPercent(price){
+  const ratio = price / Math.max(S.marketPrice,0.05);
+  if(ratio <= 0.7) return Math.min(160, 100 + (0.7-ratio)*120);
+  if(ratio <= 1.0) return 100 - (ratio-0.7)*30;
+  if(ratio <= 2.0) return 70 * Math.pow(0.55, ratio-1);
+  if(ratio <= 5.0) return 12 * Math.pow(0.4, (ratio-2)/3);
+  if(ratio <= 20)  return 1.2 * Math.pow(0.35, (ratio-5)/15);
+  return Math.max(0.0001, 0.05 / ratio);
+}
+
 function calc(){
   let base=0;
-  for(let i=0;i<H.length;i++){
-    base += safeMul(S.owned[i], safeMul(H[i].p, S.hMult[i]));
-  }
-  base = safeMul(base, S.lab.help || 1);
-  const beamM = 1 + safe(S.beam) / 90 * (S.lab.beam || 1);
-  const shipM = safeMul(1 + S.ships * 0.065, S.lab.ship || 1);
-  const riftM = 1 + S.rift * 0.11;
-  const ess = essM();
-  let pps = base * (S.up.glob||1) * (S.lab.prod||1) * beamM * riftM * ess;
-  if(Buff.frenzy>0) pps *= 7;
-  pps = safe(pps);
-  const click = safe( (S.up.click||1) * (Buff.click>0?10:1) * ess + (S.up.pct||0) * pps );
-  const val = safe( (S.up.val||1) * (S.lab.val||1) * shipM * ess );
-  let div=0;
-  S.stocks.forEach(st=>{ div += safeMul(st.o, st.p) * 0.0015 * (S.up.div||1); });
-  return {pps, click, val, beamM, shipM, riftM, div:safe(div), ess};
-}
-function earn(n, C){
-  n = safe(n);
-  if(n <= 0) return;
-  S.made = safe(S.made + n);
-  const cash = safeMul(n, C.val);
-  S.cash = safe(S.cash + cash);
-  S.total = safe(S.total + cash);
-}
-function costN(i, n){
-  n = Math.min(Math.max(1, n|0), 400);
-  const r = 1.175;
-  const owned = Math.min(S.owned[i]||0, 4000);
-  const base = safeMul(H[i].c, safePow(r, owned));
-  if(n === 1) return Math.ceil(safe(base));
-  const geom = safeMul(base, (safePow(r, n) - 1) / (r - 1));
-  return Math.ceil(safe(geom));
-}
-function qty(i){
-  if(mode === "max"){
-    let n=0;
-    while(n<250 && costN(i, n+1) <= S.cash) n++;
-    return Math.max(1, n);
-  }
-  return parseInt(mode, 10) || 1;
+  for(let i=0;i<H.length;i++) base += S.owned[i] * H[i].p * S.hMult[i];
+  const yield = 0.55 + (100-S.qc)/100*0.42; // higher QC = lower yield
+  const pps = base * yield * (0.7 + S.rep/200);
+  const demPct = demandPercent(S.price);
+  const dailyPotential = 80 + S.rep*1.8 + base*40;
+  const proj = dailyPotential * (demPct/100) * S.demandMod;
+  return {pps:safe(pps), demPct, proj:safe(proj), yield};
 }
 
-/* ========== RENDER ========== */
+function earn(amount, reason){
+  amount=safe(amount);
+  if(amount<=0) return;
+  S.cash=safe(S.cash+amount);
+  S.totalEarned=safe(S.totalEarned+amount);
+  floatMoney(amount, true);
+}
+
+function lose(amount, reason){
+  amount=safe(amount);
+  if(amount<=0) return;
+  S.cash=safe(Math.max(0,S.cash-amount));
+  S.totalLost=safe(S.totalLost+amount);
+  floatMoney(amount, false);
+}
+
+function floatMoney(amount, isGain){
+  const el=document.createElement("div");
+  el.className="money-pop";
+  el.textContent=(isGain?"+":"-")+money(amount);
+  el.style.color=isGain?"var(--good)":"var(--bad)";
+  el.style.left=(40+Math.random()*40)+"vw";
+  el.style.top=(30+Math.random()*30)+"vh";
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),1100);
+}
+
+/* ===== ORDERS ===== */
+function generateOrder(){
+  if(S.orders.length>=6) return;
+  const types=["School District","Office Supply","Art Store","Promotional","Export Inquiry","Stationery Chain"];
+  const type=types[Math.floor(Math.random()*types.length)];
+  const baseQty=Math.floor(40+Math.random()*180+S.rep*2);
+  const maxPrice=S.marketPrice*(0.85+Math.random()*0.5)*(0.9+S.rep/300);
+  const deadline=Date.now()+ (18+Math.random()*40)*1000;
+  S.orders.push({
+    id:Date.now()+Math.random(),
+    type, qty:baseQty,
+    maxPrice: +maxPrice.toFixed(2),
+    deadline,
+    status:"open"
+  });
+}
+
+function acceptOrder(id){
+  const o=S.orders.find(x=>x.id===id);
+  if(!o||o.status!=="open") return;
+  if(S.inv < o.qty){
+    say("Not enough inventory to fulfill this order.");
+    return;
+  }
+  o.status="accepted";
+  S.inv-=o.qty;
+  const revenue=o.qty*Math.min(S.price,o.maxPrice);
+  earn(revenue,"contract");
+  S.rep=Math.min(100,S.rep+1.2);
+  say(`Delivered ${o.qty} pencils to ${o.type}. +${money(revenue)}`);
+  S.orders=S.orders.filter(x=>x.id!==id);
+}
+
+function rejectOrder(id){
+  S.orders=S.orders.filter(x=>x.id!==id);
+}
+
+/* ===== RENDER ===== */
 const hEls=[];
 function buildH(){
   const box=$("#helpers");
@@ -494,488 +346,300 @@ function buildH(){
   H.forEach((h,i)=>{
     const b=document.createElement("button");
     b.className="item";
-    b.innerHTML=`<span class="ico">${h.i}</span><span class="mid"><b>${h.n}</b><small>${h.d}</small><small class="rt"></small></span><span class="right"><span class="own">0</span><span class="cost"></span></span>`;
+    b.innerHTML=`<span class="ico">${h.i}</span><span class="mid"><b>${h.n}</b><small>${h.d}</small></span><span class="right"><span class="own">0</span><span class="cost"></span></span>`;
     b.onclick=()=>{
-      const n=qty(i), c=costN(i,n);
-      if(!isFinite(c) || c<=0 || S.cash < c) return;
-      S.cash = safe(S.cash - c);
-      S.owned[i] = (S.owned[i]||0) + n;
+      const n=qty(i),c=costN(i,n);
+      if(S.cash<c) return;
+      lose(c,"hire");
+      S.owned[i]+=n;
       save();
     };
     box.appendChild(b);
-    hEls.push({el:b, own:b.querySelector(".own"), cost:b.querySelector(".cost"), rt:b.querySelector(".rt")});
+    hEls.push({el:b,own:b.querySelector(".own"),cost:b.querySelector(".cost")});
   });
 }
 
-function theme(){
-  document.body.classList.remove("space","quantum","cosmic");
-  let era="Classic Works";
-  if(S.made >= 1e16){ document.body.classList.add("cosmic"); era="Cosmic Dominion"; }
-  else if(S.made >= 1e12){ document.body.classList.add("quantum"); era="Quantum Works"; }
-  else if(S.made >= 1e9){ document.body.classList.add("space"); era="Orbital Division"; }
-  $("#era").textContent = era;
-  let g=GOALS[0];
-  for(const x of GOALS) if(S.made >= x.t) g=x;
-  const next=GOALS.find(x=>x.t > S.made);
-  $("#goal").textContent = next ? `Goal: ${g.x} → ${fmt(next.t)}` : `Goal: ${g.x}`;
+function costN(i,n){
+  n=Math.min(Math.max(1,n|0),200);
+  const r=1.16;
+  const owned=S.owned[i]||0;
+  const base=H[i].c*Math.pow(r,owned);
+  if(n===1) return Math.ceil(base);
+  return Math.ceil(base*(Math.pow(r,n)-1)/(r-1));
+}
+function qty(i){
+  if(mode==="max"){
+    let n=0; while(n<80&&costN(i,n+1)<=S.cash) n++;
+    return Math.max(1,n);
+  }
+  return parseInt(mode)||1;
 }
 
-function renderStocks(C){
+function renderOrders(){
+  const box=$("#orders");
+  if(!S.orders.length){
+    box.innerHTML="";
+    $("#noOrders").style.display="block";
+    return;
+  }
+  $("#noOrders").style.display="none";
+  let html="";
+  S.orders.forEach(o=>{
+    const left=Math.max(0,(o.deadline-Date.now())/1000);
+    html+=`<div class="order ${S.inv>=o.qty?"good":""}">
+      <b>${o.type}</b> · ${o.qty} pcs · max ${money(o.maxPrice)} each<br>
+      <small>Deadline: ${left.toFixed(0)}s · Your price: ${money(S.price)}</small><br>
+      <button class="act" onclick="acceptOrder(${o.id})">Accept</button>
+      <button class="act" onclick="rejectOrder(${o.id})">Reject</button>
+    </div>`;
+  });
+  box.innerHTML=html;
+}
+
+function render(){
+  const C=calc();
+  $("#cash").textContent=money(S.cash);
+  $("#inv").textContent=fmt(Math.floor(S.inv));
+  $("#earned").textContent=money(S.totalEarned);
+  $("#lost").textContent=money(S.totalLost);
+  $("#rates").textContent=`${fmt(C.pps)}/s production · Yield ${ (C.yield*100).toFixed(0)}%`;
+
+  $("#priceDisp").textContent=money(S.price);
+  $("#marketPrice").textContent=money(S.marketPrice);
+  $("#demandPct").textContent=C.demPct<0.01?C.demPct.toFixed(4)+"%":C.demPct.toFixed(1)+"%";
+  $("#demandBar").style.width=Math.min(100,C.demPct)+"%";
+  $("#demandBar").style.background=C.demPct>40?"var(--good)":C.demPct>10?"var(--acc)":"var(--bad)";
+  $("#projSales").textContent=fmt(C.proj)+"/day";
+
+  $("#cap").textContent=fmt(S.cap);
+  $("#used").textContent=fmt(S.inv);
+  $("#capBar").style.width=Math.min(100,(S.inv/S.cap)*100)+"%";
+  $("#invWarn").textContent=S.inv>S.cap*0.9?"Warehouse almost full — sales or storage needed":"";
+
+  $("#finCash").textContent=money(S.cash);
+  $("#finEarned").textContent=money(S.totalEarned);
+  $("#finLost").textContent=money(S.totalLost);
+  $("#finNet").textContent=money(S.cash + S.inv*S.price*0.6);
+  $("#rep").textContent=S.rep.toFixed(0);
+
+  $("#qcVal").textContent=S.qc+"%";
+  $("#yield").textContent=(C.yield*100).toFixed(0)+"%";
+
+  // helpers
+  H.forEach((h,i)=>{
+    const e=hEls[i];
+    const show=i===0||S.owned[i]>0||(i>0&&S.owned[i-1]>0)||S.totalEarned>=h.c*0.2;
+    e.el.style.display=show?"":"none";
+    const n=qty(i),c=costN(i,n);
+    e.own.textContent=S.owned[i]||0;
+    e.cost.textContent=(n>1?"×"+n+" ":"")+money(c);
+    e.el.classList.toggle("afford",S.cash>=c);
+  });
+
+  // era
+  let era="Small Workshop";
+  if(S.totalEarned>5e6) era="Regional Factory";
+  if(S.totalEarned>8e8) era="National Brand";
+  if(S.totalEarned>5e10) era="Market Leader";
+  $("#era").textContent=era;
+
+  renderOrders();
+  renderStocks();
+  renderUp();
+}
+
+function renderStocks(){
   const box=$("#stockList");
   if(!box.children.length){
     S.stocks.forEach((st,i)=>{
       const r=document.createElement("div");
-      r.className="stock-row"+(i===sel?" sel":"");
-      r.innerHTML=`<span class="sym">${st.s}</span><div class="mini-chart"></div><span class="pr"></span><span class="chg"></span>`;
-      r.onclick=()=>{ sel=i; renderStocks(calc()); };
-      const ch=r.querySelector(".mini-chart");
-      for(let k=0;k<12;k++) ch.appendChild(document.createElement("i"));
+      r.className="row";
+      r.style.cursor="pointer";
+      r.innerHTML=`<span>${st.s}</span><span class="pr"></span>`;
+      r.onclick=()=>sel=i;
       box.appendChild(r);
     });
   }
   let port=0;
   S.stocks.forEach((st,i)=>{
     const r=box.children[i];
-    r.classList.toggle("sel", i===sel);
-    const mx=Math.max(...st.h.map(safe), 0.01);
-    r.querySelectorAll("i").forEach((bar,j)=>{
-      bar.style.height = Math.max(2, (safe(st.h[j])/mx)*22) + "px";
-    });
-    const prev=safe(st.h[st.h.length-2]) || st.p;
-    const chg=((st.p - prev)/Math.max(prev,0.01))*100;
-    r.querySelector(".pr").textContent=money(st.p);
-    const ce=r.querySelector(".chg");
-    ce.textContent=(chg>=0?"+":"")+chg.toFixed(1)+"%";
-    ce.className="chg "+(chg>=0?"up":"dn");
-    port += st.o * st.p;
+    r.querySelector(".pr").textContent=money(st.p)+" ×"+st.o;
+    port+=st.o*st.p;
   });
-  $("#selSym").textContent = S.stocks[sel].s + " ×" + S.stocks[sel].o;
-  $("#port").textContent = money(port);
-  $("#divs").textContent = money(C.div)+"/s";
+  $("#port").textContent=money(port);
 }
 
-function renderBeam(C){
-  $("#beamE").textContent = fmt(S.beam)+" GeV";
-  $("#beamM").textContent = C.beamM.toFixed(2)+"×";
-  const pct=Math.min(100, S.beam/6);
-  const f=$("#beamFill");
-  f.style.width=pct+"%";
-  f.classList.toggle("hot", S.beam>400);
-  $("#beamS").textContent = S.beam>600?"CRITICAL":S.beam>250?"Hot":S.beam>60?"Warm":"Cold";
-}
-
-function renderLab(){
-  if(S.lab.cur){
-    const p=LAB.find(x=>x.id===S.lab.cur);
-    $("#labN").textContent = p ? p.n : "—";
-    const pct=Math.min(100, (S.lab.prog/(p?p.t:1))*100);
-    $("#labP").textContent = pct.toFixed(0)+"%";
-    $("#labF").style.width = pct+"%";
-  }else{
-    $("#labN").textContent="None";
-    $("#labP").textContent="—";
-    $("#labF").style.width="0%";
-  }
-  const list=$("#labList");
-  let html="";
-  LAB.forEach(p=>{
-    if(S.lab.done[p.id]) return;
-    const can=S.cash>=p.c && !S.lab.cur;
-    html+=`<div class="lab-opt"><span><b>${p.n}</b><br><small style="opacity:.7">${p.d} · ${p.t}s</small></span>
-      <button class="act" data-l="${p.id}" ${can?"":"disabled"}>${money(p.c)}</button></div>`;
-  });
-  if(!html) html='<div class="empty">All research done.</div>';
-  if(list.dataset.h!==html){ list.innerHTML=html; list.dataset.h=html; }
-}
-
-function visUp(){
-  return UPS.filter(u=>{
-    if(S.bought[u.id]) return false;
-    if(u.need){ try{ return u.need(); }catch(e){ return false; } }
-    return S.total >= u.c * 0.15;
-  }).sort((a,b)=>a.c-b.c);
-}
+const UPS=[];
+function addU(id,n,d,c,fn){UPS.push({id,n,d,c,fn});}
+addU("cap1","Extra Shelving","Warehouse +400",1200,s=>{s.cap+=400;});
+addU("cap2","Storage Wing","Warehouse +2000",2.5e4,s=>{s.cap+=2000;});
+addU("rep1","Local Ads","Reputation +8",800,s=>{s.rep=Math.min(100,s.rep+8);});
+addU("rep2","School Samples","Reputation +12",1.8e4,s=>{s.rep=Math.min(100,s.rep+12);});
+addU("p1","Better Tools","All lines +25%",5e3,s=>{s.hMult=s.hMult.map(x=>x*1.25);});
+addU("p2","Process Improvement","All lines +35%",1.2e5,s=>{s.hMult=s.hMult.map(x=>x*1.35);});
+addU("m1","Market Research","Slightly higher market price",3e4,s=>{s.marketPrice*=1.08;});
 
 function renderUp(){
-  const vis=visUp();
-  const key=vis.map(u=>u.id).join();
+  const vis=UPS.filter(u=>!S.bought[u.id] && S.totalEarned>=u.c*0.12).sort((a,b)=>a.c-b.c);
   const box=$("#ups");
-  if(key!==upKey){
-    upKey=key;
-    box.innerHTML="";
-    if(!vis.length){ box.innerHTML='<div class="empty">Keep producing.</div>'; return; }
-    vis.slice(0,30).forEach(u=>{
-      const b=document.createElement("button");
-      b.className="item";
-      b.innerHTML=`<span class="mid"><b>${u.n}</b><small>${u.d}</small></span><span class="right cost">${money(u.c)}</span>`;
-      b.onclick=()=>{
-        if(S.cash < u.c || S.bought[u.id]) return;
-        S.cash=safe(S.cash - u.c);
-        S.bought[u.id]=1;
-        u.fn(S);
-        upKey="";
-        save();
-      };
-      box.appendChild(b);
-    });
-  }
-  box.querySelectorAll(".item").forEach((el,i)=>{
-    const u=vis[i];
-    if(u) el.classList.toggle("afford", S.cash >= u.c);
+  box.innerHTML="";
+  if(!vis.length){box.innerHTML='<div class="empty">Keep producing & selling.</div>';return;}
+  vis.slice(0,12).forEach(u=>{
+    const b=document.createElement("button");
+    b.className="item"+(S.cash>=u.c?" afford":"");
+    b.innerHTML=`<span class="mid"><b>${u.n}</b><small>${u.d}</small></span><span class="right cost">${money(u.c)}</span>`;
+    b.onclick=()=>{
+      if(S.cash<u.c||S.bought[u.id])return;
+      lose(u.c,"upgrade");
+      S.bought[u.id]=1;
+      u.fn(S);
+      save();
+    };
+    box.appendChild(b);
   });
 }
 
-function render(){
-  // emergency sanitize
-  if(!isFinite(S.cash) || S.cash<0) S.cash=0;
-  if(!isFinite(S.made) || S.made<0) S.made=0;
+/* ===== EVENTS ===== */
+$("#priceSlider").oninput=e=>{
+  S.price=e.target.value/100;
+  render();
+};
+$("#qcSlider").oninput=e=>{
+  S.qc=+e.target.value;
+  render();
+};
 
+$("#make").onclick=e=>{
   const C=calc();
-  $("#cash").textContent=money(S.cash);
-  $("#made").textContent=fmt(Math.floor(S.made));
-  $("#ess").textContent=fmt(S.ess);
-  $("#asc").textContent=S.asc;
-  $("#rates").textContent=`${fmt(C.pps)}/s · ${money(C.val)} each · ${money(C.pps*C.val + C.div)}/s`;
-  document.title=fmt(Math.floor(S.made))+" — Pencil Factory";
+  const gained=C.pps*0.35+0.4; // manual click stronger early
+  S.inv=safe(S.inv+gained);
+  S.made=safe(S.made+gained);
+  floatT(e.clientX||200,e.clientY||300,"+"+fmt(gained));
+};
 
-  H.forEach((h,i)=>{
-    const e=hEls[i];
-    const show=i===0 || S.owned[i]>0 || (i>0&&S.owned[i-1]>0) || S.total>=h.c*0.18;
-    e.el.style.display=show?"":"none";
-    const n=qty(i), c=costN(i,n);
-    e.own.textContent=S.owned[i]||0;
-    e.cost.textContent=(n>1?"×"+n+" ":"")+money(c);
-    e.rt.textContent=fmt(safeMul(h.p, S.hMult[i]) * C.ess * (S.lab.help||1))+"/s each";
-    e.el.classList.toggle("afford", isFinite(c) && c>0 && S.cash>=c);
-  });
-  renderUp();
-  theme();
-
-  let bt="";
-  if(Buff.frenzy>0) bt+=`<span class="buff">Frenzy ×7 · ${Math.ceil(Buff.frenzy)}s</span>`;
-  if(Buff.click>0) bt+=`<span class="buff">Click Storm ×10 · ${Math.ceil(Buff.click)}s</span>`;
-  if($("#buffs").dataset.t!==bt){ $("#buffs").innerHTML=bt; $("#buffs").dataset.t=bt; }
-
-  let fl="";
-  H.forEach((h,i)=>{
-    if(S.owned[i]>0)
-      fl+=`<span title="${h.n} ×${S.owned[i]}">${h.i.repeat(Math.min(S.owned[i],4))}${S.owned[i]>4?"+"+(S.owned[i]-4):""}</span>`;
-  });
-  if(!fl) fl='<span class="floor-empty">Empty. Hire someone.</span>';
-  if($("#floor").dataset.t!==fl){ $("#floor").innerHTML=fl; $("#floor").dataset.t=fl; }
-
-  const map={stocks:"bStocks",beam:"bBeam",lab:"bLab",fleet:"bFleet",rift:"bRift",casino:"bCasino"};
-  Object.keys(map).forEach(k=>{
-    const btn=$("#"+map[k]);
-    btn.disabled=!S.sys[k];
-    btn.classList.toggle("on", open===k);
-  });
-
-  if(open==="stocks") renderStocks(C);
-  if(open==="beam") renderBeam(C);
-  if(open==="lab") renderLab();
-  if(open==="fleet"){
-    $("#ships").textContent=S.ships;
-    const names=["Local","Regional","Continental","Planetary","Orbital","System","Interstellar","Galactic","Universal"];
-    $("#reach").textContent=names[Math.min(S.ships, names.length-1)];
-    $("#shipM").textContent=C.shipM.toFixed(2)+"×";
-  }
-  if(open==="rift"){
-    $("#riftD").textContent=S.rift;
-    $("#riftM").textContent=C.riftM.toFixed(2)+"×";
-  }
-
-  const can=S.made>=1e11;
-  $("#presBox").style.display=can?"block":"none";
-  if(can){
-    const gain=Math.floor(Math.pow(S.made/1e11, 0.45));
-    $("#presInfo").textContent=`Reset for ${fmt(gain)} Cosmic Graphite (+12% permanent each).`;
-    $("#ascendBtn").textContent=`Ascend (+${fmt(gain)})`;
-  }
+function floatT(x,y,t){
+  const el=document.createElement("div");
+  el.className="fl";el.textContent=t;
+  el.style.left=(x-10)+"px";el.style.top=(y-16)+"px";
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),900);
 }
 
-/* ========== SYSTEMS ========== */
 function setOpen(name){
-  if(name && !S.sys[name]) return;
-  open = open===name ? null : name;
-  $("#pStocks").classList.toggle("open", open==="stocks");
-  $("#pBeam").classList.toggle("open", open==="beam");
-  $("#pLab").classList.toggle("open", open==="lab");
-  $("#pFleet").classList.toggle("open", open==="fleet");
-  $("#pRift").classList.toggle("open", open==="rift");
-  $("#pCasino").classList.toggle("open", open==="casino");
+  open=open===name?null:name;
+  ["Finance","Market","QC","Stocks"].forEach(n=>{
+    $("#p"+n).classList.toggle("open",open===n.toLowerCase()|| (n==="QC"&&open==="qc"));
+    $("#b"+n).classList.toggle("on",open===n.toLowerCase()||(n==="QC"&&open==="qc"));
+  });
 }
+$("#bFinance").onclick=()=>setOpen("finance");
+$("#bMarket").onclick=()=>setOpen("market");
+$("#bQC").onclick=()=>setOpen("qc");
 $("#bStocks").onclick=()=>setOpen("stocks");
-$("#bBeam").onclick=()=>setOpen("beam");
-$("#bLab").onclick=()=>setOpen("lab");
-$("#bFleet").onclick=()=>setOpen("fleet");
-$("#bRift").onclick=()=>setOpen("rift");
-$("#bCasino").onclick=()=>setOpen("casino");
 
 $("#buy1").onclick=()=>{
   const st=S.stocks[sel];
-  if(S.cash < st.p) return;
-  S.cash=safe(S.cash-st.p); st.o++; save();
-};
-$("#buy10").onclick=()=>{
-  const st=S.stocks[sel];
-  let n=0;
-  while(n<10 && S.cash>=st.p){ S.cash=safe(S.cash-st.p); st.o++; n++; }
+  if(S.cash<st.p)return;
+  lose(st.p,"stock");
+  st.o++;
   save();
 };
 $("#sell1").onclick=()=>{
   const st=S.stocks[sel];
-  if(st.o<1) return;
-  st.o--; S.cash=safe(S.cash+st.p); save();
-};
-$("#sellAll").onclick=()=>{
-  const st=S.stocks[sel];
-  if(st.o<1) return;
-  S.cash=safe(S.cash + st.o*st.p); st.o=0; save();
-};
-
-$("#charge").onclick=()=>{
-  const cost=50 + S.beam*5;
-  if(S.cash < cost) return;
-  S.cash=safe(S.cash-cost);
-  S.beam=safe(S.beam + 5 + Math.floor(S.beam*0.012));
+  if(st.o<1)return;
+  st.o--;
+  earn(st.p,"stock");
   save();
 };
-$("#over").onclick=()=>{
-  const cost=250 + S.beam*12;
-  if(S.cash < cost) return;
-  S.cash=safe(S.cash-cost);
-  if(Math.random()<0.75 || S.up.safe){
-    S.beam=safe(S.beam + 22 + Math.floor(S.beam*0.03));
-    say("Overcharge OK.",4);
-  }else{
-    S.beam=safe(S.beam*0.35);
-    say("Coil meltdown!",5);
-  }
-  save();
-};
-
-$("#labList").onclick=e=>{
-  const b=e.target.closest("[data-l]");
-  if(!b || S.lab.cur) return;
-  const p=LAB.find(x=>x.id===b.dataset.l);
-  if(!p || S.lab.done[p.id] || S.cash < p.c) return;
-  S.cash=safe(S.cash-p.c);
-  S.lab.cur=p.id;
-  S.lab.prog=0;
-  save();
-};
-
-$("#buyShip").onclick=()=>{
-  const cost=safe(1.5e9 * safePow(3.4, S.ships));
-  if(S.cash < cost) return;
-  S.cash=safe(S.cash-cost);
-  S.ships++;
-  save();
-};
-$("#probe").onclick=()=>{
-  const cost=safe(3e13 * safePow(2.7, S.rift) * (S.lab.riftC||1));
-  if(S.cash < cost) return;
-  S.cash=safe(S.cash-cost);
-  S.rift++;
-  say("The rift widens.",5);
-  save();
-};
-
-function gamble(pct){
-  const bet=safe(S.cash * pct);
-  if(bet < 1) return;
-  S.cash=safe(S.cash - bet);
-  const win=S.lab.cas || 0.49;
-  const r=Math.random();
-  if(r < 0.012){
-    S.cash=safe(S.cash + bet*10);
-    $("#casLast").textContent="JACKPOT ×10";
-    say("Jackpot!",5);
-  }else if(r < win){
-    S.cash=safe(S.cash + bet*2);
-    $("#casLast").textContent="Win ×2";
-  }else{
-    $("#casLast").textContent="Lost";
-  }
-  save();
-}
-$("#bet1").onclick=()=>gamble(0.01);
-$("#bet10").onclick=()=>gamble(0.1);
-$("#betAll").onclick=()=>gamble(1);
-
-/* ========== CLICK / GOLDEN ========== */
-const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
-function floatT(x,y,t){
-  const el=document.createElement("div");
-  el.className="fl"; el.textContent=t;
-  el.style.left=(x-10)+"px"; el.style.top=(y-16)+"px";
-  document.body.appendChild(el);
-  setTimeout(()=>el.remove(),900);
-}
-$("#make").onclick=e=>{
-  const C=calc();
-  earn(C.click, C);
-  S.clicks++;
-  let x=e.clientX, y=e.clientY;
-  if(!x && !y){
-    const r=e.currentTarget.getBoundingClientRect();
-    x=r.left+r.width/2; y=r.top+r.height/2;
-  }
-  floatT(x,y,"+"+fmt(C.click));
-  if(!reduce){
-    $("#psvg").animate([{transform:"scale(1)"},{transform:"scale(.93) rotate(-2deg)"},{transform:"scale(1)"}],{duration:100});
-  }
-};
-
-let gIn=30+Math.random()*40, gEl=null;
-function spawnG(){
-  const b=document.createElement("button");
-  b.className="golden"; b.textContent="✏️";
-  b.style.left=(5+Math.random()*85)+"vw";
-  b.style.top=(10+Math.random()*70)+"vh";
-  b.onclick=()=>{
-    const C=calc(), r=Math.random(), pow=S.up.gPow||1;
-    if(r<0.4){ Buff.frenzy=26; say("Frenzy! 7× production.",7); }
-    else if(r<0.75){
-      const g=Math.max(C.pps*C.val*350*pow, 20);
-      S.cash=safe(S.cash+g); S.total=safe(S.total+g);
-      say("Bulk +"+money(g),6);
-    }else{ Buff.click=13; say("Click Storm!",6); }
-    b.remove(); gEl=null;
-  };
-  document.body.appendChild(b); gEl=b;
-  setTimeout(()=>{ if(gEl===b){ b.remove(); gEl=null; } },11000);
-}
-
-/* ========== PRESTIGE ========== */
-$("#ascendBtn").onclick=()=>{
-  if(S.made < 1e11) return;
-  const gain=Math.floor(Math.pow(S.made/1e11, 0.45));
-  if(!confirm(`Ascend for ${fmt(gain)} Cosmic Graphite?\n\nResets almost everything.\nGraphite is permanent (+12% each).`)) return;
-  const keep={ess:S.ess+gain, asc:S.asc+1};
-  S=fresh();
-  S.ess=keep.ess; S.asc=keep.asc;
-  Buff.frenzy=0; Buff.click=0; upKey=""; open=null;
-  save();
-  say(`Ascended. +${fmt(gain)} Graphite.`,10);
-  setOpen(null);
-};
-
-/* ========== LOOP ========== */
-let last=performance.now(), sT=0, nT=0, stT=0, aT=0;
-function say(t,h){ $("#ticker").textContent=t; newsHold=h||6; }
-function rotNews(){
-  if(newsHold>0) return;
-  const pool=NEWS.filter(n=>S.made>=n[0]);
-  const r=pool.slice(-3);
-  $("#ticker").textContent=r[Math.floor(Math.random()*r.length)][1];
-}
-
-setInterval(()=>{
-  const now=performance.now();
-  const dt=Math.min((now-last)/1000, 15);
-  last=now;
-  const C=calc();
-
-  earn(C.pps*dt, C);
-  S.cash=safe(S.cash + C.div*dt);
-  S.total=safe(S.total + C.div*dt);
-  if(S.lab.auto>0) earn(C.click * S.lab.auto * dt, C);
-
-  Buff.frenzy=Math.max(0, Buff.frenzy-dt);
-  Buff.click=Math.max(0, Buff.click-dt);
-
-  if(S.lab.cur){
-    const p=LAB.find(x=>x.id===S.lab.cur);
-    S.lab.prog += dt;
-    if(p && S.lab.prog >= p.t){
-      p.fn(S);
-      S.lab.done[p.id]=1;
-      say("Research: "+p.n+" — "+p.d, 8);
-      S.lab.cur=null;
-      S.lab.prog=0;
-    }
-  }
-
-  stT+=dt;
-  if(stT>=2.4){
-    stT=0;
-    const stab=S.lab.stab||1;
-    S.stocks.forEach(st=>{
-      const force=(Math.random()-0.48)*st.v*0.07*stab + Math.min(C.pps/8e9, 0.015);
-      st.p=Math.max(0.2, safe(st.p*(1+force)));
-      st.h.push(st.p);
-      if(st.h.length>12) st.h.shift();
-    });
-  }
-
-  aT+=dt;
-  if(S.up.auto && aT>5){
-    aT=0;
-    let cheap=S.stocks[0];
-    S.stocks.forEach(st=>{ if(st.p < cheap.p) cheap=st; });
-    if(S.cash > cheap.p*4){
-      S.cash=safe(S.cash-cheap.p);
-      cheap.o++;
-    }
-  }
-
-  if(newsHold>0) newsHold-=dt;
-  nT+=dt;
-  if(nT>=8){ nT=0; rotNews(); }
-
-  if(!gEl){
-    gIn -= dt*(S.up.gRate||1);
-    if(gIn<=0){ spawnG(); gIn=38+Math.random()*50; }
-  }
-
-  sT+=dt;
-  if(sT>=4){ sT=0; save(); }
-  render();
-},100);
-
-setInterval(()=>{
-  if(S.made<3e8 || reduce || document.querySelectorAll(".pt").length>14) return;
-  const p=document.createElement("div");
-  p.className="pt";
-  const sz=1+Math.random()*2;
-  p.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}vw;bottom:-3px;background:${Math.random()>.5?"#fff":"var(--acc)"};opacity:.35;animation-duration:${8+Math.random()*11}s`;
-  document.body.appendChild(p);
-  setTimeout(()=>p.remove(),20000);
-},1000);
 
 $("#mode").onclick=e=>{
   const b=e.target.closest("button");
-  if(!b) return;
+  if(!b)return;
   mode=b.dataset.m;
-  $$("#mode button").forEach(x=>x.classList.toggle("on", x===b));
+  $$("#mode button").forEach(x=>x.classList.toggle("on",x===b));
 };
+
 $("#reset").onclick=()=>{
-  if(confirm("Hard reset EVERYTHING including Cosmic Graphite?")){
+  if(confirm("Hard reset everything?")){
     S=fresh();
-    Buff.frenzy=0; Buff.click=0; upKey=""; open=null;
     save();
-    say("Ash. Begin again.",6);
-    setOpen(null);
+    location.reload();
   }
 };
 
-(function(){
-  const secs=Math.min((Date.now()-S.last)/1000, 5*3600);
-  if(secs>40){
-    const C=calc();
-    const gain=C.pps*secs*0.35;
-    if(gain>=1){ earn(gain,C); say("While away: +"+fmt(gain)+" pencils.",10); }
-  }else{
-    rotNews();
-    say(NEWS[0][1],4);
-  }
-})();
+/* ===== MAIN LOOP ===== */
+let last=performance.now(), orderTimer=0, marketTimer=0;
+function say(t){ $("#ticker").textContent=t; }
 
+setInterval(()=>{
+  const now=performance.now();
+  const dt=Math.min((now-last)/1000,2);
+  last=now;
+  const C=calc();
+
+  // production into inventory
+  const produced=C.pps*dt;
+  if(S.inv+produced <= S.cap){
+    S.inv=safe(S.inv+produced);
+  }else{
+    // overflow loss
+    const overflow=S.inv+produced-S.cap;
+    S.inv=S.cap;
+    if(overflow>1) lose(overflow*S.price*0.15,"overflow");
+  }
+
+  // passive market sales (small continuous sales based on demand)
+  const sellRate=(C.proj/86400)*dt; // daily to per-second
+  const canSell=Math.min(S.inv,sellRate);
+  if(canSell>0.01){
+    S.inv=safe(S.inv-canSell);
+    earn(canSell*S.price,"market");
+  }
+
+  // orders
+  orderTimer+=dt;
+  if(orderTimer>9+Math.random()*8){
+    orderTimer=0;
+    generateOrder();
+  }
+  // expire old orders
+  S.orders=S.orders.filter(o=>{
+    if(Date.now()>o.deadline){
+      S.rep=Math.max(20,S.rep-2);
+      say("Missed an order deadline. Reputation hurt.");
+      return false;
+    }
+    return true;
+  });
+
+  // market price drift
+  marketTimer+=dt;
+  if(marketTimer>6){
+    marketTimer=0;
+    S.marketPrice=safe(S.marketPrice*(1+(Math.random()-0.48)*0.025));
+    S.stocks.forEach(st=>{
+      st.p=Math.max(3,st.p*(1+(Math.random()-0.47)*0.04));
+    });
+  }
+
+  // season
+  const hour=new Date().getHours();
+  if(hour>=8&&hour<=16){S.season="School hours";S.demandMod=1.25;}
+  else{S.season="Regular";S.demandMod=1;}
+
+  $("#season").textContent=S.season;
+  $("#mDemand").textContent=S.demandMod>1.1?"Strong":"Normal";
+
+  render();
+  if(Math.random()<0.008) save();
+},120);
+
+// initial
 buildH();
+$("#priceSlider").value=S.price*100;
+$("#qcSlider").value=S.qc;
 render();
-setOpen(null);
+say("Welcome. Produce pencils, set a realistic price, and fulfill orders.");
 </script>
 </body>
 </html>
