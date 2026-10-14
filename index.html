@@ -17,9 +17,7 @@
   --border: #3a2c20;
   --shadow: rgba(55, 35, 15, 0.2);
 }
-
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
 body {
   min-height: 100vh;
   font-family: Georgia, "Palatino Linotype", serif;
@@ -33,12 +31,10 @@ body {
   animation: slowShift 80s ease-in-out infinite alternate;
   overflow-x: hidden;
 }
-
 @keyframes slowShift {
   from { background-position: 0% 0%, 100% 100%, 0% 50%; }
   to   { background-position: 100% 50%, 0% 0%, 100% 0%; }
 }
-
 .leaf {
   position: fixed;
   pointer-events: none;
@@ -51,7 +47,6 @@ body {
   0%   { transform: translateY(-5vh) rotate(0deg); opacity: 0.5; }
   100% { transform: translateY(105vh) rotate(720deg); opacity: 0.05; }
 }
-
 header {
   max-width: 1360px;
   margin: 0 auto;
@@ -82,7 +77,6 @@ h1 small {
   font-style: italic;
   min-height: 34px;
 }
-
 .wrap {
   max-width: 1360px;
   margin: 0 auto;
@@ -96,7 +90,6 @@ h1 small {
 @media (max-width: 1050px) {
   .wrap { grid-template-columns: 1fr; }
 }
-
 .panel {
   background: var(--card);
   border: 3px solid var(--border);
@@ -123,7 +116,6 @@ h1 small {
   padding-bottom: 2px;
   margin-bottom: 9px;
 }
-
 .stats {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -144,7 +136,6 @@ h1 small {
 .stat.big b { font-size: 22px; }
 .pos { color: var(--good); }
 .neg { color: var(--bad); }
-
 .rates {
   font-size: 11.5px;
   color: var(--muted);
@@ -152,7 +143,6 @@ h1 small {
   padding-top: 5px;
   margin-bottom: 8px;
 }
-
 .make {
   display: block;
   width: 100%;
@@ -182,13 +172,11 @@ h1 small {
   letter-spacing: 1px;
   text-transform: uppercase;
 }
-
 input[type=range] {
   width: 100%;
   accent-color: var(--acc);
   margin: 6px 0;
 }
-
 .demand-bar {
   height: 12px;
   background: #e6d7bc;
@@ -203,7 +191,6 @@ input[type=range] {
   width: 100%;
   transition: width 0.3s;
 }
-
 .meter {
   height: 12px;
   background: rgba(0,0,0,0.1);
@@ -218,7 +205,6 @@ input[type=range] {
   width: 0%;
   transition: width 0.25s;
 }
-
 .mode {
   display: flex;
   gap: 5px;
@@ -242,7 +228,6 @@ input[type=range] {
   color: white;
   font-weight: 700;
 }
-
 .item {
   display: flex;
   gap: 8px;
@@ -268,7 +253,6 @@ input[type=range] {
 .right { text-align: right; }
 .own { display: block; font-size: 15px; }
 .cost { font-size: 11px; font-weight: 700; color: var(--acc); }
-
 .order {
   border: 2px solid var(--border);
   padding: 7px 9px;
@@ -278,7 +262,6 @@ input[type=range] {
   font-size: 12px;
 }
 .order.can { border-color: var(--good); background: rgba(58,107,76,0.08); }
-
 .sysrow {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -286,7 +269,6 @@ input[type=range] {
   margin-bottom: 8px;
 }
 .sysbtn { padding: 6px 2px; font-size: 12px; text-align: center; }
-
 .syspanel {
   display: none;
   margin: 8px 0;
@@ -310,10 +292,8 @@ input[type=range] {
   margin: 4px 0;
   gap: 6px;
 }
-
 .scroll { max-height: 40vh; overflow-y: auto; }
 .empty { font-size: 12px; color: var(--muted); font-style: italic; padding: 5px 0; }
-
 .reset {
   margin-top: 10px;
   font: inherit;
@@ -326,7 +306,6 @@ input[type=range] {
   color: var(--muted);
   text-transform: uppercase;
 }
-
 .float {
   position: fixed;
   pointer-events: none;
@@ -341,12 +320,10 @@ input[type=range] {
 </style>
 </head>
 <body>
-
 <header>
   <h1>Pencil Factory <small id="era">Cozy Autumn Workshop</small></h1>
   <div id="ticker">The smell of cedar fills the workshop. Click Forge Pencil to begin.</div>
 </header>
-
 <div class="wrap">
   <!-- LEFT -->
   <section class="panel">
@@ -360,7 +337,6 @@ input[type=range] {
       <div class="stat"><small>All-time Lost</small><b id="lost" class="neg">$0</b></div>
     </div>
     <div class="rates" id="rates">0.00/s production</div>
-
     <button class="make" id="makeBtn">
       <svg viewBox="0 0 300 72">
         <rect x="5" y="12" width="30" height="48" rx="7" fill="#c45a62"/>
@@ -374,7 +350,6 @@ input[type=range] {
       </svg>
       <span>Forge Pencil</span>
     </button>
-
     <h2 style="margin-top:14px">Pricing & Demand</h2>
     <div style="font-size:13px">Your price: <b id="priceDisp">$0.25</b></div>
     <input type="range" id="priceSlider" min="5" max="5000" value="25" step="5">
@@ -382,19 +357,16 @@ input[type=range] {
     <div style="font-size:12px;margin-top:4px">Demand: <b id="demandPct">100%</b></div>
     <div class="demand-bar"><div id="demandBar"></div></div>
     <div style="font-size:12px">Projected: <b id="projSales">0</b> / day</div>
-
     <h2 style="margin-top:14px">Warehouse</h2>
     <div style="font-size:12px">Capacity <b id="cap">600</b> · Used <b id="used">0</b></div>
     <div class="meter"><div id="capBar"></div></div>
     <div id="invWarn" style="font-size:11px;color:var(--muted);margin-top:3px"></div>
   </section>
-
   <!-- MIDDLE -->
   <section class="panel">
     <h2>Order Board</h2>
     <div id="orderList" class="scroll" style="max-height:250px"></div>
     <div class="empty" id="noOrders">No orders yet. Keep producing…</div>
-
     <h2 style="margin-top:16px">Workforce</h2>
     <div class="mode" id="modeBtns">
       Qty:
@@ -405,7 +377,6 @@ input[type=range] {
     </div>
     <div id="helperList" class="scroll"></div>
   </section>
-
   <!-- RIGHT -->
   <section class="panel">
     <h2>Office</h2>
@@ -415,7 +386,6 @@ input[type=range] {
       <button class="sysbtn" id="btnQC">Quality</button>
       <button class="sysbtn" id="btnStocks">Stocks</button>
     </div>
-
     <div class="syspanel" id="panelFinance">
       <h3>Financial Snapshot</h3>
       <div class="row"><span>Cash</span><b id="fCash">$95</b></div>
@@ -423,13 +393,11 @@ input[type=range] {
       <div class="row"><span>All-time Lost</span><b id="fLost" class="neg">$0</b></div>
       <div class="row"><span>Reputation</span><b id="fRep">52</b></div>
     </div>
-
     <div class="syspanel" id="panelMarket">
       <h3>Market</h3>
       <div class="row"><span>Season</span><b id="season">Regular</b></div>
       <div class="row"><span>Demand mood</span><b id="mood">Steady</b></div>
     </div>
-
     <div class="syspanel" id="panelQC">
       <h3>Quality Control</h3>
       <div class="row"><span>Strictness</span><b id="qcVal">45%</b></div>
@@ -437,7 +405,6 @@ input[type=range] {
       <div style="font-size:11px;color:var(--muted);margin:4px 0">Higher = better reputation, lower yield</div>
       <div class="row"><span>Yield</span><b id="yield">88%</b></div>
     </div>
-
     <div class="syspanel" id="panelStocks">
       <h3>Stocks</h3>
       <div id="stockList"></div>
@@ -447,20 +414,16 @@ input[type=range] {
       </div>
       <div class="row"><span>Portfolio</span><b id="portfolio">$0</b></div>
     </div>
-
     <h2 style="margin-top:14px">Upgrades</h2>
     <div id="upgradeList" class="scroll" style="max-height:26vh"></div>
     <button class="reset" id="resetBtn">Hard Reset</button>
   </section>
 </div>
-
 <script>
 (function() {
   "use strict";
-
   // ========== STATE ==========
   const SAVE_KEY = "pencil_autumn_v3";
-
   const HELPERS = [
     { name: "Apprentice", desc: "Still learning", cost: 45, rate: 0.2, icon: "🧑‍🔧" },
     { name: "Sharpening Bench", desc: "Simple tools", cost: 300, rate: 1.2, icon: "🔧" },
@@ -471,14 +434,12 @@ input[type=range] {
     { name: "Auto Lathe", desc: "Reliable", cost: 48000000, rate: 6500, icon: "🤖" },
     { name: "Finishing Press", desc: "Smooth finish", cost: 650000000, rate: 36000, icon: "🖨️" }
   ];
-
   const STOCKS_DEF = [
     { symbol: "PNCL", base: 15 },
     { symbol: "CEDR", base: 32 },
     { symbol: "GRAF", base: 49 },
     { symbol: "OFFC", base: 68 }
   ];
-
   function defaultState() {
     return {
       cash: 95,
@@ -498,14 +459,12 @@ input[type=range] {
       selectedStock: 0
     };
   }
-
   let S = defaultState();
   try {
     const saved = localStorage.getItem(SAVE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved);
       S = Object.assign(defaultState(), parsed);
-      // safety
       S.owned = (S.owned || []).map(n => Math.max(0, Math.floor(n)));
       while (S.owned.length < HELPERS.length) S.owned.push(0);
       S.mult = (S.mult || []).map(n => n > 0 ? n : 1);
@@ -514,10 +473,8 @@ input[type=range] {
       S.inv = Math.max(0, S.inv || 0);
     }
   } catch (e) {}
-
   let mode = "1";
   let openPanel = null;
-
   // ========== HELPERS ==========
   function $(id) { return document.getElementById(id); }
   function money(n) {
@@ -541,14 +498,13 @@ input[type=range] {
     const el = document.createElement("div");
     el.className = "float";
     el.textContent = text;
-    el.style.left = (x || 200) + "px";
-    el.style.top = (y || 300) + "px";
+    el.style.left = (typeof x === "number" ? x + "px" : (x || "200px"));
+    el.style.top = (typeof y === "number" ? y + "px" : (y || "300px"));
     el.style.color = color || "var(--ink)";
     el.style.fontSize = "16px";
     document.body.appendChild(el);
     setTimeout(() => el.remove(), 1000);
   }
-
   // ========== CORE CALCULATIONS ==========
   function demandPct(price) {
     const ratio = price / Math.max(S.market, 0.05);
@@ -558,19 +514,17 @@ input[type=range] {
     if (ratio <= 8) return 8 * Math.pow(0.4, (ratio - 2.5) / 5);
     return Math.max(0.0001, 0.3 / ratio);
   }
-
   function calc() {
     let base = 0;
     for (let i = 0; i < HELPERS.length; i++) {
       base += (S.owned[i] || 0) * HELPERS[i].rate * (S.mult[i] || 1);
     }
-    const yield = 0.55 + ((100 - S.qc) / 100) * 0.42;
-    const pps = base * yield * (0.7 + S.rep / 200);
+    const yld = 0.55 + ((100 - S.qc) / 100) * 0.42;
+    const pps = base * yld * (0.7 + S.rep / 200);
     const dem = demandPct(S.price);
     const daily = (80 + S.rep * 2 + base * 50) * (dem / 100);
-    return { pps, dem, daily, yield };
+    return { pps, dem, daily, yield: yld };
   }
-
   function earn(amt) {
     if (amt <= 0) return;
     S.cash += amt;
@@ -584,7 +538,6 @@ input[type=range] {
     S.lost += real;
     floatMsg("−" + money(real), 40 + Math.random()*30 + "vw", 30 + Math.random()*20 + "vh", "var(--bad)");
   }
-
   // ========== ORDERS ==========
   function makeOrder() {
     if (S.orders.length >= 5) return;
@@ -600,7 +553,6 @@ input[type=range] {
       deadline: Date.now() + (25000 + Math.random() * 35000)
     });
   }
-
   function acceptOrder(id) {
     const o = S.orders.find(x => x.id === id);
     if (!o) return;
@@ -618,56 +570,45 @@ input[type=range] {
     save();
     render();
   }
-
   // ========== RENDER ==========
   function render() {
     const C = calc();
-
     $("cash").textContent = money(S.cash);
     $("inv").textContent = fmt(S.inv);
     $("earned").textContent = money(S.earned);
     $("lost").textContent = money(S.lost);
     $("rates").textContent = fmt(C.pps) + "/s production · Yield " + (C.yield*100).toFixed(0) + "%";
-
     $("priceDisp").textContent = money(S.price);
     $("marketPrice").textContent = money(S.market);
     $("demandPct").textContent = C.dem < 0.01 ? C.dem.toFixed(4) + "%" : C.dem.toFixed(1) + "%";
     $("demandBar").style.width = Math.min(100, C.dem) + "%";
     $("demandBar").style.background = C.dem > 40 ? "var(--good)" : C.dem > 10 ? "var(--acc)" : "var(--bad)";
     $("projSales").textContent = fmt(C.daily);
-
     $("cap").textContent = fmt(S.cap);
     $("used").textContent = fmt(S.inv);
     $("capBar").style.width = Math.min(100, (S.inv / S.cap) * 100) + "%";
     $("invWarn").textContent = S.inv > S.cap * 0.9 ? "Warehouse almost full!" : "";
-
     $("fCash").textContent = money(S.cash);
     $("fEarned").textContent = money(S.earned);
     $("fLost").textContent = money(S.lost);
     $("fRep").textContent = Math.round(S.rep);
-
     $("qcVal").textContent = S.qc + "%";
     $("yield").textContent = (C.yield * 100).toFixed(0) + "%";
-
-    // era
     let era = "Cozy Autumn Workshop";
     if (S.earned > 1e6) era = "Regional Workshop";
     if (S.earned > 5e8) era = "Known Brand";
     $("era").textContent = era;
-
     // helpers
     const list = $("helperList");
     list.innerHTML = "";
     HELPERS.forEach((h, i) => {
       const show = i === 0 || S.owned[i] > 0 || (i > 0 && S.owned[i-1] > 0) || S.earned > h.cost * 0.15;
       if (!show) return;
-
       let qty = 1;
       if (mode === "10") qty = 10;
       else if (mode === "100") qty = 100;
       else if (mode === "max") {
         qty = 0;
-        let c = 0;
         while (qty < 50) {
           const next = costOf(i, qty + 1);
           if (next > S.cash) break;
@@ -675,7 +616,6 @@ input[type=range] {
         }
         qty = Math.max(1, qty);
       }
-
       const cost = costOf(i, qty);
       const btn = document.createElement("button");
       btn.className = "item" + (S.cash >= cost ? " afford" : "");
@@ -695,7 +635,6 @@ input[type=range] {
       };
       list.appendChild(btn);
     });
-
     // orders
     const oList = $("orderList");
     oList.innerHTML = "";
@@ -726,7 +665,6 @@ input[type=range] {
         oList.appendChild(div);
       });
     }
-
     // stocks
     const sList = $("stockList");
     sList.innerHTML = "";
@@ -743,7 +681,6 @@ input[type=range] {
       sList.appendChild(row);
     });
     $("portfolio").textContent = money(port);
-
     // upgrades
     const ups = [
       { id: "cap1", name: "Extra Shelves", desc: "+500 capacity", cost: 1200, fn: () => S.cap += 500 },
@@ -769,18 +706,15 @@ input[type=range] {
       uList.appendChild(btn);
     });
   }
-
   function costOf(i, qty) {
     const r = 1.15;
     const base = HELPERS[i].cost * Math.pow(r, S.owned[i] || 0);
     if (qty <= 1) return Math.ceil(base);
     return Math.ceil(base * (Math.pow(r, qty) - 1) / (r - 1));
   }
-
   function save() {
     try { localStorage.setItem(SAVE_KEY, JSON.stringify(S)); } catch(e) {}
   }
-
   // ========== EVENTS ==========
   $("makeBtn").onclick = function(e) {
     const C = calc();
@@ -793,17 +727,14 @@ input[type=range] {
     floatMsg("+" + fmt(add), e.clientX, e.clientY, "var(--ink)");
     render();
   };
-
   $("priceSlider").oninput = function() {
     S.price = Number(this.value) / 100;
     render();
   };
-
   $("qcSlider").oninput = function() {
     S.qc = Number(this.value);
     render();
   };
-
   $("modeBtns").onclick = function(e) {
     const btn = e.target.closest("button");
     if (!btn) return;
@@ -811,7 +742,6 @@ input[type=range] {
     document.querySelectorAll("#modeBtns button").forEach(b => b.classList.toggle("on", b === btn));
     render();
   };
-
   function togglePanel(name) {
     openPanel = openPanel === name ? null : name;
     ["Finance", "Market", "QC", "Stocks"].forEach(n => {
@@ -825,7 +755,6 @@ input[type=range] {
   $("btnMarket").onclick = () => togglePanel("market");
   $("btnQC").onclick = () => togglePanel("qc");
   $("btnStocks").onclick = () => togglePanel("stocks");
-
   $("buyStock").onclick = () => {
     const st = S.stocks[S.selectedStock];
     if (S.cash < st.price) return;
@@ -842,26 +771,21 @@ input[type=range] {
     save();
     render();
   };
-
   $("resetBtn").onclick = () => {
     if (confirm("Reset the entire workshop?")) {
       localStorage.removeItem(SAVE_KEY);
       location.reload();
     }
   };
-
   // ========== MAIN LOOP ==========
   let last = Date.now();
   let orderCD = 0;
   let marketCD = 0;
-
   setInterval(function() {
     const now = Date.now();
     const dt = Math.min((now - last) / 1000, 1.2);
     last = now;
-
     const C = calc();
-
     // produce
     const produced = C.pps * dt;
     if (S.inv + produced <= S.cap) {
@@ -871,14 +795,12 @@ input[type=range] {
       S.inv = S.cap;
       if (over > 1) lose(over * S.price * 0.1);
     }
-
     // passive sales
     const sell = Math.min(S.inv, (C.daily / 86400) * dt);
     if (sell > 0.05) {
       S.inv -= sell;
       earn(sell * S.price);
     }
-
     // orders
     orderCD += dt;
     if (orderCD > 9) {
@@ -893,7 +815,6 @@ input[type=range] {
       }
       return true;
     });
-
     // market drift
     marketCD += dt;
     if (marketCD > 6) {
@@ -903,7 +824,6 @@ input[type=range] {
         st.price = Math.max(5, st.price * (1 + (Math.random() - 0.47) * 0.03));
       });
     }
-
     // season
     const h = new Date().getHours();
     if (h >= 8 && h <= 17) {
@@ -913,10 +833,8 @@ input[type=range] {
       $("season").textContent = "Quiet hours";
       $("mood").textContent = "Steady";
     }
-
     render();
   }, 150);
-
   // leaves
   function spawnLeaf() {
     const el = document.createElement("div");
@@ -930,7 +848,6 @@ input[type=range] {
   }
   setInterval(spawnLeaf, 1600);
   for (let i = 0; i < 6; i++) setTimeout(spawnLeaf, i * 300);
-
   // start
   $("priceSlider").value = Math.round(S.price * 100);
   $("qcSlider").value = S.qc;
