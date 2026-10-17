@@ -7,83 +7,82 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <style>
     :root {
-      --bg-deep: #12100e;
-      --bg-panel: #1c1915;
-      --bg-card: #26211c;
+      --bg: #0f0e0c;
+      --bg-panel: #181512;
+      --bg-card: #221e19;
+      --bg-elevated: #2a251f;
       --bg-hover: #322c25;
-      --border: #3d362e;
-      --border-soft: #2e2822;
-      --text: #f2e9dc;
-      --text-dim: #9a8b76;
+      --border: #3a332b;
+      --border-light: #4a4238;
+      --text: #f3ebe0;
+      --text-dim: #9a8d7a;
+      --text-muted: #6b5f50;
       --accent: #e07a3d;
       --accent-soft: #d4a574;
-      --accent-dark: #b85c2a;
+      --accent-glow: rgba(224,122,61,0.35);
       --sage: #6f9b6a;
       --sage-bright: #9bc892;
       --teal: #5a8a8a;
       --cream: #f5e6c8;
       --rose: #c47b6a;
       --gold: #d4b483;
-      --blue-cool: #6b8f9e;
-      --purple-soft: #9b7b9b;
-      --font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-      --font-sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-      --radius: 12px;
-      --shadow: 0 8px 28px rgba(0,0,0,0.4);
+      --purple: #9b7b9b;
+      --blue: #6b8f9e;
+      --font: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      --mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      --radius: 14px;
+      --shadow: 0 10px 32px rgba(0,0,0,0.45);
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: var(--font-sans);
-      background: var(--bg-deep);
+      font-family: var(--font);
+      background: var(--bg);
       color: var(--text);
       min-height: 100vh;
       overflow-x: hidden;
       line-height: 1.5;
       background-image:
-        radial-gradient(ellipse at 12% 0%, rgba(224,122,61,0.06) 0%, transparent 45%),
-        radial-gradient(ellipse at 88% 100%, rgba(90,138,138,0.05) 0%, transparent 45%);
+        radial-gradient(ellipse at 10% -10%, rgba(224,122,61,0.07) 0%, transparent 45%),
+        radial-gradient(ellipse at 90% 110%, rgba(90,138,138,0.05) 0%, transparent 45%);
     }
-
-    /* ===== TOP BAR ===== */
     .topbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 20px;
-      background: linear-gradient(180deg, #231e19 0%, #181410 100%);
+      padding: 11px 18px;
+      background: linear-gradient(180deg, #1f1b16 0%, #14110e 100%);
       border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
       z-index: 100;
-      gap: 14px;
+      gap: 12px;
       flex-wrap: wrap;
     }
     .brand {
       display: flex;
       align-items: center;
-      gap: 11px;
+      gap: 10px;
       font-weight: 700;
-      font-size: 1.15rem;
+      font-size: 1.12rem;
       color: var(--cream);
     }
     .brand-icon {
-      width: 36px; height: 36px;
+      width: 34px; height: 34px;
       background: linear-gradient(145deg, var(--accent), var(--accent-soft));
       border-radius: 10px;
       display: grid;
       place-items: center;
-      font-size: 1.2rem;
-      box-shadow: 0 0 16px rgba(224,122,61,0.3);
-      animation: iconPulse 3s ease-in-out infinite;
+      font-size: 1.15rem;
+      box-shadow: 0 0 18px var(--accent-glow);
+      animation: glow 3.5s ease-in-out infinite;
     }
-    @keyframes iconPulse {
-      0%, 100% { box-shadow: 0 0 12px rgba(224,122,61,0.25); }
-      50% { box-shadow: 0 0 22px rgba(224,122,61,0.45); }
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 12px var(--accent-glow); }
+      50% { box-shadow: 0 0 24px rgba(224,122,61,0.5); }
     }
     .resources {
       display: flex;
-      gap: 16px;
+      gap: 14px;
       flex-wrap: wrap;
       align-items: center;
     }
@@ -91,142 +90,130 @@
       display: flex;
       flex-direction: column;
       align-items: flex-end;
-      min-width: 88px;
-      position: relative;
+      min-width: 82px;
     }
     .resource-label {
-      font-size: 0.62rem;
+      font-size: 0.58rem;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-dim);
+      letter-spacing: 0.09em;
+      color: var(--text-muted);
       font-weight: 600;
     }
     .resource-value {
-      font-family: var(--font-mono);
-      font-size: 1.05rem;
+      font-family: var(--mono);
+      font-size: 1.02rem;
       font-weight: 600;
       color: var(--accent);
-      transition: color 0.2s, transform 0.15s;
+      transition: transform 0.18s;
     }
-    .resource-value.pulse {
-      animation: valuePulse 0.45s ease;
-    }
-    @keyframes valuePulse {
+    .resource-value.pulse { animation: pop 0.4s ease; }
+    @keyframes pop {
       0% { transform: scale(1); }
-      40% { transform: scale(1.12); }
+      35% { transform: scale(1.14); }
       100% { transform: scale(1); }
     }
     .resource-value.pencils { color: var(--gold); }
     .resource-value.rate { color: var(--sage-bright); }
-    .resource-value.demand { color: var(--teal); }
     .resource-value.sales { color: var(--sage); }
-
-    /* ===== LAYOUT ===== */
+    .resource-value.demand { color: var(--teal); }
     .app {
       display: grid;
-      grid-template-columns: 190px 1fr;
-      min-height: calc(100vh - 68px);
+      grid-template-columns: 178px 1fr;
+      min-height: calc(100vh - 62px);
     }
-    @media (max-width: 920px) {
+    @media (max-width: 900px) {
       .app { grid-template-columns: 1fr; }
       .sidebar { display: none; }
       .mobile-tabs { display: flex !important; }
     }
-
     .sidebar {
       background: var(--bg-panel);
       border-right: 1px solid var(--border);
-      padding: 14px 8px;
+      padding: 12px 7px;
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 2px;
     }
     .nav-btn {
       display: flex;
       align-items: center;
-      gap: 9px;
-      padding: 10px 11px;
+      gap: 8px;
+      padding: 9px 10px;
       border: none;
       background: transparent;
       color: var(--text-dim);
-      font-size: 0.88rem;
+      font-size: 0.84rem;
       font-weight: 500;
       border-radius: 9px;
       cursor: pointer;
-      transition: all 0.18s ease;
+      transition: all 0.16s;
       text-align: left;
     }
     .nav-btn:hover { background: var(--bg-hover); color: var(--text); }
     .nav-btn.active {
-      background: linear-gradient(90deg, rgba(224,122,61,0.16), transparent);
+      background: linear-gradient(90deg, rgba(224,122,61,0.15), transparent);
       color: var(--accent);
       border-left: 3px solid var(--accent);
     }
-    .nav-btn .icon { font-size: 1.05rem; width: 20px; text-align: center; }
-
+    .nav-btn .icon { font-size: 1rem; width: 18px; text-align: center; }
     .mobile-tabs {
       display: none;
       background: var(--bg-panel);
       border-bottom: 1px solid var(--border);
       overflow-x: auto;
-      padding: 7px;
-      gap: 4px;
+      padding: 6px;
+      gap: 3px;
     }
-    .mobile-tabs .nav-btn { flex-shrink: 0; padding: 8px 11px; font-size: 0.8rem; }
-
+    .mobile-tabs .nav-btn { flex-shrink: 0; padding: 7px 10px; font-size: 0.78rem; }
     .main {
-      padding: 18px;
+      padding: 16px;
       overflow-y: auto;
-      max-height: calc(100vh - 68px);
+      max-height: calc(100vh - 62px);
     }
-    .panel { display: none; animation: fadeIn 0.28s ease; }
+    .panel { display: none; animation: fade 0.25s ease; }
     .panel.active { display: block; }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: none; }
     }
-
     h2 {
-      font-size: 1.35rem;
-      margin-bottom: 2px;
+      font-size: 1.28rem;
       font-weight: 700;
       color: var(--cream);
+      margin-bottom: 2px;
     }
     .subtitle {
       color: var(--text-dim);
-      font-size: 0.86rem;
-      margin-bottom: 16px;
+      font-size: 0.84rem;
+      margin-bottom: 14px;
     }
-
-    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 13px; }
-    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 11px; }
-
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
     .card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 15px;
+      padding: 14px;
       box-shadow: var(--shadow);
-      transition: border-color 0.2s;
+      transition: border-color 0.18s;
     }
-    .card:hover { border-color: #4a4036; }
+    .card:hover { border-color: var(--border-light); }
     .card h3 {
-      font-size: 0.92rem;
-      margin-bottom: 9px;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
       gap: 6px;
       color: var(--cream);
+      font-weight: 600;
     }
-
-    /* ===== PRODUCTION ZONE ===== */
     .produce-zone {
       text-align: center;
-      padding: 22px 14px 18px;
-      background: linear-gradient(165deg, #2a241e 0%, #1e1a15 100%);
+      padding: 20px 12px 16px;
+      background: linear-gradient(165deg, #261f19 0%, #1a1612 100%);
       border-radius: var(--radius);
       border: 1px solid var(--border);
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       position: relative;
       overflow: hidden;
     }
@@ -234,467 +221,431 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 50% 12%, rgba(224,122,61,0.09), transparent 55%);
+      background: radial-gradient(circle at 50% 8%, rgba(224,122,61,0.1), transparent 55%);
       pointer-events: none;
     }
     .produce-btn {
-      width: 112px; height: 112px;
+      width: 108px; height: 108px;
       border-radius: 50%;
       border: 3px solid var(--accent);
-      background: linear-gradient(145deg, #353028, #241f1a);
+      background: linear-gradient(145deg, #322c25, #1f1b16);
       color: var(--accent);
-      font-size: 2.3rem;
+      font-size: 2.2rem;
       cursor: pointer;
       transition: all 0.12s;
       position: relative;
       z-index: 1;
-      box-shadow: 0 0 0 0 rgba(224,122,61,0.25);
     }
     .produce-btn:hover {
-      transform: scale(1.06);
-      box-shadow: 0 0 28px rgba(224,122,61,0.35);
+      transform: scale(1.07);
+      box-shadow: 0 0 28px var(--accent-glow);
     }
-    .produce-btn:active { transform: scale(0.93); }
-    .produce-btn.working {
-      animation: produceSpin 0.35s ease;
-    }
-    @keyframes produceSpin {
-      0% { transform: scale(1) rotate(0); }
-      50% { transform: scale(0.92) rotate(-8deg); }
-      100% { transform: scale(1) rotate(0); }
+    .produce-btn:active { transform: scale(0.92); }
+    .produce-btn.working { animation: click 0.3s ease; }
+    @keyframes click {
+      0% { transform: scale(1); }
+      40% { transform: scale(0.9) rotate(-6deg); }
+      100% { transform: scale(1); }
     }
     .produce-info {
-      margin-top: 11px;
-      font-family: var(--font-mono);
+      margin-top: 10px;
+      font-family: var(--mono);
       color: var(--text-dim);
-      font-size: 0.83rem;
+      font-size: 0.8rem;
     }
     .produce-info strong { color: var(--accent); }
-
     .pricing-panel {
-      background: var(--bg-deep);
-      border-radius: 10px;
-      padding: 13px;
-      margin-top: 13px;
+      background: var(--bg);
+      border-radius: 11px;
+      padding: 12px;
+      margin-top: 12px;
       border: 1px solid var(--border);
     }
     .pricing-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 9px;
+      margin-bottom: 8px;
       flex-wrap: wrap;
-      gap: 7px;
+      gap: 6px;
     }
     .price-input-wrap {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 6px;
     }
     .price-input-wrap label {
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       color: var(--text-dim);
     }
     .price-input {
-      width: 84px;
+      width: 80px;
       padding: 6px 8px;
       border-radius: 7px;
       border: 1px solid var(--border);
       background: var(--bg-card);
       color: var(--cream);
-      font-family: var(--font-mono);
-      font-size: 0.98rem;
+      font-family: var(--mono);
+      font-size: 0.95rem;
       font-weight: 600;
       text-align: right;
     }
-    .price-input:focus { outline: none; border-color: var(--accent); }
-
-    .demand-meter { margin-top: 7px; }
+    .price-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-glow); }
+    .demand-meter { margin-top: 6px; }
     .demand-bar-bg {
-      height: 14px;
+      height: 12px;
       background: var(--bg-card);
-      border-radius: 7px;
+      border-radius: 6px;
       overflow: hidden;
       border: 1px solid var(--border);
     }
     .demand-bar-fill {
       height: 100%;
-      border-radius: 7px;
-      transition: width 0.4s cubic-bezier(0.22,1,0.36,1), background 0.4s;
+      border-radius: 6px;
+      transition: width 0.4s cubic-bezier(0.22,1,0.36,1), background 0.35s;
       background: linear-gradient(90deg, var(--rose), var(--accent), var(--sage));
     }
     .demand-labels {
       display: flex;
       justify-content: space-between;
-      font-size: 0.7rem;
-      color: var(--text-dim);
+      font-size: 0.68rem;
+      color: var(--text-muted);
       margin-top: 3px;
     }
     .demand-stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-      gap: 7px;
-      margin-top: 11px;
+      grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+      gap: 6px;
+      margin-top: 10px;
     }
     .demand-stat {
       background: var(--bg-card);
       padding: 8px;
       border-radius: 8px;
       text-align: center;
-      transition: background 0.2s;
     }
-    .demand-stat .lbl { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-dim); }
+    .demand-stat .lbl {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
     .demand-stat .val {
-      font-family: var(--font-mono);
-      font-size: 0.95rem;
+      font-family: var(--mono);
+      font-size: 0.92rem;
       font-weight: 600;
       margin-top: 2px;
-      transition: color 0.2s;
     }
-
     .live-sales {
-      margin-top: 9px;
-      padding: 8px 11px;
+      margin-top: 8px;
+      padding: 8px 10px;
       background: rgba(111,155,106,0.1);
       border-radius: 8px;
-      font-size: 0.83rem;
+      font-size: 0.8rem;
       color: var(--sage-bright);
-      font-family: var(--font-mono);
-      min-height: 34px;
+      font-family: var(--mono);
+      min-height: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 7px;
-      transition: background 0.3s, color 0.3s;
+      gap: 6px;
+      transition: all 0.25s;
     }
     .live-sales.flash {
       background: rgba(111,155,106,0.22);
-      animation: salesFlash 0.5s ease;
+      animation: flash 0.45s ease;
     }
-    @keyframes salesFlash {
+    @keyframes flash {
       0% { transform: scale(1); }
       40% { transform: scale(1.02); }
       100% { transform: scale(1); }
     }
-
-    /* ===== MACHINES ===== */
-    .machine { display: flex; flex-direction: column; gap: 6px; }
+    .machine { display: flex; flex-direction: column; gap: 5px; }
     .machine-top { display: flex; justify-content: space-between; align-items: center; }
-    .machine-name { font-weight: 600; font-size: 0.9rem; }
+    .machine-name { font-weight: 600; font-size: 0.88rem; }
     .machine-level {
-      background: var(--bg-deep);
+      background: var(--bg);
       padding: 2px 7px;
-      border-radius: 16px;
-      font-size: 0.7rem;
-      font-family: var(--font-mono);
+      border-radius: 12px;
+      font-size: 0.68rem;
+      font-family: var(--mono);
       color: var(--gold);
     }
-    .machine-stats { font-size: 0.76rem; color: var(--text-dim); display: flex; gap: 9px; }
-    .machine-bar { height: 4px; background: var(--bg-deep); border-radius: 3px; overflow: hidden; }
+    .machine-stats { font-size: 0.74rem; color: var(--text-dim); display: flex; gap: 8px; }
+    .machine-bar { height: 4px; background: var(--bg); border-radius: 3px; overflow: hidden; }
     .machine-bar-fill {
       height: 100%;
       background: linear-gradient(90deg, var(--teal), var(--sage));
       border-radius: 3px;
-      transition: width 0.35s;
+      transition: width 0.3s;
     }
-    .machine-active-dot {
-      width: 7px; height: 7px;
+    .dot {
+      width: 6px; height: 6px;
       border-radius: 50%;
       background: var(--sage);
       display: inline-block;
       margin-right: 4px;
-      opacity: 0.3;
+      opacity: 0.25;
     }
-    .machine-active-dot.on {
+    .dot.on {
       opacity: 1;
       box-shadow: 0 0 6px var(--sage);
-      animation: blink 1.2s infinite;
+      animation: blink 1.1s infinite;
     }
     @keyframes blink {
       0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
+      50% { opacity: 0.35; }
     }
-
     .buy-btn {
-      margin-top: 5px;
-      padding: 8px 10px;
+      margin-top: 4px;
+      padding: 7px 10px;
       border: none;
       border-radius: 8px;
-      background: linear-gradient(180deg, var(--accent), var(--accent-dark));
+      background: linear-gradient(180deg, var(--accent), #b85c2a);
       color: #1a120c;
       font-weight: 700;
-      font-size: 0.81rem;
+      font-size: 0.8rem;
       cursor: pointer;
-      transition: all 0.15s;
+      transition: all 0.14s;
       width: 100%;
     }
-    .buy-btn:hover:not(:disabled) { filter: brightness(1.1); transform: translateY(-1px); }
+    .buy-btn:hover:not(:disabled) { filter: brightness(1.12); transform: translateY(-1px); }
     .buy-btn:disabled {
       background: var(--bg-hover);
-      color: var(--text-dim);
+      color: var(--text-muted);
       cursor: not-allowed;
-      opacity: 0.6;
+      opacity: 0.65;
     }
-
-    /* ===== UPGRADES ===== */
     .upgrade {
       display: flex;
-      gap: 11px;
+      gap: 10px;
       align-items: flex-start;
-      padding: 11px;
-      background: var(--bg-deep);
-      border-radius: 9px;
+      padding: 10px;
+      background: var(--bg);
+      border-radius: 10px;
       border: 1px solid transparent;
-      transition: border-color 0.15s, background 0.15s;
+      transition: all 0.15s;
     }
     .upgrade:hover { border-color: var(--border); background: #1a1612; }
     .upgrade-icon {
-      width: 38px; height: 38px;
+      width: 36px; height: 36px;
       border-radius: 8px;
       background: var(--bg-card);
       display: grid;
       place-items: center;
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       flex-shrink: 0;
     }
-    .upgrade-info { flex: 1; }
-    .upgrade-name { font-weight: 600; margin-bottom: 2px; font-size: 0.9rem; }
-    .upgrade-desc { font-size: 0.76rem; color: var(--text-dim); margin-bottom: 4px; }
-    .upgrade-effect { font-size: 0.72rem; color: var(--sage-bright); font-family: var(--font-mono); }
-
-    /* ===== STOCKS ===== */
+    .upgrade-name { font-weight: 600; font-size: 0.88rem; margin-bottom: 1px; }
+    .upgrade-desc { font-size: 0.74rem; color: var(--text-dim); margin-bottom: 3px; }
+    .upgrade-effect { font-size: 0.7rem; color: var(--sage-bright); font-family: var(--mono); }
+    .mkt-card {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 11px;
+      border: 1px solid var(--border);
+      margin-bottom: 7px;
+      transition: border-color 0.15s;
+    }
+    .mkt-card:hover { border-color: var(--border-light); }
+    .mkt-title { font-weight: 600; font-size: 0.88rem; margin-bottom: 2px; }
+    .mkt-desc { font-size: 0.72rem; color: var(--text-dim); margin-bottom: 6px; }
+    .mkt-level { font-family: var(--mono); font-size: 0.74rem; color: var(--gold); }
     .stock-row {
       display: grid;
-      grid-template-columns: 1fr 78px 80px 60px 88px;
-      gap: 7px;
+      grid-template-columns: 1fr 72px 72px 52px 82px;
+      gap: 6px;
       align-items: center;
-      padding: 9px 11px;
-      background: var(--bg-deep);
+      padding: 8px 10px;
+      background: var(--bg);
       border-radius: 8px;
-      margin-bottom: 6px;
-      font-size: 0.84rem;
-      transition: background 0.15s;
+      margin-bottom: 5px;
+      font-size: 0.82rem;
     }
-    .stock-row:hover { background: #1f1b16; }
-    @media (max-width: 700px) {
-      .stock-row { grid-template-columns: 1fr 1fr; gap: 5px; }
+    .stock-row:hover { background: #1c1814; }
+    @media (max-width: 680px) {
+      .stock-row { grid-template-columns: 1fr 1fr; gap: 4px; }
     }
     .stock-name { font-weight: 600; }
-    .stock-ticker { font-size: 0.68rem; color: var(--text-dim); font-family: var(--font-mono); }
-    .stock-price { font-family: var(--font-mono); font-weight: 600; }
+    .stock-ticker { font-size: 0.66rem; color: var(--text-muted); font-family: var(--mono); }
+    .stock-price { font-family: var(--mono); font-weight: 600; }
     .stock-change.up { color: var(--sage-bright); }
     .stock-change.down { color: var(--rose); }
-    .stock-shares { font-family: var(--font-mono); color: var(--text-dim); }
+    .stock-shares { font-family: var(--mono); color: var(--text-dim); }
     .stock-actions { display: flex; gap: 4px; }
     .stock-actions button {
-      padding: 4px 8px;
+      padding: 3px 7px;
       border: none;
       border-radius: 5px;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 600;
       cursor: pointer;
-      transition: filter 0.15s;
     }
-    .stock-actions button:hover { filter: brightness(1.15); }
     .btn-buy { background: var(--sage); color: #1a1a12; }
     .btn-sell { background: var(--rose); color: #1a120c; }
-
-    /* ===== CHARTS & STATS ===== */
-    .chart-container { position: relative; height: 190px; margin-bottom: 3px; }
+    .chart-container { position: relative; height: 180px; }
     .stat-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(115px, 1fr));
-      gap: 9px;
-      margin-bottom: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap: 8px;
+      margin-bottom: 12px;
     }
     .stat-box {
-      background: var(--bg-deep);
-      padding: 10px;
+      background: var(--bg);
+      padding: 9px;
       border-radius: 8px;
       text-align: center;
-      transition: transform 0.2s;
     }
-    .stat-box .label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-dim); margin-bottom: 2px; }
+    .stat-box .label {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
     .stat-box .value {
-      font-family: var(--font-mono);
-      font-size: 1.05rem;
+      font-family: var(--mono);
+      font-size: 1rem;
       font-weight: 600;
-      transition: color 0.2s;
     }
-
-    /* ===== TOAST & FLOAT ===== */
     .toast {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
+      bottom: 18px;
+      right: 18px;
       background: var(--bg-card);
       border: 1px solid var(--border);
-      padding: 11px 15px;
+      padding: 10px 14px;
       border-radius: 10px;
       box-shadow: var(--shadow);
       z-index: 1000;
       opacity: 0;
-      transform: translateY(14px);
-      transition: all 0.28s cubic-bezier(0.22,1,0.36,1);
-      max-width: 300px;
-      font-size: 0.86rem;
+      transform: translateY(12px);
+      transition: all 0.26s cubic-bezier(0.22,1,0.36,1);
+      max-width: 280px;
+      font-size: 0.84rem;
     }
     .toast.show { opacity: 1; transform: none; }
-
     .float-money {
       position: fixed;
       pointer-events: none;
-      font-family: var(--font-mono);
+      font-family: var(--mono);
       font-weight: 700;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       color: var(--sage-bright);
       z-index: 999;
-      animation: floatUp 1.15s ease-out forwards;
-      text-shadow: 0 1px 5px rgba(0,0,0,0.55);
+      animation: floatUp 1.1s ease-out forwards;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
     }
     @keyframes floatUp {
       0% { opacity: 1; transform: translateY(0) scale(1); }
-      100% { opacity: 0; transform: translateY(-55px) scale(0.88); }
+      100% { opacity: 0; transform: translateY(-52px) scale(0.9); }
     }
-
-    /* ===== MISC ===== */
-    .actions-bar { display: flex; gap: 7px; margin-top: 11px; flex-wrap: wrap; }
+    .actions-bar { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
     .secondary-btn {
-      padding: 7px 13px;
+      padding: 6px 12px;
       border: 1px solid var(--border);
       background: var(--bg-card);
       color: var(--text);
       border-radius: 7px;
       cursor: pointer;
-      font-size: 0.81rem;
+      font-size: 0.8rem;
       font-weight: 500;
-      transition: background 0.15s;
+      transition: background 0.14s;
     }
     .secondary-btn:hover { background: var(--bg-hover); }
-
     .quality-badge {
       display: inline-block;
-      padding: 2px 7px;
+      padding: 2px 6px;
       border-radius: 5px;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 600;
       background: rgba(224,122,61,0.14);
       color: var(--accent);
     }
-
     .event-log {
-      max-height: 130px;
+      max-height: 120px;
       overflow-y: auto;
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       color: var(--text-dim);
     }
-    .event-log div { padding: 3px 0; border-bottom: 1px solid rgba(74,64,54,0.4); }
-    .event-log .time { color: var(--teal); font-family: var(--font-mono); margin-right: 6px; }
-
-    .hint { font-size: 0.74rem; color: var(--text-dim); margin-top: 6px; }
-
+    .event-log div { padding: 2px 0; border-bottom: 1px solid rgba(58,51,43,0.5); }
+    .event-log .time { color: var(--teal); font-family: var(--mono); margin-right: 5px; }
+    .hint { font-size: 0.72rem; color: var(--text-muted); margin-top: 5px; }
     .prestige-box {
-      background: linear-gradient(135deg, rgba(155,123,155,0.1), rgba(90,138,138,0.07));
-      border: 1px solid var(--purple-soft);
+      background: linear-gradient(135deg, rgba(155,123,155,0.1), rgba(90,138,138,0.06));
+      border: 1px solid var(--purple);
       border-radius: var(--radius);
-      padding: 18px;
+      padding: 16px;
       text-align: center;
-      margin-top: 16px;
+      margin-top: 14px;
     }
-
     .material-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 7px 0;
-      border-bottom: 1px solid rgba(74,64,54,0.35);
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(58,51,43,0.4);
     }
     .material-row:last-child { border-bottom: none; }
-
     input[type=range] {
       -webkit-appearance: none;
       width: 100%;
-      height: 6px;
-      border-radius: 4px;
+      height: 5px;
+      border-radius: 3px;
       background: var(--bg-card);
       outline: none;
-      margin: 6px 0;
+      margin: 5px 0;
     }
     input[type=range]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 17px; height: 17px;
+      width: 16px; height: 16px;
       border-radius: 50%;
       background: var(--accent);
       cursor: pointer;
-      box-shadow: 0 0 7px rgba(224,122,61,0.4);
+      box-shadow: 0 0 6px var(--accent-glow);
     }
-
     .clearance-btn {
-      padding: 7px 13px;
+      padding: 6px 12px;
       border: 1px solid var(--rose);
       background: transparent;
       color: var(--rose);
       border-radius: 7px;
       cursor: pointer;
-      font-size: 0.81rem;
+      font-size: 0.8rem;
       font-weight: 600;
-      margin-top: 7px;
-      transition: all 0.15s;
+      margin-top: 6px;
+      transition: all 0.14s;
     }
     .clearance-btn:hover { background: rgba(196,123,106,0.12); }
     .clearance-btn.active {
       background: var(--rose);
       color: #1a120c;
     }
-
-    .season-banner {
-      background: linear-gradient(90deg, rgba(224,122,61,0.12), rgba(90,138,138,0.08));
+    .banner {
+      background: linear-gradient(90deg, rgba(224,122,61,0.12), rgba(90,138,138,0.07));
       border: 1px solid var(--border);
       border-radius: 9px;
-      padding: 9px 13px;
-      margin-bottom: 13px;
+      padding: 8px 12px;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
-      gap: 9px;
-      font-size: 0.86rem;
+      gap: 8px;
+      font-size: 0.84rem;
     }
-    .season-banner strong { color: var(--accent); }
-
-    .warn-text { color: var(--rose); font-size: 0.78rem; margin-top: 5px; }
-
-    /* Marketing cards */
-    .mkt-card {
-      background: var(--bg-deep);
-      border-radius: 9px;
-      padding: 12px;
-      border: 1px solid var(--border-soft);
-      margin-bottom: 8px;
+    .banner strong { color: var(--accent); }
+    .progress-track {
+      height: 6px;
+      background: var(--bg);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 8px;
     }
-    .mkt-card .mkt-title {
-      font-weight: 600;
-      font-size: 0.9rem;
-      margin-bottom: 3px;
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--teal), var(--sage));
+      border-radius: 3px;
+      transition: width 0.3s;
     }
-    .mkt-card .mkt-desc {
-      font-size: 0.74rem;
-      color: var(--text-dim);
-      margin-bottom: 7px;
-    }
-    .mkt-card .mkt-level {
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      color: var(--gold);
-    }
-
-    /* Income ticker */
-    .income-ticker {
-      font-size: 0.78rem;
-      color: var(--sage-bright);
-      font-family: var(--font-mono);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .income-ticker.show { opacity: 1; }
   </style>
 </head>
 <body>
@@ -706,7 +657,7 @@
     <div class="resources">
       <div class="resource">
         <span class="resource-label">Cash</span>
-        <span class="resource-value" id="cash-display">$40.00</span>
+        <span class="resource-value" id="cash-display">$45.00</span>
       </div>
       <div class="resource">
         <span class="resource-label">Inventory</span>
@@ -722,13 +673,11 @@
       </div>
       <div class="resource">
         <span class="resource-label">Demand</span>
-        <span class="resource-value demand" id="demand-display">30%</span>
+        <span class="resource-value demand" id="demand-display">55%</span>
       </div>
     </div>
   </div>
-
   <div class="mobile-tabs" id="mobile-tabs"></div>
-
   <div class="app">
     <aside class="sidebar">
       <button class="nav-btn active" data-panel="production"><span class="icon">🏭</span> Floor</button>
@@ -740,1235 +689,549 @@
       <button class="nav-btn" data-panel="analytics"><span class="icon">📊</span> Analytics</button>
       <button class="nav-btn" data-panel="office"><span class="icon">🏢</span> Office</button>
     </aside>
-
     <main class="main">
-      <!-- PRODUCTION -->
       <div class="panel active" id="panel-production">
         <h2>Production Floor</h2>
-        <p class="subtitle">Click to make pencils → set a fair price → customers buy only what you have in stock.</p>
-
-        <div class="season-banner">
+        <p class="subtitle">Make pencils → set a fair price → customers buy what you have in stock.</p>
+        <div class="banner">
           <span>🍂</span>
-          <div><strong>Autumn Season</strong> — Demand starts low. Build brand &amp; marketing to grow it.</div>
+          <div><strong>Tip:</strong> Click the pencil (or Space). Keep price near Fair Value. Buy Local Ads early.</div>
         </div>
-
         <div class="produce-zone">
           <button class="produce-btn" id="produce-btn" title="Spacebar to produce">✏️</button>
           <div class="produce-info">
-            Click: <strong id="click-power">1</strong> pencil
+            Click: <strong id="click-power">1</strong>
             &nbsp;•&nbsp; <span class="quality-badge" id="quality-badge">Standard HB</span>
-            &nbsp;•&nbsp; Mat cost: $<span id="unit-cost">0.08</span>
+            &nbsp;•&nbsp; Cost: $<span id="unit-cost">0.08</span>
           </div>
-
           <div class="pricing-panel">
             <div class="pricing-header">
               <div class="price-input-wrap">
-                <label>Your Price $</label>
-                <input type="number" class="price-input" id="asking-price" min="0.10" max="40" step="0.05" value="1.00">
+                <label>Price $</label>
+                <input type="number" class="price-input" id="asking-price" min="0.10" max="40" step="0.05" value="0.95">
               </div>
-              <div style="font-size:0.82rem; color:var(--text-dim);">
-                Fair value ≈ <strong id="perceived-value" style="color:var(--gold);">$0.90</strong>
+              <div style="font-size:0.8rem; color:var(--text-dim);">
+                Fair ≈ <strong id="perceived-value" style="color:var(--gold);">$0.90</strong>
               </div>
             </div>
-
-            <input type="range" id="price-slider" min="10" max="2000" value="100" step="5">
-
+            <input type="range" id="price-slider" min="10" max="2000" value="95" step="5">
             <div class="demand-meter">
               <div class="demand-bar-bg">
-                <div class="demand-bar-fill" id="demand-bar" style="width:18%"></div>
+                <div class="demand-bar-fill" id="demand-bar" style="width:40%"></div>
               </div>
               <div class="demand-labels">
                 <span>Low</span>
-                <span id="demand-pct-label">30% Demand</span>
+                <span id="demand-pct-label">55% Demand</span>
                 <span>High</span>
               </div>
             </div>
-
             <div class="demand-stats">
-              <div class="demand-stat">
-                <div class="lbl">Sales Rate</div>
-                <div class="val" id="sales-rate">0.0 /s</div>
-              </div>
-              <div class="demand-stat">
-                <div class="lbl">Revenue /s</div>
-                <div class="val" id="rev-rate">$0.00</div>
-              </div>
-              <div class="demand-stat">
-                <div class="lbl">Sold Total</div>
-                <div class="val" id="sold-total">0</div>
-              </div>
-              <div class="demand-stat">
-                <div class="lbl">Brand</div>
-                <div class="val" id="brand-stat">1.00</div>
-              </div>
+              <div class="demand-stat"><div class="lbl">Sales Rate</div><div class="val" id="sales-rate">0.0 /s</div></div>
+              <div class="demand-stat"><div class="lbl">Revenue /s</div><div class="val" id="rev-rate">$0.00</div></div>
+              <div class="demand-stat"><div class="lbl">Sold</div><div class="val" id="sold-total">0</div></div>
+              <div class="demand-stat"><div class="lbl">Brand</div><div class="val" id="brand-stat">1.00</div></div>
             </div>
-
-            <div class="live-sales" id="live-sales">No inventory — make some pencils first</div>
-
-            <button class="clearance-btn" id="clearance-btn">Clearance Sale (50% off · 25s)</button>
-            <p class="hint">Demand starts very low. Upgrade Marketing (Ads, Logo, Campaigns) and Brand to raise it. You only earn money when you actually sell inventory.</p>
+            <div class="live-sales" id="live-sales">Make pencils to start selling</div>
+            <button class="clearance-btn" id="clearance-btn">Clearance (50% off · 20s)</button>
+            <p class="hint">You only earn money when inventory is sold. Marketing raises demand.</p>
           </div>
         </div>
-
         <div class="grid-2">
           <div class="card">
-            <h3>📋 Live Status</h3>
+            <h3>📋 Status</h3>
             <div class="stat-grid" style="margin:0;">
-              <div class="stat-box">
-                <div class="label">Inventory</div>
-                <div class="value" id="inv-stat">0</div>
-              </div>
-              <div class="stat-box">
-                <div class="label">Making</div>
-                <div class="value" id="auto-stat">0/s</div>
-              </div>
-              <div class="stat-box">
-                <div class="label">Total Made</div>
-                <div class="value" id="total-made-stat">0</div>
-              </div>
-              <div class="stat-box">
-                <div class="label">Lifetime $</div>
-                <div class="value" id="lifetime-sales">$0</div>
-              </div>
+              <div class="stat-box"><div class="label">Inventory</div><div class="value" id="inv-stat">0</div></div>
+              <div class="stat-box"><div class="label">Making</div><div class="value" id="auto-stat">0/s</div></div>
+              <div class="stat-box"><div class="label">Total Made</div><div class="value" id="total-made-stat">0</div></div>
+              <div class="stat-box"><div class="label">Lifetime $</div><div class="value" id="lifetime-sales">$0</div></div>
             </div>
           </div>
           <div class="card">
-            <h3>📰 Activity Log</h3>
+            <h3>📰 Log</h3>
             <div class="event-log" id="event-log"></div>
           </div>
         </div>
       </div>
-
-      <!-- MACHINES -->
       <div class="panel" id="panel-machines">
         <h2>Machines</h2>
-        <p class="subtitle">Automate production. Machines only run when materials are available.</p>
+        <p class="subtitle">Automate production. They only run when materials are available.</p>
         <div class="grid-3" id="machines-grid"></div>
       </div>
-
-      <!-- UPGRADES -->
       <div class="panel" id="panel-upgrades">
-        <h2>R&amp;D Laboratory</h2>
-        <p class="subtitle">Quality, efficiency, click power and permanent brand strength.</p>
+        <h2>R&amp;D Lab</h2>
+        <p class="subtitle">Quality, speed, brand and efficiency upgrades.</p>
         <div class="grid-2" id="upgrades-grid"></div>
       </div>
-
-      <!-- MARKETING (new dedicated panel) -->
       <div class="panel" id="panel-marketing">
         <h2>Marketing &amp; Brand</h2>
-        <p class="subtitle">Demand starts weak. These upgrades are the main way to grow customers.</p>
+        <p class="subtitle">This is how you grow demand. Start with Local Ads ($28).</p>
         <div class="grid-2">
           <div class="card">
             <h3>📣 Campaigns</h3>
             <div id="marketing-list"></div>
           </div>
           <div class="card">
-            <h3>📈 Current Boosts</h3>
-            <div class="material-row">
-              <span>Marketing Level</span>
-              <span style="font-family:var(--font-mono)" id="mkt-total-level">0</span>
-            </div>
-            <div class="material-row">
-              <span>Demand Multiplier</span>
-              <span style="font-family:var(--font-mono); color:var(--sage-bright)" id="mkt-demand-boost">×0.30</span>
-            </div>
-            <div class="material-row">
-              <span>Brand Strength</span>
-              <span style="font-family:var(--font-mono); color:var(--gold)" id="mkt-brand">1.00</span>
-            </div>
-            <div class="material-row">
-              <span>Logo Power</span>
-              <span style="font-family:var(--font-mono); color:var(--teal)" id="mkt-logo">0</span>
-            </div>
-            <p class="hint" style="margin-top:12px;">Tip: Buy Ads early, then Logo &amp; Catalog. Higher brand lets you charge more without killing demand.</p>
+            <h3>📈 Boost Summary</h3>
+            <div class="material-row"><span>Total Marketing Lv</span><span style="font-family:var(--mono)" id="mkt-total-level">0</span></div>
+            <div class="material-row"><span>Current Demand</span><span style="font-family:var(--mono); color:var(--sage-bright)" id="mkt-demand-boost">55%</span></div>
+            <div class="material-row"><span>Brand Strength</span><span style="font-family:var(--mono); color:var(--gold)" id="mkt-brand">1.00</span></div>
+            <div class="material-row"><span>Logo Level</span><span style="font-family:var(--mono); color:var(--teal)" id="mkt-logo">0</span></div>
+            <p class="hint" style="margin-top:10px;">Local Ads are cheap and effective early. Logo + Catalog let you charge more later.</p>
           </div>
         </div>
       </div>
-
-      <!-- SUPPLY -->
       <div class="panel" id="panel-supply">
         <h2>Supply Chain</h2>
-        <p class="subtitle">Materials keep the factory running. Low stock slows production hard.</p>
+        <p class="subtitle">Materials keep machines running. Low stock slows everything.</p>
         <div class="grid-2">
           <div class="card">
             <h3>🪵 Materials</h3>
             <div id="materials-list"></div>
             <div class="actions-bar">
-              <button class="secondary-btn" id="buy-materials-btn">Restock ($18 → +350 units)</button>
-              <button class="secondary-btn" id="buy-bulk-btn">Bulk Order ($95 → +2000)</button>
+              <button class="secondary-btn" id="buy-materials-btn">Restock ($15 → +400)</button>
+              <button class="secondary-btn" id="buy-bulk-btn">Bulk ($80 → +2200)</button>
             </div>
-            <p class="hint">Production slows dramatically under 50 units.</p>
           </div>
           <div class="card">
             <h3>📦 Warehouse</h3>
-            <div class="material-row">
-              <span>Capacity</span>
-              <span style="font-family:var(--font-mono)" id="wh-cap">3,000</span>
-            </div>
-            <div class="material-row">
-              <span>Current Stock</span>
-              <span style="font-family:var(--font-mono); color:var(--gold)" id="wh-stock">0</span>
-            </div>
-            <div class="material-row">
-              <span>Fill %</span>
-              <span style="font-family:var(--font-mono)" id="wh-fill">0%</span>
-            </div>
-            <div class="machine-bar" style="margin-top:10px; height:8px;">
-              <div class="machine-bar-fill" id="wh-bar" style="width:0%"></div>
-            </div>
+            <div class="material-row"><span>Capacity</span><span style="font-family:var(--mono)" id="wh-cap">3,000</span></div>
+            <div class="material-row"><span>Stock</span><span style="font-family:var(--mono); color:var(--gold)" id="wh-stock">0</span></div>
+            <div class="material-row"><span>Fill</span><span style="font-family:var(--mono)" id="wh-fill">0%</span></div>
+            <div class="progress-track"><div class="progress-fill" id="wh-bar" style="width:0%"></div></div>
           </div>
         </div>
       </div>
-
-      <!-- STOCKS -->
       <div class="panel" id="panel-market">
         <h2>Stock Market</h2>
-        <p class="subtitle">Park excess cash. Some stocks gently react to your factory size.</p>
-        <div class="card" style="margin-bottom:11px;">
+        <p class="subtitle">Invest spare cash. Some stocks react to your factory size.</p>
+        <div class="card" style="margin-bottom:10px;">
           <div style="display:flex; justify-content:space-between; align-items:center;">
-            <h3 style="margin:0;">Portfolio Value</h3>
-            <span style="font-family:var(--font-mono); color:var(--purple-soft); font-size:1.1rem;" id="portfolio-detail">$0.00</span>
+            <h3 style="margin:0;">Portfolio</h3>
+            <span style="font-family:var(--mono); color:var(--purple); font-size:1.05rem;" id="portfolio-detail">$0.00</span>
           </div>
         </div>
         <div id="stocks-list"></div>
       </div>
-
-      <!-- ANALYTICS -->
       <div class="panel" id="panel-analytics">
         <h2>Factory Analytics</h2>
-        <p class="subtitle">Live telemetry and historical trends.</p>
+        <p class="subtitle">Live numbers and trends.</p>
         <div class="stat-grid">
           <div class="stat-box"><div class="label">Cash</div><div class="value" id="a-cash">$0</div></div>
           <div class="stat-box"><div class="label">Making /s</div><div class="value" id="a-rate">0</div></div>
           <div class="stat-box"><div class="label">Selling /s</div><div class="value" id="a-sales">0</div></div>
-          <div class="stat-box"><div class="label">Price</div><div class="value" id="a-price">$1.00</div></div>
-          <div class="stat-box"><div class="label">Demand</div><div class="value" id="a-demand">30%</div></div>
+          <div class="stat-box"><div class="label">Price</div><div class="value" id="a-price">$0.95</div></div>
+          <div class="stat-box"><div class="label">Demand</div><div class="value" id="a-demand">55%</div></div>
           <div class="stat-box"><div class="label">Brand</div><div class="value" id="a-brand">1.00</div></div>
-          <div class="stat-box"><div class="label">Net Income /s</div><div class="value" id="a-income">$0</div></div>
+          <div class="stat-box"><div class="label">Income /s</div><div class="value" id="a-income">$0</div></div>
           <div class="stat-box"><div class="label">Materials</div><div class="value" id="a-mats">0</div></div>
         </div>
         <div class="grid-2">
-          <div class="card"><h3>Production Rate</h3><div class="chart-container"><canvas id="prod-chart"></canvas></div></div>
+          <div class="card"><h3>Production</h3><div class="chart-container"><canvas id="prod-chart"></canvas></div></div>
           <div class="card"><h3>Demand %</h3><div class="chart-container"><canvas id="demand-chart"></canvas></div></div>
         </div>
-        <div class="grid-2" style="margin-top:11px;">
-          <div class="card"><h3>Cash Flow</h3><div class="chart-container"><canvas id="cash-chart"></canvas></div></div>
+        <div class="grid-2" style="margin-top:10px;">
+          <div class="card"><h3>Cash</h3><div class="chart-container"><canvas id="cash-chart"></canvas></div></div>
           <div class="card"><h3>Portfolio</h3><div class="chart-container"><canvas id="port-chart"></canvas></div></div>
         </div>
       </div>
-
-      <!-- OFFICE -->
       <div class="panel" id="panel-office">
         <h2>Office</h2>
-        <p class="subtitle">Saves, prestige and danger zone.</p>
+        <p class="subtitle">Saves and prestige.</p>
         <div class="grid-2">
           <div class="card">
-            <h3>💾 Save System</h3>
-            <p class="hint" style="margin-bottom:9px;">Auto-saves every 10 seconds. Offline progress is calculated on return (capped).</p>
+            <h3>💾 Save</h3>
+            <p class="hint" style="margin-bottom:8px;">Auto-saves every 10s. Offline progress is applied when you return.</p>
             <div class="actions-bar">
               <button class="secondary-btn" id="save-btn">Force Save</button>
-              <button class="secondary-btn" id="export-btn">Export Save</button>
-              <button class="secondary-btn" id="import-btn">Import Save</button>
+              <button class="secondary-btn" id="export-btn">Export</button>
+              <button class="secondary-btn" id="import-btn">Import</button>
             </div>
             <input type="file" id="import-file" accept=".json" style="display:none;">
           </div>
           <div class="card">
             <h3>⚙️ Danger Zone</h3>
             <div class="actions-bar">
-              <button class="secondary-btn" id="reset-btn" style="border-color:var(--rose); color:var(--rose);">Hard Reset Everything</button>
+              <button class="secondary-btn" id="reset-btn" style="border-color:var(--rose); color:var(--rose);">Hard Reset</button>
             </div>
-            <p class="hint" style="margin-top:7px;">Deletes the current save permanently.</p>
+            <p class="hint" style="margin-top:6px;">Deletes everything permanently.</p>
           </div>
         </div>
-
         <div class="prestige-box">
-          <h3 style="color:var(--purple-soft); margin-bottom:5px;">🔄 Prestige</h3>
-          <p style="color:var(--text-dim); margin-bottom:9px; max-width:460px; margin-left:auto; margin-right:auto; font-size:0.88rem;">
-            Reset the factory for a permanent production multiplier. Requires lifetime sales.
+          <h3 style="color:var(--purple); margin-bottom:4px;">🔄 Prestige</h3>
+          <p style="color:var(--text-dim); margin-bottom:8px; max-width:440px; margin-left:auto; margin-right:auto; font-size:0.86rem;">
+            Reset for a permanent production multiplier. Needs lifetime sales.
           </p>
-          <div style="font-family:var(--font-mono); margin-bottom:9px; font-size:0.88rem;">
-            Need: <strong id="prestige-req">$25,000</strong><br>
+          <div style="font-family:var(--mono); margin-bottom:8px; font-size:0.86rem;">
+            Need: <strong id="prestige-req">$20,000</strong><br>
             Gain: <strong id="prestige-gain">+0.00×</strong>
           </div>
-          <button class="buy-btn" id="prestige-btn" style="max-width:210px; margin:0 auto; background:linear-gradient(180deg,var(--purple-soft),#7a5a7a); color:#fff;" disabled>
+          <button class="buy-btn" id="prestige-btn" style="max-width:200px; margin:0 auto; background:linear-gradient(180deg,var(--purple),#7a5a7a); color:#fff;" disabled>
             Prestige
           </button>
         </div>
       </div>
     </main>
   </div>
-
   <div class="toast" id="toast"></div>
-
   <script>
-    // ========== SAVE KEY (v4 — clean start) ==========
-    const SAVE_KEY = 'pencilFactory_v4_pro';
-
+    const SAVE_KEY = 'pencilFactory_v5_playable';
     const MACHINES = [
-      { id: 'worker',   name: 'Craftsman',        icon: '👷', baseCost: 22,    baseRate: 0.25, desc: 'Hand-crafts pencils carefully.' },
-      { id: 'extruder', name: 'Graphite Extruder', icon: '🔧', baseCost: 130,   baseRate: 1.2,  desc: 'Forms graphite cores.' },
-      { id: 'slatline', name: 'Cedar Slat Line',   icon: '🪵', baseCost: 680,   baseRate: 5.5,  desc: 'Grooves and glues wood.' },
-      { id: 'lacquer',  name: 'Lacquering Booth',  icon: '🎨', baseCost: 3400,  baseRate: 24,   desc: 'Applies finish and color.' },
-      { id: 'assembly', name: 'Ferrule Assembly',  icon: '🤖', baseCost: 16500, baseRate: 90,   desc: 'Adds ferrule + eraser + QC.' },
-      { id: 'cnc',      name: 'CNC Mill',          icon: '⚙️', baseCost: 88000, baseRate: 340,  desc: 'High-speed precision.' },
-      { id: 'wing',     name: 'Full Wing',         icon: '🏭', baseCost: 480000,baseRate: 1400, desc: 'Complete production hall.' },
-      { id: 'mega',     name: 'Mega Complex',      icon: '🏙️', baseCost: 3.2e6, baseRate: 6200, desc: 'Industrial campus.' }
+      { id: 'worker', name: 'Craftsman', icon: '👷', baseCost: 18, baseRate: 0.35, desc: 'Hand crafts pencils.' },
+      { id: 'extruder', name: 'Graphite Extruder', icon: '🔧', baseCost: 95, baseRate: 1.4, desc: 'Forms graphite cores.' },
+      { id: 'slatline', name: 'Cedar Slat Line', icon: '🪵', baseCost: 520, baseRate: 6.0, desc: 'Grooves and glues wood.' },
+      { id: 'lacquer', name: 'Lacquering Booth', icon: '🎨', baseCost: 2800, baseRate: 26, desc: 'Applies finish.' },
+      { id: 'assembly', name: 'Ferrule Assembly', icon: '🤖', baseCost: 14000, baseRate: 95, desc: 'Ferrule + eraser + QC.' },
+      { id: 'cnc', name: 'CNC Mill', icon: '⚙️', baseCost: 72000, baseRate: 360, desc: 'High-speed precision.' },
+      { id: 'wing', name: 'Full Wing', icon: '🏭', baseCost: 400000, baseRate: 1500, desc: 'Complete production hall.' },
+      { id: 'mega', name: 'Mega Complex', icon: '🏙️', baseCost: 2.8e6, baseRate: 6500, desc: 'Industrial campus.' }
     ];
-
     const UPGRADES = [
-      { id: 'click1', name: 'Better Bench',      icon: '🪑', cost: 30,    effect: 'clickPower', value: 1,   desc: '+1 pencil per click.', once: false },
-      { id: 'click2', name: 'Pneumatic Assist',  icon: '💨', cost: 240,   effect: 'clickPower', value: 3,   desc: '+3 per click.', once: false },
-      { id: 'click3', name: 'Master Kit',        icon: '🛠️', cost: 1600,  effect: 'clickPower', value: 10,  desc: '+10 per click.', once: false },
-      { id: 'click4', name: 'Workshop Pro',      icon: '🏭', cost: 12000, effect: 'clickPower', value: 35,  desc: '+35 per click.', once: false },
-
-      { id: 'quality1', name: 'Premium Graphite', icon: '⬛', cost: 150,   effect: 'quality', value: 0.18, desc: 'Smoother lead. Higher fair value.', once: true },
-      { id: 'quality2', name: 'Incense Cedar',    icon: '🌲', cost: 950,   effect: 'quality', value: 0.28, desc: 'Beautiful wood. Big value jump.', once: true },
-      { id: 'quality3', name: 'Artist Formula',   icon: '🎨', cost: 6500,  effect: 'quality', value: 0.4,  desc: 'Specialty cores for artists.', once: true },
-      { id: 'quality4', name: 'Signature Line',   icon: '✒️', cost: 38000, effect: 'quality', value: 0.65, desc: 'Premium branding & ferrule.', once: true },
-
-      { id: 'eff1', name: 'Lean Flow',       icon: '📐', cost: 480,   effect: 'rateMult', value: 0.12, desc: '+12% all machine output.', once: true },
-      { id: 'eff2', name: 'Process Control', icon: '📊', cost: 3800,  effect: 'rateMult', value: 0.22, desc: '+22% output.', once: true },
-      { id: 'eff3', name: 'Smart Sensors',   icon: '📡', cost: 28000, effect: 'rateMult', value: 0.32, desc: '+32% output.', once: true },
-
-      { id: 'brand1', name: 'Art Fair Booth',  icon: '🎪', cost: 200,   effect: 'brand', value: 0.18, desc: 'Raises brand strength.', once: true },
-      { id: 'brand2', name: 'Artist Collab',   icon: '✏️', cost: 1800,  effect: 'brand', value: 0.28, desc: 'Partnerships improve reputation.', once: true },
-      { id: 'brand3', name: 'Catalog Feature', icon: '📖', cost: 12000, effect: 'brand', value: 0.4,  desc: 'National exposure.', once: true },
-      { id: 'brand4', name: 'Heritage Mark',   icon: '🏅', cost: 65000, effect: 'brand', value: 0.55, desc: 'Legacy brand status.', once: true },
-
-      { id: 'mat1',     name: 'Bulk Wood Deal',   icon: '🌳', cost: 600,  effect: 'matSave', value: 0.15, desc: '15% cheaper materials.', once: true },
-      { id: 'mat2',     name: 'Supplier Contract',icon: '📝', cost: 4500, effect: 'matSave', value: 0.12, desc: 'Further material savings.', once: true },
-      { id: 'storage1', name: 'Bigger Warehouse', icon: '📦', cost: 1800, effect: 'storage', value: 6000, desc: '+6,000 inventory space.', once: false },
-      { id: 'storage2', name: 'Mega Warehouse',   icon: '🏗️', cost: 22000,effect: 'storage', value: 25000,desc: '+25,000 inventory space.', once: false },
-      { id: 'offline',  name: 'Night Shift',      icon: '🌙', cost: 1400, effect: 'offlineCap', value: 4, desc: '+4 hours offline earnings.', once: true }
+      { id: 'click1', name: 'Better Bench', icon: '🪑', cost: 25, effect: 'clickPower', value: 1, desc: '+1 per click.', once: false },
+      { id: 'click2', name: 'Pneumatic Assist', icon: '💨', cost: 180, effect: 'clickPower', value: 3, desc: '+3 per click.', once: false },
+      { id: 'click3', name: 'Master Kit', icon: '🛠️', cost: 1200, effect: 'clickPower', value: 10, desc: '+10 per click.', once: false },
+      { id: 'click4', name: 'Workshop Pro', icon: '🏭', cost: 9000, effect: 'clickPower', value: 30, desc: '+30 per click.', once: false },
+      { id: 'quality1', name: 'Premium Graphite', icon: '⬛', cost: 120, effect: 'quality', value: 0.2, desc: 'Higher fair value.', once: true },
+      { id: 'quality2', name: 'Incense Cedar', icon: '🌲', cost: 750, effect: 'quality', value: 0.3, desc: 'Beautiful wood.', once: true },
+      { id: 'quality3', name: 'Artist Formula', icon: '🎨', cost: 5200, effect: 'quality', value: 0.4, desc: 'Specialty cores.', once: true },
+      { id: 'quality4', name: 'Signature Line', icon: '✒️', cost: 32000, effect: 'quality', value: 0.6, desc: 'Premium branding.', once: true },
+      { id: 'eff1', name: 'Lean Flow', icon: '📐', cost: 380, effect: 'rateMult', value: 0.15, desc: '+15% machine output.', once: true },
+      { id: 'eff2', name: 'Process Control', icon: '📊', cost: 3200, effect: 'rateMult', value: 0.25, desc: '+25% output.', once: true },
+      { id: 'eff3', name: 'Smart Sensors', icon: '📡', cost: 24000, effect: 'rateMult', value: 0.35, desc: '+35% output.', once: true },
+      { id: 'brand1', name: 'Art Fair Booth', icon: '🎪', cost: 150, effect: 'brand', value: 0.2, desc: 'Raises brand.', once: true },
+      { id: 'brand2', name: 'Artist Collab', icon: '✏️', cost: 1400, effect: 'brand', value: 0.3, desc: 'Better reputation.', once: true },
+      { id: 'brand3', name: 'Catalog Feature', icon: '📖', cost: 10000, effect: 'brand', value: 0.4, desc: 'National exposure.', once: true },
+      { id: 'brand4', name: 'Heritage Mark', icon: '🏅', cost: 55000, effect: 'brand', value: 0.55, desc: 'Legacy status.', once: true },
+      { id: 'mat1', name: 'Bulk Wood Deal', icon: '🌳', cost: 450, effect: 'matSave', value: 0.15, desc: '15% cheaper materials.', once: true },
+      { id: 'mat2', name: 'Supplier Contract', icon: '📝', cost: 3800, effect: 'matSave', value: 0.12, desc: 'More savings.', once: true },
+      { id: 'storage1', name: 'Bigger Warehouse', icon: '📦', cost: 1400, effect: 'storage', value: 7000, desc: '+7,000 space.', once: false },
+      { id: 'storage2', name: 'Mega Warehouse', icon: '🏗️', cost: 18000, effect: 'storage', value: 30000, desc: '+30,000 space.', once: false },
+      { id: 'offline', name: 'Night Shift', icon: '🌙', cost: 1100, effect: 'offlineCap', value: 4, desc: '+4h offline.', once: true }
     ];
-
-    // Marketing upgrades — main demand growth path
     const MARKETING = [
-      { id: 'ads',     name: 'Local Ads',        icon: '📰', baseCost: 45,   costMult: 1.55, boost: 0.12, desc: 'Newspaper & local flyers. Small steady demand.' },
-      { id: 'logo',    name: 'Logo Design',      icon: '🎨', baseCost: 120,  costMult: 1.65, boost: 0.18, desc: 'Professional logo. Strong brand signal.' },
-      { id: 'social',  name: 'Social Campaign',  icon: '📱', baseCost: 350,  costMult: 1.6,  boost: 0.22, desc: 'Online presence & influencer posts.' },
-      { id: 'catalog', name: 'Print Catalog',    icon: '📖', baseCost: 900,  costMult: 1.7,  boost: 0.28, desc: 'Distributed to schools & offices.' },
-      { id: 'tv',      name: 'Regional TV Spot', icon: '📺', baseCost: 4500, costMult: 1.75, boost: 0.35, desc: 'Broadcast reach. Big demand spike.' },
-      { id: 'global',  name: 'Global Branding',  icon: '🌍', baseCost: 28000,costMult: 1.8,  boost: 0.45, desc: 'Worldwide recognition.' }
+      { id: 'ads', name: 'Local Ads', icon: '📰', baseCost: 28, costMult: 1.45, boost: 0.18, desc: 'Flyers & local papers. Great early.' },
+      { id: 'logo', name: 'Logo Design', icon: '🎨', baseCost: 70, costMult: 1.5, boost: 0.22, desc: 'Professional logo. Strong signal.' },
+      { id: 'social', name: 'Social Campaign', icon: '📱', baseCost: 220, costMult: 1.55, boost: 0.28, desc: 'Online posts & influencers.' },
+      { id: 'catalog', name: 'Print Catalog', icon: '📖', baseCost: 650, costMult: 1.6, boost: 0.32, desc: 'Schools & offices.' },
+      { id: 'tv', name: 'Regional TV Spot', icon: '📺', baseCost: 3200, costMult: 1.7, boost: 0.4, desc: 'Broadcast reach.' },
+      { id: 'global', name: 'Global Branding', icon: '🌍', baseCost: 20000, costMult: 1.75, boost: 0.5, desc: 'Worldwide recognition.' }
     ];
-
     const STOCKS_DEF = [
-      { id: 'cedar',  ticker: 'CDR', name: 'CedarWood',     base: 11, vol: 0.018, sens: 0.12 },
-      { id: 'graph',  ticker: 'GRP', name: 'GraphiteGlobal',base: 23, vol: 0.025, sens: 0.09 },
-      { id: 'mach',   ticker: 'PML', name: 'PencilMach',    base: 38, vol: 0.03,  sens: 0.18 },
-      { id: 'office', ticker: 'OFS', name: 'OfficeSupply',  base: 16, vol: 0.016, sens: 0.22 },
-      { id: 'lead',   ticker: 'LTR', name: 'LeadTech',      base: 52, vol: 0.035, sens: 0.07 }
+      { id: 'cedar', ticker: 'CDR', name: 'CedarWood', base: 10, vol: 0.018, sens: 0.12 },
+      { id: 'graph', ticker: 'GRP', name: 'GraphiteGlobal', base: 22, vol: 0.024, sens: 0.09 },
+      { id: 'mach', ticker: 'PML', name: 'PencilMach', base: 35, vol: 0.028, sens: 0.18 },
+      { id: 'office', ticker: 'OFS', name: 'OfficeSupply', base: 15, vol: 0.015, sens: 0.22 },
+      { id: 'lead', ticker: 'LTR', name: 'LeadTech', base: 48, vol: 0.032, sens: 0.07 }
     ];
-
-    // Clean starting state
     let state = {
-      cash: 40,
-      pencils: 0,
-      materials: 280,
-      clickPower: 1,
-      quality: 1.0,
-      rateMult: 1,
-      brand: 1.0,
-      marketing: {},          // id -> level
-      matSave: 0,
-      storage: 3000,
-      prestigeLevel: 0,
-      prestigeMult: 1,
-      lifetimeSales: 0,
-      totalProduced: 0,
-      totalSold: 0,
-      machines: {},
-      upgradesOwned: {},
-      stocks: {},
-      askingPrice: 1.00,
-      offlineCapHours: 8,
-      lastTick: Date.now(),
-      history: { prod: [], demand: [], cash: [], port: [], labels: [] },
-      log: [],
-      clearanceActive: false,
-      clearanceTimer: 0
+      cash: 45, pencils: 0, materials: 350, clickPower: 1, quality: 1.0, rateMult: 1, brand: 1.0,
+      marketing: {}, matSave: 0, storage: 3000, prestigeLevel: 0, prestigeMult: 1,
+      lifetimeSales: 0, totalProduced: 0, totalSold: 0, machines: {}, upgradesOwned: {}, stocks: {},
+      askingPrice: 0.95, offlineCapHours: 8, lastTick: Date.now(),
+      history: { prod: [], demand: [], cash: [], port: [], labels: [] }, log: [],
+      clearanceActive: false, clearanceTimer: 0
     };
-
     MACHINES.forEach(m => state.machines[m.id] = 0);
     MARKETING.forEach(m => state.marketing[m.id] = 0);
-    STOCKS_DEF.forEach(s => {
-      state.stocks[s.id] = { price: s.base, shares: 0, history: [s.base] };
-    });
+    STOCKS_DEF.forEach(s => { state.stocks[s.id] = { price: s.base, shares: 0, history: [s.base] }; });
 
-    // ========== HELPERS ==========
-    function safe(n, fallback = 0) {
-      n = Number(n);
-      if (!isFinite(n) || isNaN(n)) return fallback;
-      return n;
+    function safe(n, f=0) { n=Number(n); return (!isFinite(n)||isNaN(n))?f:n; }
+    function clamp(n,a,b){return Math.max(a,Math.min(b,safe(n,a)));}
+    function formatNum(n,d=0){
+      n=safe(n);
+      if(Math.abs(n)>=1e15)return(n/1e15).toFixed(2)+'Q';
+      if(Math.abs(n)>=1e12)return(n/1e12).toFixed(2)+'T';
+      if(Math.abs(n)>=1e9)return(n/1e9).toFixed(2)+'B';
+      if(Math.abs(n)>=1e6)return(n/1e6).toFixed(2)+'M';
+      if(Math.abs(n)>=1e3)return(n/1e3).toFixed(2)+'K';
+      return n.toFixed(d);
     }
-    function clamp(n, min, max) {
-      return Math.max(min, Math.min(max, safe(n, min)));
-    }
-    function formatNum(n, dec = 0) {
-      n = safe(n);
-      if (Math.abs(n) >= 1e15) return (n / 1e15).toFixed(2) + 'Q';
-      if (Math.abs(n) >= 1e12) return (n / 1e12).toFixed(2) + 'T';
-      if (Math.abs(n) >= 1e9)  return (n / 1e9).toFixed(2) + 'B';
-      if (Math.abs(n) >= 1e6)  return (n / 1e6).toFixed(2) + 'M';
-      if (Math.abs(n) >= 1e3)  return (n / 1e3).toFixed(2) + 'K';
-      return n.toFixed(dec);
-    }
-    function formatMoney(n) {
-      n = safe(n);
-      if (Math.abs(n) >= 1e6) return '$' + formatNum(n, 2);
-      return '$' + n.toFixed(2);
-    }
-    function toast(msg) {
-      const el = document.getElementById('toast');
-      el.textContent = msg;
-      el.classList.add('show');
-      clearTimeout(el._t);
-      el._t = setTimeout(() => el.classList.remove('show'), 2500);
-    }
-    function logEvent(msg) {
-      const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      state.log.unshift({ time, msg });
-      if (state.log.length > 35) state.log.pop();
-      renderLog();
-    }
-    function spawnFloat(text, x, y) {
-      const el = document.createElement('div');
-      el.className = 'float-money';
-      el.textContent = text;
-      el.style.left = (x || (window.innerWidth * 0.5 + (Math.random()-0.5)*80)) + 'px';
-      el.style.top  = (y || (window.innerHeight * 0.45 + (Math.random()-0.5)*40)) + 'px';
-      document.body.appendChild(el);
-      setTimeout(() => el.remove(), 1200);
-    }
+    function formatMoney(n){n=safe(n);if(Math.abs(n)>=1e6)return'$'+formatNum(n,2);return'$'+n.toFixed(2);}
+    function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('show'),2400);}
+    function logEvent(msg){const time=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});state.log.unshift({time,msg});if(state.log.length>30)state.log.pop();renderLog();}
+    function spawnFloat(text){const el=document.createElement('div');el.className='float-money';el.textContent=text;el.style.left=(window.innerWidth*0.48+(Math.random()-0.5)*90)+'px';el.style.top=(window.innerHeight*0.42+(Math.random()-0.5)*40)+'px';document.body.appendChild(el);setTimeout(()=>el.remove(),1150);}
+    const displayCache={};
+    function animateValue(id,val,fmt){const el=document.getElementById(id);if(!el)return;const prev=displayCache[id];displayCache[id]=val;el.textContent=fmt?fmt(val):val;if(prev!==undefined&&Math.abs(prev-val)>0.001){el.classList.remove('pulse');void el.offsetWidth;el.classList.add('pulse');}}
 
-    // Animated display helper
-    const displayCache = {};
-    function animateValue(id, newVal, formatter) {
-      const el = document.getElementById(id);
-      if (!el) return;
-      const key = id;
-      const prev = displayCache[key];
-      displayCache[key] = newVal;
-      el.textContent = formatter ? formatter(newVal) : newVal;
-      if (prev !== undefined && prev !== newVal) {
-        el.classList.remove('pulse');
-        void el.offsetWidth;
-        el.classList.add('pulse');
-      }
+    function getMachineCost(m){return Math.floor(m.baseCost*Math.pow(1.14,state.machines[m.id]||0));}
+    function getMachineRate(m){return m.baseRate*(state.machines[m.id]||0)*state.rateMult*state.prestigeMult;}
+    function getTotalRate(){return MACHINES.reduce((s,m)=>s+getMachineRate(m),0);}
+    function getUnitMaterialCost(){const base=0.07+(state.quality-1)*0.16;return Math.max(0.025,base*(1-state.matSave));}
+    function getPerceivedValue(){return 0.82*state.quality*(0.72+state.brand*0.42)*(1+state.prestigeLevel*0.02);}
+    function getMarketingBoost(){let t=0;MARKETING.forEach(m=>{t+=(state.marketing[m.id]||0)*m.boost;});return t;}
+    function getTotalMarketingLevel(){return MARKETING.reduce((s,m)=>s+(state.marketing[m.id]||0),0);}
+    function getDemandPercent(){
+      let demand=0.52;
+      demand+=getMarketingBoost();
+      demand*=(0.88+state.brand*0.16);
+      demand*=(0.97+Math.min(0.18,state.totalSold/60000));
+      const perceived=Math.max(0.25,getPerceivedValue());
+      let price=state.askingPrice;
+      if(state.clearanceActive)price*=0.5;
+      const ratio=price/perceived;
+      if(ratio>1.15)demand*=Math.pow(1/ratio,1.5);
+      else if(ratio<0.9)demand*=1+(0.9-ratio)*0.6;
+      if(state.clearanceActive)demand*=1.65;
+      return clamp(demand,0.08,5.0);
     }
-
-    // ========== CORE MATH ==========
-    function getMachineCost(m) {
-      const owned = state.machines[m.id] || 0;
-      return Math.floor(m.baseCost * Math.pow(1.145, owned));
+    function getSalesRate(){
+      const base=1.4+state.prestigeLevel*1.0+Math.log10(1+state.totalSold+8)*1.4+getTotalMarketingLevel()*0.55;
+      return base*getDemandPercent();
     }
-    function getMachineRate(m) {
-      const owned = state.machines[m.id] || 0;
-      return m.baseRate * owned * state.rateMult * state.prestigeMult;
-    }
-    function getTotalRate() {
-      return MACHINES.reduce((sum, m) => sum + getMachineRate(m), 0);
-    }
-    function getUnitMaterialCost() {
-      const base = 0.07 + (state.quality - 1) * 0.18;
-      return Math.max(0.025, base * (1 - state.matSave));
-    }
-    function getPerceivedValue() {
-      // Starts around $0.90, grows with quality + brand
-      return 0.85 * state.quality * (0.7 + state.brand * 0.45) * (1 + state.prestigeLevel * 0.02);
-    }
+    function getPortfolioValue(){return STOCKS_DEF.reduce((s,def)=>{const st=state.stocks[def.id];return s+(st.shares||0)*(st.price||0);},0);}
+    function getPrestigeGain(){return Math.max(0,Math.sqrt(state.lifetimeSales/20000)*0.15);}
+    function getNextPrestigeReq(){return 20000*Math.pow(2.7,state.prestigeLevel);}
 
-    // Marketing total boost (main demand driver)
-    function getMarketingBoost() {
-      let total = 0;
-      MARKETING.forEach(m => {
-        const lvl = state.marketing[m.id] || 0;
-        total += lvl * m.boost;
-      });
-      return total;
-    }
-    function getTotalMarketingLevel() {
-      return MARKETING.reduce((s, m) => s + (state.marketing[m.id] || 0), 0);
-    }
-
-    function getDemandPercent() {
-      // BASE demand is intentionally LOW
-      let demand = 0.28;
-
-      // Marketing is the primary growth path
-      demand += getMarketingBoost();
-
-      // Brand helps a bit
-      demand *= (0.85 + state.brand * 0.18);
-
-      // Small lifetime bonus (very slow)
-      demand *= (0.95 + Math.min(0.2, state.totalSold / 80000));
-
-      // Price sensitivity
-      const perceived = Math.max(0.2, getPerceivedValue());
-      let price = state.askingPrice;
-      if (state.clearanceActive) price *= 0.5;
-      const ratio = price / perceived;
-
-      // Steep penalty when overpriced, mild bonus when underpriced
-      if (ratio > 1.05) {
-        demand *= Math.pow(1 / ratio, 1.6);
-      } else if (ratio < 0.85) {
-        demand *= 1 + (0.85 - ratio) * 0.7;
-      }
-
-      // Clearance temporary boost
-      if (state.clearanceActive) demand *= 1.7;
-
-      return clamp(demand, 0.04, 4.5);
-    }
-
-    function getSalesRate() {
-      // Base capacity starts VERY low so early game is manual + careful pricing
-      const baseCapacity = 0.55 + state.prestigeLevel * 0.8
-                         + Math.log10(1 + state.totalSold + 5) * 1.1
-                         + getTotalMarketingLevel() * 0.35;
-
-      return baseCapacity * getDemandPercent();
-    }
-
-    function getPortfolioValue() {
-      return STOCKS_DEF.reduce((sum, s) => {
-        const st = state.stocks[s.id];
-        return sum + (st.shares || 0) * (st.price || 0);
-      }, 0);
-    }
-    function getPrestigeGain() {
-      return Math.max(0, Math.sqrt(state.lifetimeSales / 25000) * 0.15);
-    }
-    function getNextPrestigeReq() {
-      return 25000 * Math.pow(2.8, state.prestigeLevel);
-    }
-
-    // ========== ACTIONS ==========
-    function produceManual() {
-      if (state.pencils >= state.storage) {
-        toast('Warehouse full!');
-        return;
-      }
-      const amount = state.clickPower * state.prestigeMult;
-      const space = state.storage - state.pencils;
-      const actual = Math.min(amount, space);
-
-      if (state.materials < actual * 0.5) {
-        toast('Low materials — restock in Supply');
-      }
-
-      state.pencils += actual;
-      state.totalProduced += actual;
-      state.materials = Math.max(0, state.materials - actual * 0.7);
-      // tiny material cost
-      state.cash = Math.max(0, state.cash - getUnitMaterialCost() * actual * 0.2);
-
-      const btn = document.getElementById('produce-btn');
-      btn.classList.remove('working');
-      void btn.offsetWidth;
-      btn.classList.add('working');
-
+    function produceManual(){
+      if(state.pencils>=state.storage){toast('Warehouse full!');return;}
+      const amount=state.clickPower*state.prestigeMult;
+      const actual=Math.min(amount,state.storage-state.pencils);
+      if(state.materials<actual*0.4)toast('Low materials — restock in Supply');
+      state.pencils+=actual;state.totalProduced+=actual;
+      state.materials=Math.max(0,state.materials-actual*0.65);
+      state.cash=Math.max(0,state.cash-getUnitMaterialCost()*actual*0.15);
+      const btn=document.getElementById('produce-btn');btn.classList.remove('working');void btn.offsetWidth;btn.classList.add('working');
       renderResources();
     }
-
-    function setAskingPrice(val) {
-      val = clamp(Number(val) || 1, 0.1, 40);
-      state.askingPrice = Math.round(val * 100) / 100;
-      const input = document.getElementById('asking-price');
-      const slider = document.getElementById('price-slider');
-      if (input && document.activeElement !== input) input.value = state.askingPrice.toFixed(2);
-      if (slider) slider.value = Math.round(state.askingPrice * 100);
+    function setAskingPrice(val){
+      val=clamp(Number(val)||1,0.1,40);state.askingPrice=Math.round(val*100)/100;
+      const input=document.getElementById('asking-price');const slider=document.getElementById('price-slider');
+      if(input&&document.activeElement!==input)input.value=state.askingPrice.toFixed(2);
+      if(slider)slider.value=Math.round(state.askingPrice*100);
       renderDemandUI();
     }
-
-    function startClearance() {
-      if (state.clearanceActive) return;
-      state.clearanceActive = true;
-      state.clearanceTimer = 25;
-      document.getElementById('clearance-btn').classList.add('active');
-      logEvent('Clearance sale! 50% off for 25 seconds');
-      toast('Clearance started — demand spikes!');
+    function startClearance(){
+      if(state.clearanceActive)return;state.clearanceActive=true;state.clearanceTimer=20;
+      document.getElementById('clearance-btn').classList.add('active');logEvent('Clearance! 50% off for 20s');toast('Clearance started');
     }
-
-    function buyMachine(id) {
-      const m = MACHINES.find(x => x.id === id);
-      if (!m) return;
-      const cost = getMachineCost(m);
-      if (state.cash < cost) return;
-      state.cash -= cost;
-      state.machines[id] = (state.machines[id] || 0) + 1;
-      logEvent(`Bought ${m.name} (×${state.machines[id]})`);
-      renderMachines();
-      renderResources();
+    function buyMachine(id){
+      const m=MACHINES.find(x=>x.id===id);if(!m)return;const cost=getMachineCost(m);if(state.cash<cost)return;
+      state.cash-=cost;state.machines[id]=(state.machines[id]||0)+1;logEvent(`Bought ${m.name} (×${state.machines[id]})`);renderMachines();renderResources();
     }
-
-    function buyUpgrade(id) {
-      const u = UPGRADES.find(x => x.id === id);
-      if (!u) return;
-      if (u.once && state.upgradesOwned[id]) return;
-      const owned = state.upgradesOwned[id] || 0;
-      const cost = Math.floor(u.cost * Math.pow(1.48, owned));
-      if (state.cash < cost) return;
-      state.cash -= cost;
-      state.upgradesOwned[id] = owned + 1;
-
-      if (u.effect === 'clickPower') state.clickPower += u.value;
-      if (u.effect === 'quality')    state.quality += u.value;
-      if (u.effect === 'rateMult')   state.rateMult += u.value;
-      if (u.effect === 'brand')      state.brand += u.value;
-      if (u.effect === 'matSave')    state.matSave = Math.min(0.5, state.matSave + u.value);
-      if (u.effect === 'storage')    state.storage += u.value;
-      if (u.effect === 'offlineCap') state.offlineCapHours += u.value;
-
-      logEvent(`Researched ${u.name}`);
-      renderUpgrades();
-      renderResources();
-      renderDemandUI();
-      renderMarketing();
+    function buyUpgrade(id){
+      const u=UPGRADES.find(x=>x.id===id);if(!u)return;if(u.once&&state.upgradesOwned[id])return;
+      const owned=state.upgradesOwned[id]||0;const cost=Math.floor(u.cost*Math.pow(1.45,owned));if(state.cash<cost)return;
+      state.cash-=cost;state.upgradesOwned[id]=owned+1;
+      if(u.effect==='clickPower')state.clickPower+=u.value;
+      if(u.effect==='quality')state.quality+=u.value;
+      if(u.effect==='rateMult')state.rateMult+=u.value;
+      if(u.effect==='brand')state.brand+=u.value;
+      if(u.effect==='matSave')state.matSave=Math.min(0.5,state.matSave+u.value);
+      if(u.effect==='storage')state.storage+=u.value;
+      if(u.effect==='offlineCap')state.offlineCapHours+=u.value;
+      logEvent(`Researched ${u.name}`);renderUpgrades();renderResources();renderDemandUI();renderMarketing();
     }
-
-    function buyMarketing(id) {
-      const m = MARKETING.find(x => x.id === id);
-      if (!m) return;
-      const lvl = state.marketing[id] || 0;
-      const cost = Math.floor(m.baseCost * Math.pow(m.costMult, lvl));
-      if (state.cash < cost) {
-        toast('Not enough cash');
-        return;
-      }
-      state.cash -= cost;
-      state.marketing[id] = lvl + 1;
-      logEvent(`${m.name} → Level ${lvl + 1}`);
-      toast(`${m.name} upgraded!`);
-      renderMarketing();
-      renderResources();
-      renderDemandUI();
+    function buyMarketing(id){
+      const m=MARKETING.find(x=>x.id===id);if(!m)return;const lvl=state.marketing[id]||0;
+      const cost=Math.floor(m.baseCost*Math.pow(m.costMult,lvl));if(state.cash<cost){toast('Not enough cash');return;}
+      state.cash-=cost;state.marketing[id]=lvl+1;logEvent(`${m.name} → Lv ${lvl+1}`);toast(`${m.name} upgraded!`);
+      renderMarketing();renderResources();renderDemandUI();
     }
-
-    function buyMaterials(bulk = false) {
-      if (bulk) {
-        if (state.cash < 95) { toast('Need $95'); return; }
-        state.cash -= 95;
-        state.materials += 2000;
-        logEvent('Bulk order +2000 materials');
-      } else {
-        if (state.cash < 18) { toast('Need $18'); return; }
-        state.cash -= 18;
-        state.materials += 350;
-        logEvent('Restocked +350 materials');
-      }
-      renderSupply();
-      renderResources();
+    function buyMaterials(bulk=false){
+      if(bulk){if(state.cash<80){toast('Need $80');return;}state.cash-=80;state.materials+=2200;logEvent('Bulk +2200 materials');}
+      else{if(state.cash<15){toast('Need $15');return;}state.cash-=15;state.materials+=400;logEvent('Restocked +400 materials');}
+      renderSupply();renderResources();
     }
-
-    function tradeStock(id, isBuy) {
-      const def = STOCKS_DEF.find(s => s.id === id);
-      const st = state.stocks[id];
-      if (!def || !st) return;
-      if (isBuy) {
-        if (state.cash < st.price) { toast('Not enough cash'); return; }
-        state.cash -= st.price;
-        st.shares += 1;
-        logEvent(`Bought 1 ${def.ticker}`);
-      } else {
-        if (st.shares <= 0) return;
-        state.cash += st.price;
-        st.shares -= 1;
-        logEvent(`Sold 1 ${def.ticker}`);
-      }
-      renderStocks();
-      renderResources();
+    function tradeStock(id,isBuy){
+      const def=STOCKS_DEF.find(s=>s.id===id);const st=state.stocks[id];if(!def||!st)return;
+      if(isBuy){if(state.cash<st.price){toast('Not enough cash');return;}state.cash-=st.price;st.shares+=1;logEvent(`Bought 1 ${def.ticker}`);}
+      else{if(st.shares<=0)return;state.cash+=st.price;st.shares-=1;logEvent(`Sold 1 ${def.ticker}`);}
+      renderStocks();renderResources();
     }
-
-    function doPrestige() {
-      if (state.lifetimeSales < getNextPrestigeReq()) return;
-      const gain = getPrestigeGain();
-      state.prestigeLevel += 1;
-      state.prestigeMult += gain;
-
-      // Soft reset
-      state.cash = 55;
-      state.pencils = 0;
-      state.materials = 300;
-      state.clickPower = 1;
-      state.quality = 1;
-      state.rateMult = 1;
-      state.brand = 1 + state.prestigeLevel * 0.07;
-      state.marketing = {};
-      MARKETING.forEach(m => state.marketing[m.id] = 0);
-      state.matSave = 0;
-      state.storage = 3000;
-      state.totalProduced = 0;
-      state.totalSold = 0;
-      state.lifetimeSales = 0;
-      state.machines = {};
-      MACHINES.forEach(m => state.machines[m.id] = 0);
-      state.upgradesOwned = {};
-      state.askingPrice = 1.00;
-      state.clearanceActive = false;
-
-      logEvent(`PRESTIGE! Multiplier now ×${state.prestigeMult.toFixed(2)}`);
-      toast(`Prestige complete! +${gain.toFixed(2)}× permanent`);
-      renderAll();
-      saveGame();
+    function doPrestige(){
+      if(state.lifetimeSales<getNextPrestigeReq())return;const gain=getPrestigeGain();
+      state.prestigeLevel+=1;state.prestigeMult+=gain;
+      state.cash=60;state.pencils=0;state.materials=350;state.clickPower=1;state.quality=1;state.rateMult=1;
+      state.brand=1+state.prestigeLevel*0.06;state.marketing={};MARKETING.forEach(m=>state.marketing[m.id]=0);
+      state.matSave=0;state.storage=3000;state.totalProduced=0;state.totalSold=0;state.lifetimeSales=0;
+      state.machines={};MACHINES.forEach(m=>state.machines[m.id]=0);state.upgradesOwned={};state.askingPrice=0.95;state.clearanceActive=false;
+      logEvent(`PRESTIGE! ×${state.prestigeMult.toFixed(2)}`);toast(`Prestige +${gain.toFixed(2)}×`);renderAll();saveGame();
     }
-
-    // ========== STOCK TICK ==========
-    function tickStocks() {
-      const rate = getTotalRate();
-      STOCKS_DEF.forEach(def => {
-        const st = state.stocks[def.id];
-        let change = (Math.random() - 0.5) * def.vol * st.price;
-        change += (def.base - st.price) * 0.0018;
-        if (rate > 25) change += rate * 0.00015 * def.sens * (Math.random() > 0.45 ? 1 : -0.25);
-        st.price = clamp(st.price + change, 0.4, 6000);
-        st.history.push(st.price);
-        if (st.history.length > 45) st.history.shift();
+    function tickStocks(){
+      const rate=getTotalRate();
+      STOCKS_DEF.forEach(def=>{
+        const st=state.stocks[def.id];
+        let change=(Math.random()-0.5)*def.vol*st.price;change+=(def.base-st.price)*0.0015;
+        if(rate>20)change+=rate*0.00012*def.sens*(Math.random()>0.4?1:-0.3);
+        st.price=clamp(st.price+change,0.4,5000);st.history.push(st.price);if(st.history.length>40)st.history.shift();
       });
     }
 
-    // ========== MAIN LOOP ==========
-    let lastFrame = performance.now();
-    let lastSaleFlash = 0;
-
-    function gameLoop(now) {
-      const dt = Math.min((now - lastFrame) / 1000, 0.12);
-      lastFrame = now;
-
-      // --- Produce ---
-      const rate = getTotalRate();
-      if (rate > 0 && state.pencils < state.storage - 0.01) {
-        let produced = rate * dt;
-        // Materials throttle
-        if (state.materials < 40) produced *= 0.25;
-        else if (state.materials < 100) produced *= 0.55;
-        produced = Math.min(produced, state.storage - state.pencils);
-        if (produced > 0) {
-          state.pencils += produced;
-          state.totalProduced += produced;
-          state.materials = Math.max(0, state.materials - produced * 0.72);
-        }
+    let lastFrame=performance.now();let lastSaleFlash=0;
+    function gameLoop(now){
+      const dt=Math.min((now-lastFrame)/1000,0.12);lastFrame=now;
+      const rate=getTotalRate();
+      if(rate>0&&state.pencils<state.storage-0.01){
+        let produced=rate*dt;
+        if(state.materials<30)produced*=0.2;else if(state.materials<80)produced*=0.5;
+        produced=Math.min(produced,state.storage-state.pencils);
+        if(produced>0){state.pencils+=produced;state.totalProduced+=produced;state.materials=Math.max(0,state.materials-produced*0.7);}
       }
-
-      // --- Sell (STRICT inventory check — fixes money-from-nothing bug) ---
-      const salesRate = getSalesRate();
-      // Only sell what actually exists
-      let toSell = Math.min(Math.max(0, state.pencils), salesRate * dt);
-
-      // Hard floor: never sell dust amounts that create phantom money
-      if (toSell >= 0.02 && state.pencils >= 0.02) {
-        let price = state.askingPrice;
-        if (state.clearanceActive) price *= 0.5;
-        const revenue = toSell * price;
-
-        // Atomic update
-        state.pencils = Math.max(0, state.pencils - toSell);
-        state.cash += revenue;
-        state.lifetimeSales += revenue;
-        state.totalSold += toSell;
-
-        // Tiny brand growth from sales
-        state.brand = Math.min(6, state.brand + toSell * 0.000015);
-
-        // Visual feedback
-        if (now - lastSaleFlash > 180) {
-          lastSaleFlash = now;
-          const live = document.getElementById('live-sales');
-          if (live) {
-            live.classList.remove('flash');
-            void live.offsetWidth;
-            live.classList.add('flash');
-          }
-          // Occasional floating money
-          if (Math.random() < 0.35) {
-            spawnFloat('+' + formatMoney(revenue), null, null);
-          }
-        }
+      const salesRate=getSalesRate();
+      let toSell=Math.min(Math.max(0,state.pencils),salesRate*dt);
+      if(toSell>=0.015&&state.pencils>=0.015){
+        let price=state.askingPrice;if(state.clearanceActive)price*=0.5;
+        const revenue=toSell*price;
+        state.pencils=Math.max(0,state.pencils-toSell);state.cash+=revenue;state.lifetimeSales+=revenue;state.totalSold+=toSell;
+        state.brand=Math.min(6,state.brand+toSell*0.000012);
+        if(now-lastSaleFlash>160){lastSaleFlash=now;const live=document.getElementById('live-sales');if(live){live.classList.remove('flash');void live.offsetWidth;live.classList.add('flash');}if(Math.random()<0.4)spawnFloat('+'+formatMoney(revenue));}
       }
-
-      // Clearance timer
-      if (state.clearanceActive) {
-        state.clearanceTimer -= dt;
-        if (state.clearanceTimer <= 0) {
-          state.clearanceActive = false;
-          document.getElementById('clearance-btn').classList.remove('active');
-          logEvent('Clearance ended');
-        }
-      }
-
-      // Stocks occasionally
-      if (Math.random() < dt / 2.0) tickStocks();
-
-      // History sampling
-      if (Math.random() < dt / 2.2) {
-        const label = new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit', second:'2-digit' });
-        state.history.labels.push(label);
-        state.history.prod.push(rate);
-        state.history.demand.push(getDemandPercent() * 100);
-        state.history.cash.push(state.cash);
-        state.history.port.push(getPortfolioValue());
-        if (state.history.labels.length > 45) {
-          ['labels','prod','demand','cash','port'].forEach(k => state.history[k].shift());
-        }
+      if(state.clearanceActive){state.clearanceTimer-=dt;if(state.clearanceTimer<=0){state.clearanceActive=false;document.getElementById('clearance-btn').classList.remove('active');logEvent('Clearance ended');}}
+      if(Math.random()<dt/1.9)tickStocks();
+      if(Math.random()<dt/2.0){
+        const label=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+        state.history.labels.push(label);state.history.prod.push(rate);state.history.demand.push(getDemandPercent()*100);
+        state.history.cash.push(state.cash);state.history.port.push(getPortfolioValue());
+        if(state.history.labels.length>40)['labels','prod','demand','cash','port'].forEach(k=>state.history[k].shift());
         updateCharts();
       }
-
-      // Safety clamps
-      state.cash = clamp(state.cash, 0, 1e18);
-      state.pencils = clamp(state.pencils, 0, state.storage);
-      state.materials = clamp(state.materials, 0, 5e6);
-
-      renderResources();
-      renderDemandUI();
-      requestAnimationFrame(gameLoop);
+      state.cash=clamp(state.cash,0,1e18);state.pencils=clamp(state.pencils,0,state.storage);state.materials=clamp(state.materials,0,5e6);
+      renderResources();renderDemandUI();requestAnimationFrame(gameLoop);
     }
 
-    // ========== RENDER ==========
-    function renderResources() {
-      animateValue('cash-display', state.cash, formatMoney);
-      animateValue('pencils-display', state.pencils, n => formatNum(n, 0));
-      animateValue('rate-display', getTotalRate(), n => formatNum(n, 1) + '/s');
-      animateValue('sales-display', getSalesRate(), n => formatNum(n, 1) + '/s');
-      animateValue('demand-display', getDemandPercent() * 100, n => Math.round(n) + '%');
-
-      const cp = document.getElementById('click-power');
-      if (cp) cp.textContent = formatNum(state.clickPower * state.prestigeMult, 1);
-      const uc = document.getElementById('unit-cost');
-      if (uc) uc.textContent = getUnitMaterialCost().toFixed(2);
-
-      const qb = document.getElementById('quality-badge');
-      if (qb) {
-        if (state.quality >= 2.3) qb.textContent = 'Signature';
-        else if (state.quality >= 1.85) qb.textContent = 'Artist Series';
-        else if (state.quality >= 1.4) qb.textContent = 'Cedar Select';
-        else if (state.quality >= 1.15) qb.textContent = 'Premium HB';
-        else qb.textContent = 'Standard HB';
-      }
-
-      const inv = document.getElementById('inv-stat');
-      if (inv) inv.textContent = formatNum(state.pencils, 0) + '/' + formatNum(state.storage, 0);
-      const aut = document.getElementById('auto-stat');
-      if (aut) aut.textContent = formatNum(getTotalRate(), 1) + '/s';
-      const tot = document.getElementById('total-made-stat');
-      if (tot) tot.textContent = formatNum(state.totalProduced, 0);
-      const life = document.getElementById('lifetime-sales');
-      if (life) life.textContent = formatMoney(state.lifetimeSales);
-
-      // Analytics
-      const salesR = getSalesRate();
-      const price = state.clearanceActive ? state.askingPrice * 0.5 : state.askingPrice;
-      const income = salesR * price;
-      const map = {
-        'a-cash': formatMoney(state.cash),
-        'a-rate': formatNum(getTotalRate(), 1),
-        'a-sales': formatNum(salesR, 1),
-        'a-price': formatMoney(state.askingPrice),
-        'a-demand': Math.round(getDemandPercent() * 100) + '%',
-        'a-brand': state.brand.toFixed(2),
-        'a-income': formatMoney(income),
-        'a-mats': formatNum(state.materials, 0)
-      };
-      for (const [id, val] of Object.entries(map)) {
-        const el = document.getElementById(id);
-        if (el) el.textContent = val;
-      }
-
-      // Prestige
-      const req = getNextPrestigeReq();
-      const gain = getPrestigeGain();
-      const preq = document.getElementById('prestige-req');
-      if (preq) preq.textContent = formatMoney(req);
-      const pg = document.getElementById('prestige-gain');
-      if (pg) pg.textContent = '+' + gain.toFixed(2) + '×';
-      const pbtn = document.getElementById('prestige-btn');
-      if (pbtn) {
-        pbtn.disabled = state.lifetimeSales < req;
-        pbtn.textContent = state.lifetimeSales < req ? `Need ${formatMoney(req)}` : 'Prestige Now';
-      }
+    function renderResources(){
+      animateValue('cash-display',state.cash,formatMoney);
+      animateValue('pencils-display',state.pencils,n=>formatNum(n,0));
+      animateValue('rate-display',getTotalRate(),n=>formatNum(n,1)+'/s');
+      animateValue('sales-display',getSalesRate(),n=>formatNum(n,1)+'/s');
+      animateValue('demand-display',getDemandPercent()*100,n=>Math.round(n)+'%');
+      const cp=document.getElementById('click-power');if(cp)cp.textContent=formatNum(state.clickPower*state.prestigeMult,1);
+      const uc=document.getElementById('unit-cost');if(uc)uc.textContent=getUnitMaterialCost().toFixed(2);
+      const qb=document.getElementById('quality-badge');
+      if(qb){if(state.quality>=2.2)qb.textContent='Signature';else if(state.quality>=1.8)qb.textContent='Artist Series';else if(state.quality>=1.4)qb.textContent='Cedar Select';else if(state.quality>=1.15)qb.textContent='Premium HB';else qb.textContent='Standard HB';}
+      const inv=document.getElementById('inv-stat');if(inv)inv.textContent=formatNum(state.pencils,0)+'/'+formatNum(state.storage,0);
+      const aut=document.getElementById('auto-stat');if(aut)aut.textContent=formatNum(getTotalRate(),1)+'/s';
+      const tot=document.getElementById('total-made-stat');if(tot)tot.textContent=formatNum(state.totalProduced,0);
+      const life=document.getElementById('lifetime-sales');if(life)life.textContent=formatMoney(state.lifetimeSales);
+      const salesR=getSalesRate();const price=state.clearanceActive?state.askingPrice*0.5:state.askingPrice;const income=salesR*price;
+      const map={'a-cash':formatMoney(state.cash),'a-rate':formatNum(getTotalRate(),1),'a-sales':formatNum(salesR,1),'a-price':formatMoney(state.askingPrice),'a-demand':Math.round(getDemandPercent()*100)+'%','a-brand':state.brand.toFixed(2),'a-income':formatMoney(income),'a-mats':formatNum(state.materials,0)};
+      for(const[id,val]of Object.entries(map)){const el=document.getElementById(id);if(el)el.textContent=val;}
+      const req=getNextPrestigeReq();const gain=getPrestigeGain();
+      const preq=document.getElementById('prestige-req');if(preq)preq.textContent=formatMoney(req);
+      const pg=document.getElementById('prestige-gain');if(pg)pg.textContent='+'+gain.toFixed(2)+'×';
+      const pbtn=document.getElementById('prestige-btn');if(pbtn){pbtn.disabled=state.lifetimeSales<req;pbtn.textContent=state.lifetimeSales<req?`Need ${formatMoney(req)}`:'Prestige Now';}
     }
-
-    function renderDemandUI() {
-      const demand = getDemandPercent();
-      // Visual scale: 0–250% demand fills the bar
-      const pctVisual = Math.min(100, (demand / 2.5) * 100);
-      const bar = document.getElementById('demand-bar');
-      if (bar) {
-        bar.style.width = pctVisual + '%';
-        if (demand > 1.6) bar.style.background = 'linear-gradient(90deg, var(--sage), #b8e0b0)';
-        else if (demand > 0.7) bar.style.background = 'linear-gradient(90deg, var(--accent), var(--sage))';
-        else bar.style.background = 'linear-gradient(90deg, var(--rose), var(--accent))';
-      }
-      const lbl = document.getElementById('demand-pct-label');
-      if (lbl) lbl.textContent = Math.round(demand * 100) + '% Demand';
-
-      const sales = getSalesRate();
-      const price = state.clearanceActive ? state.askingPrice * 0.5 : state.askingPrice;
-      const rev = sales * price;
-
-      document.getElementById('sales-rate').textContent = formatNum(sales, 1) + ' /s';
-      document.getElementById('rev-rate').textContent = formatMoney(rev);
-      document.getElementById('sold-total').textContent = formatNum(state.totalSold, 0);
-      document.getElementById('brand-stat').textContent = state.brand.toFixed(2);
-      document.getElementById('perceived-value').textContent = formatMoney(getPerceivedValue());
-
-      // Live sales feedback — honest about inventory
-      const live = document.getElementById('live-sales');
-      if (live) {
-        if (state.pencils < 0.5) {
-          live.textContent = 'No inventory — make some pencils!';
-          live.style.color = 'var(--text-dim)';
-          live.style.background = 'rgba(154,139,118,0.08)';
-        } else if (sales < 0.15) {
-          live.textContent = 'Demand very low — lower price or buy Marketing';
-          live.style.color = 'var(--rose)';
-          live.style.background = 'rgba(196,123,106,0.1)';
-        } else {
-          live.innerHTML = `Selling <strong>${formatNum(sales, 1)}/s</strong> → <strong>${formatMoney(rev)}/s</strong>`;
-          live.style.color = 'var(--sage-bright)';
-          live.style.background = 'rgba(111,155,106,0.12)';
-        }
-      }
+    function renderDemandUI(){
+      const demand=getDemandPercent();const pctVisual=Math.min(100,(demand/2.2)*100);
+      const bar=document.getElementById('demand-bar');
+      if(bar){bar.style.width=pctVisual+'%';if(demand>1.4)bar.style.background='linear-gradient(90deg, var(--sage), #b8e0b0)';else if(demand>0.7)bar.style.background='linear-gradient(90deg, var(--accent), var(--sage))';else bar.style.background='linear-gradient(90deg, var(--rose), var(--accent))';}
+      const lbl=document.getElementById('demand-pct-label');if(lbl)lbl.textContent=Math.round(demand*100)+'% Demand';
+      const sales=getSalesRate();const price=state.clearanceActive?state.askingPrice*0.5:state.askingPrice;const rev=sales*price;
+      document.getElementById('sales-rate').textContent=formatNum(sales,1)+' /s';
+      document.getElementById('rev-rate').textContent=formatMoney(rev);
+      document.getElementById('sold-total').textContent=formatNum(state.totalSold,0);
+      document.getElementById('brand-stat').textContent=state.brand.toFixed(2);
+      document.getElementById('perceived-value').textContent=formatMoney(getPerceivedValue());
+      const live=document.getElementById('live-sales');
+      if(live){if(state.pencils<0.4){live.textContent='No inventory — click the pencil!';live.style.color='var(--text-dim)';live.style.background='rgba(154,141,122,0.08)';}
+      else if(sales<0.25){live.textContent='Low demand — lower price or buy Ads';live.style.color='var(--rose)';live.style.background='rgba(196,123,106,0.1)';}
+      else{live.innerHTML=`Selling <strong>${formatNum(sales,1)}/s</strong> → <strong>${formatMoney(rev)}/s</strong>`;live.style.color='var(--sage-bright)';live.style.background='rgba(111,155,106,0.12)';}}
     }
-
-    function renderLog() {
-      const el = document.getElementById('event-log');
-      if (!el) return;
-      el.innerHTML = state.log.slice(0, 9).map(e =>
-        `<div><span class="time">${e.time}</span>${e.msg}</div>`
-      ).join('') || '<div style="color:var(--text-dim)">Start producing to see activity.</div>';
+    function renderLog(){const el=document.getElementById('event-log');if(!el)return;el.innerHTML=state.log.slice(0,8).map(e=>`<div><span class="time">${e.time}</span>${e.msg}</div>`).join('')||'<div style="color:var(--text-muted)">Start producing...</div>';}
+    function renderMachines(){
+      const grid=document.getElementById('machines-grid');if(!grid)return;const totalRate=getTotalRate();
+      grid.innerHTML=MACHINES.map(m=>{const owned=state.machines[m.id]||0;const cost=getMachineCost(m);const rate=getMachineRate(m);const can=state.cash>=cost;const active=owned>0&&totalRate>0;
+        return`<div class="card machine"><div class="machine-top"><span class="machine-name"><span class="dot ${active?'on':''}"></span>${m.icon} ${m.name}</span><span class="machine-level">×${owned}</span></div><div class="machine-stats"><span>${formatNum(rate,1)}/s</span><span>${formatMoney(cost)}</span></div><div class="machine-bar"><div class="machine-bar-fill" style="width:${Math.min(100,owned*7)}%"></div></div><p style="font-size:0.72rem;color:var(--text-dim);margin:2px 0 0;">${m.desc}</p><button class="buy-btn" ${can?'':'disabled'} onclick="buyMachine('${m.id}')">${can?'Buy — '+formatMoney(cost):'Need '+formatMoney(cost)}</button></div>`;}).join('');
     }
-
-    function renderMachines() {
-      const grid = document.getElementById('machines-grid');
-      if (!grid) return;
-      const totalRate = getTotalRate();
-      grid.innerHTML = MACHINES.map(m => {
-        const owned = state.machines[m.id] || 0;
-        const cost = getMachineCost(m);
-        const rate = getMachineRate(m);
-        const can = state.cash >= cost;
-        const active = owned > 0 && totalRate > 0;
-        return `<div class="card machine">
-          <div class="machine-top">
-            <span class="machine-name"><span class="machine-active-dot ${active ? 'on' : ''}"></span>${m.icon} ${m.name}</span>
-            <span class="machine-level">×${owned}</span>
-          </div>
-          <div class="machine-stats">
-            <span>${formatNum(rate,1)}/s</span>
-            <span>${formatMoney(cost)}</span>
-          </div>
-          <div class="machine-bar"><div class="machine-bar-fill" style="width:${Math.min(100, owned * 7)}%"></div></div>
-          <p style="font-size:0.73rem;color:var(--text-dim);margin:2px 0 0;">${m.desc}</p>
-          <button class="buy-btn" ${can ? '' : 'disabled'} onclick="buyMachine('${m.id}')">
-            ${can ? 'Buy — ' + formatMoney(cost) : 'Need ' + formatMoney(cost)}
-          </button>
-        </div>`;
-      }).join('');
+    function renderUpgrades(){
+      const grid=document.getElementById('upgrades-grid');if(!grid)return;
+      grid.innerHTML=UPGRADES.map(u=>{const owned=state.upgradesOwned[u.id]||0;
+        if(u.once&&owned>0)return`<div class="upgrade" style="opacity:0.45"><div class="upgrade-icon">${u.icon}</div><div class="upgrade-info"><div class="upgrade-name">${u.name} ✓</div><div class="upgrade-desc">${u.desc}</div></div></div>`;
+        const cost=Math.floor(u.cost*Math.pow(1.45,owned));const can=state.cash>=cost;
+        return`<div class="upgrade"><div class="upgrade-icon">${u.icon}</div><div class="upgrade-info"><div class="upgrade-name">${u.name}</div><div class="upgrade-desc">${u.desc}</div><div class="upgrade-effect">${formatMoney(cost)}</div><button class="buy-btn" style="margin-top:4px;width:auto;padding:4px 10px;" ${can?'':'disabled'} onclick="buyUpgrade('${u.id}')">Research</button></div></div>`;}).join('');
     }
-
-    function renderUpgrades() {
-      const grid = document.getElementById('upgrades-grid');
-      if (!grid) return;
-      grid.innerHTML = UPGRADES.map(u => {
-        const owned = state.upgradesOwned[u.id] || 0;
-        if (u.once && owned > 0) {
-          return `<div class="upgrade" style="opacity:0.45">
-            <div class="upgrade-icon">${u.icon}</div>
-            <div class="upgrade-info">
-              <div class="upgrade-name">${u.name} ✓</div>
-              <div class="upgrade-desc">${u.desc}</div>
-            </div>
-          </div>`;
-        }
-        const cost = Math.floor(u.cost * Math.pow(1.48, owned));
-        const can = state.cash >= cost;
-        return `<div class="upgrade">
-          <div class="upgrade-icon">${u.icon}</div>
-          <div class="upgrade-info">
-            <div class="upgrade-name">${u.name}</div>
-            <div class="upgrade-desc">${u.desc}</div>
-            <div class="upgrade-effect">${formatMoney(cost)}</div>
-            <button class="buy-btn" style="margin-top:5px;width:auto;padding:5px 11px;" ${can ? '' : 'disabled'} onclick="buyUpgrade('${u.id}')">Research</button>
-          </div>
-        </div>`;
-      }).join('');
+    function renderMarketing(){
+      const list=document.getElementById('marketing-list');
+      if(list){list.innerHTML=MARKETING.map(m=>{const lvl=state.marketing[m.id]||0;const cost=Math.floor(m.baseCost*Math.pow(m.costMult,lvl));const can=state.cash>=cost;
+        return`<div class="mkt-card"><div class="mkt-title">${m.icon} ${m.name}</div><div class="mkt-desc">${m.desc}</div><div style="display:flex;justify-content:space-between;align-items:center;"><span class="mkt-level">Lv ${lvl} · +${Math.round(m.boost*100)}% each</span><button class="buy-btn" style="width:auto;padding:4px 11px;margin:0;" ${can?'':'disabled'} onclick="buyMarketing('${m.id}')">${can?formatMoney(cost):'Need '+formatMoney(cost)}</button></div></div>`;}).join('');}
+      document.getElementById('mkt-total-level').textContent=getTotalMarketingLevel();
+      document.getElementById('mkt-demand-boost').textContent=Math.round(getDemandPercent()*100)+'%';
+      document.getElementById('mkt-brand').textContent=state.brand.toFixed(2);
+      document.getElementById('mkt-logo').textContent=state.marketing.logo||0;
     }
-
-    function renderMarketing() {
-      const list = document.getElementById('marketing-list');
-      if (list) {
-        list.innerHTML = MARKETING.map(m => {
-          const lvl = state.marketing[m.id] || 0;
-          const cost = Math.floor(m.baseCost * Math.pow(m.costMult, lvl));
-          const can = state.cash >= cost;
-          return `<div class="mkt-card">
-            <div class="mkt-title">${m.icon} ${m.name}</div>
-            <div class="mkt-desc">${m.desc}</div>
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <span class="mkt-level">Lv ${lvl} · +${Math.round(m.boost * 100)}% each</span>
-              <button class="buy-btn" style="width:auto;padding:5px 12px;margin:0;" ${can ? '' : 'disabled'} onclick="buyMarketing('${m.id}')">
-                ${can ? formatMoney(cost) : 'Need ' + formatMoney(cost)}
-              </button>
-            </div>
-          </div>`;
-        }).join('');
-      }
-
-      document.getElementById('mkt-total-level').textContent = getTotalMarketingLevel();
-      document.getElementById('mkt-demand-boost').textContent = '×' + getDemandPercent().toFixed(2);
-      document.getElementById('mkt-brand').textContent = state.brand.toFixed(2);
-      document.getElementById('mkt-logo').textContent = state.marketing.logo || 0;
+    function renderSupply(){
+      const list=document.getElementById('materials-list');
+      if(list){list.innerHTML=`<div class="material-row"><span>Material Units</span><span style="font-family:var(--mono);color:var(--gold)">${formatNum(state.materials,0)}</span></div><div class="material-row"><span>Cost per pencil</span><span style="font-family:var(--mono)">${formatMoney(getUnitMaterialCost())}</span></div><div class="material-row"><span>Throttle</span><span style="font-family:var(--mono);color:${state.materials<30?'var(--rose)':state.materials<80?'var(--accent)':'var(--sage-bright)'}">${state.materials<30?'Critical':state.materials<80?'Slow':'Normal'}</span></div>`;}
+      document.getElementById('wh-cap').textContent=formatNum(state.storage,0);
+      document.getElementById('wh-stock').textContent=formatNum(state.pencils,0);
+      const fill=state.storage>0?(state.pencils/state.storage*100):0;
+      document.getElementById('wh-fill').textContent=Math.round(fill)+'%';
+      document.getElementById('wh-bar').style.width=Math.min(100,fill)+'%';
     }
-
-    function renderSupply() {
-      const list = document.getElementById('materials-list');
-      if (list) {
-        list.innerHTML = `
-          <div class="material-row"><span>Material Units</span><span style="font-family:var(--font-mono);color:var(--gold)">${formatNum(state.materials,0)}</span></div>
-          <div class="material-row"><span>Cost per pencil</span><span style="font-family:var(--font-mono)">${formatMoney(getUnitMaterialCost())}</span></div>
-          <div class="material-row"><span>Production throttle</span><span style="font-family:var(--font-mono);color:${state.materials < 40 ? 'var(--rose)' : 'var(--sage-bright)'}">${state.materials < 40 ? 'Critical' : state.materials < 100 ? 'Slow' : 'Normal'}</span></div>`;
-      }
-      document.getElementById('wh-cap').textContent = formatNum(state.storage, 0);
-      document.getElementById('wh-stock').textContent = formatNum(state.pencils, 0);
-      const fill = state.storage > 0 ? (state.pencils / state.storage * 100) : 0;
-      document.getElementById('wh-fill').textContent = Math.round(fill) + '%';
-      document.getElementById('wh-bar').style.width = Math.min(100, fill) + '%';
+    function renderStocks(){
+      const list=document.getElementById('stocks-list');if(!list)return;
+      document.getElementById('portfolio-detail').textContent=formatMoney(getPortfolioValue());
+      list.innerHTML=STOCKS_DEF.map(def=>{const st=state.stocks[def.id];const prev=st.history.length>1?st.history[st.history.length-2]:st.price;const change=st.price-prev;const pct=(change/(prev||1))*100;const cls=change>=0?'up':'down';
+        return`<div class="stock-row"><div><div class="stock-name">${def.name}</div><div class="stock-ticker">${def.ticker}</div></div><div class="stock-price">${formatMoney(st.price)}</div><div class="stock-change ${cls}">${change>=0?'+':''}${pct.toFixed(1)}%</div><div class="stock-shares">${st.shares}</div><div class="stock-actions"><button class="btn-buy" onclick="tradeStock('${def.id}',true)">Buy</button><button class="btn-sell" onclick="tradeStock('${def.id}',false)">Sell</button></div></div>`;}).join('');
     }
-
-    function renderStocks() {
-      const list = document.getElementById('stocks-list');
-      if (!list) return;
-      document.getElementById('portfolio-detail').textContent = formatMoney(getPortfolioValue());
-      list.innerHTML = STOCKS_DEF.map(def => {
-        const st = state.stocks[def.id];
-        const prev = st.history.length > 1 ? st.history[st.history.length - 2] : st.price;
-        const change = st.price - prev;
-        const pct = (change / (prev || 1)) * 100;
-        const cls = change >= 0 ? 'up' : 'down';
-        return `<div class="stock-row">
-          <div><div class="stock-name">${def.name}</div><div class="stock-ticker">${def.ticker}</div></div>
-          <div class="stock-price">${formatMoney(st.price)}</div>
-          <div class="stock-change ${cls}">${change >= 0 ? '+' : ''}${pct.toFixed(1)}%</div>
-          <div class="stock-shares">${st.shares}</div>
-          <div class="stock-actions">
-            <button class="btn-buy" onclick="tradeStock('${def.id}',true)">Buy</button>
-            <button class="btn-sell" onclick="tradeStock('${def.id}',false)">Sell</button>
-          </div>
-        </div>`;
-      }).join('');
+    let prodChart,demandChart,cashChart,portChart;
+    function initCharts(){
+      const opts={responsive:true,maintainAspectRatio:false,animation:{duration:250,easing:'easeOutQuart'},plugins:{legend:{display:false}},scales:{x:{display:false},y:{ticks:{color:'#9a8d7a',font:{size:9}},grid:{color:'rgba(58,51,43,0.35)'}}},elements:{point:{radius:0},line:{tension:0.35,borderWidth:2}}};
+      prodChart=new Chart(document.getElementById('prod-chart'),{type:'line',data:{labels:[],datasets:[{data:[],borderColor:'#6f9b6a',backgroundColor:'rgba(111,155,106,0.12)',fill:true}]},options:opts});
+      demandChart=new Chart(document.getElementById('demand-chart'),{type:'line',data:{labels:[],datasets:[{data:[],borderColor:'#5a8a8a',backgroundColor:'rgba(90,138,138,0.12)',fill:true}]},options:opts});
+      cashChart=new Chart(document.getElementById('cash-chart'),{type:'line',data:{labels:[],datasets:[{data:[],borderColor:'#e07a3d',backgroundColor:'rgba(224,122,61,0.12)',fill:true}]},options:opts});
+      portChart=new Chart(document.getElementById('port-chart'),{type:'line',data:{labels:[],datasets:[{data:[],borderColor:'#9b7b9b',backgroundColor:'rgba(155,123,155,0.12)',fill:true}]},options:opts});
     }
-
-    let prodChart, demandChart, cashChart, portChart;
-    function initCharts() {
-      const opts = {
-        responsive: true,
-        maintainAspectRatio: false,
-        animation: { duration: 280, easing: 'easeOutQuart' },
-        plugins: { legend: { display: false } },
-        scales: {
-          x: { display: false },
-          y: {
-            ticks: { color: '#9a8b76', font: { size: 10 } },
-            grid: { color: 'rgba(61,54,46,0.35)' }
-          }
-        },
-        elements: {
-          point: { radius: 0 },
-          line: { tension: 0.35, borderWidth: 2 }
-        }
-      };
-      prodChart = new Chart(document.getElementById('prod-chart'), {
-        type: 'line',
-        data: { labels: [], datasets: [{ data: [], borderColor: '#6f9b6a', backgroundColor: 'rgba(111,155,106,0.12)', fill: true }] },
-        options: opts
-      });
-      demandChart = new Chart(document.getElementById('demand-chart'), {
-        type: 'line',
-        data: { labels: [], datasets: [{ data: [], borderColor: '#5a8a8a', backgroundColor: 'rgba(90,138,138,0.12)', fill: true }] },
-        options: opts
-      });
-      cashChart = new Chart(document.getElementById('cash-chart'), {
-        type: 'line',
-        data: { labels: [], datasets: [{ data: [], borderColor: '#e07a3d', backgroundColor: 'rgba(224,122,61,0.12)', fill: true }] },
-        options: opts
-      });
-      portChart = new Chart(document.getElementById('port-chart'), {
-        type: 'line',
-        data: { labels: [], datasets: [{ data: [], borderColor: '#9b7b9b', backgroundColor: 'rgba(155,123,155,0.12)', fill: true }] },
-        options: opts
-      });
+    function updateCharts(){
+      if(!prodChart)return;const h=state.history;
+      prodChart.data.labels=h.labels;prodChart.data.datasets[0].data=h.prod;prodChart.update('none');
+      demandChart.data.labels=h.labels;demandChart.data.datasets[0].data=h.demand;demandChart.update('none');
+      cashChart.data.labels=h.labels;cashChart.data.datasets[0].data=h.cash;cashChart.update('none');
+      portChart.data.labels=h.labels;portChart.data.datasets[0].data=h.port;portChart.update('none');
     }
-    function updateCharts() {
-      if (!prodChart) return;
-      const h = state.history;
-      prodChart.data.labels = h.labels;
-      prodChart.data.datasets[0].data = h.prod;
-      prodChart.update('none');
-      demandChart.data.labels = h.labels;
-      demandChart.data.datasets[0].data = h.demand;
-      demandChart.update('none');
-      cashChart.data.labels = h.labels;
-      cashChart.data.datasets[0].data = h.cash;
-      cashChart.update('none');
-      portChart.data.labels = h.labels;
-      portChart.data.datasets[0].data = h.port;
-      portChart.update('none');
-    }
-
-    function renderAll() {
-      renderResources();
-      renderDemandUI();
-      renderMachines();
-      renderUpgrades();
-      renderMarketing();
-      renderSupply();
-      renderStocks();
-      renderLog();
-    }
-
-    // ========== SAVE ==========
-    function saveGame() {
-      state.lastTick = Date.now();
-      try {
-        localStorage.setItem(SAVE_KEY, JSON.stringify(state));
-      } catch (e) {}
-    }
-    function loadGame() {
-      try {
-        const raw = localStorage.getItem(SAVE_KEY);
-        if (!raw) return false;
-        const loaded = JSON.parse(raw);
-        if (!loaded || typeof loaded.cash !== 'number' || loaded.cash > 1e15 || loaded.cash < 0) {
-          localStorage.removeItem(SAVE_KEY);
-          return false;
-        }
-        Object.assign(state, loaded);
-        state.cash = clamp(state.cash, 0, 1e15);
-        state.pencils = clamp(state.pencils, 0, 1e9);
-        state.materials = clamp(state.materials, 0, 5e6);
-        state.askingPrice = clamp(state.askingPrice, 0.1, 40);
-        MACHINES.forEach(m => { if (state.machines[m.id] === undefined) state.machines[m.id] = 0; });
-        MARKETING.forEach(m => { if (state.marketing[m.id] === undefined) state.marketing[m.id] = 0; });
-        STOCKS_DEF.forEach(s => {
-          if (!state.stocks[s.id]) state.stocks[s.id] = { price: s.base, shares: 0, history: [s.base] };
-        });
-        if (!state.history) state.history = { prod:[], demand:[], cash:[], port:[], labels:[] };
-
-        // Offline progress (safe, capped)
-        const elapsed = Math.min((Date.now() - (loaded.lastTick || Date.now())) / 1000, state.offlineCapHours * 3600);
-        if (elapsed > 20) {
-          const rate = getTotalRate();
-          let produced = Math.min(rate * elapsed * 0.75, state.storage - state.pencils);
-          produced = Math.max(0, produced);
-          state.pencils += produced;
-          state.totalProduced += produced;
-
-          // Only sell what was actually produced offline
-          const sales = Math.min(state.pencils, getSalesRate() * elapsed * 0.55);
-          if (sales > 0.1) {
-            const rev = sales * state.askingPrice * 0.8;
-            state.pencils -= sales;
-            state.cash += rev;
-            state.lifetimeSales += rev;
-            state.totalSold += sales;
-          }
-          logEvent(`Welcome back! ${Math.floor(elapsed / 60)}m offline progress`);
-          toast('Offline progress applied');
+    function renderAll(){renderResources();renderDemandUI();renderMachines();renderUpgrades();renderMarketing();renderSupply();renderStocks();renderLog();}
+    function saveGame(){state.lastTick=Date.now();try{localStorage.setItem(SAVE_KEY,JSON.stringify(state));}catch(e){}}
+    function loadGame(){
+      try{
+        const raw=localStorage.getItem(SAVE_KEY);if(!raw)return false;
+        const loaded=JSON.parse(raw);
+        if(!loaded||typeof loaded.cash!=='number'||loaded.cash>1e15||loaded.cash<0){localStorage.removeItem(SAVE_KEY);return false;}
+        Object.assign(state,loaded);
+        state.cash=clamp(state.cash,0,1e15);state.pencils=clamp(state.pencils,0,1e9);state.materials=clamp(state.materials,0,5e6);state.askingPrice=clamp(state.askingPrice,0.1,40);
+        MACHINES.forEach(m=>{if(state.machines[m.id]===undefined)state.machines[m.id]=0;});
+        MARKETING.forEach(m=>{if(state.marketing[m.id]===undefined)state.marketing[m.id]=0;});
+        STOCKS_DEF.forEach(s=>{if(!state.stocks[s.id])state.stocks[s.id]={price:s.base,shares:0,history:[s.base]};});
+        if(!state.history)state.history={prod:[],demand:[],cash:[],port:[],labels:[]};
+        const elapsed=Math.min((Date.now()-(loaded.lastTick||Date.now()))/1000,state.offlineCapHours*3600);
+        if(elapsed>15){
+          const rate=getTotalRate();let produced=Math.min(rate*elapsed*0.75,state.storage-state.pencils);produced=Math.max(0,produced);
+          state.pencils+=produced;state.totalProduced+=produced;
+          const sales=Math.min(state.pencils,getSalesRate()*elapsed*0.55);
+          if(sales>0.1){const rev=sales*state.askingPrice*0.8;state.pencils-=sales;state.cash+=rev;state.lifetimeSales+=rev;state.totalSold+=sales;}
+          logEvent(`Welcome back! ${Math.floor(elapsed/60)}m offline`);toast('Offline progress applied');
         }
         return true;
-      } catch (e) {
-        localStorage.removeItem(SAVE_KEY);
-        return false;
-      }
+      }catch(e){localStorage.removeItem(SAVE_KEY);return false;}
     }
-
-    // ========== UI ==========
-    function switchPanel(id) {
-      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById('panel-' + id)?.classList.add('active');
-      document.querySelectorAll(`.nav-btn[data-panel="${id}"]`).forEach(b => b.classList.add('active'));
-      if (id === 'machines') renderMachines();
-      if (id === 'upgrades') renderUpgrades();
-      if (id === 'marketing') renderMarketing();
-      if (id === 'supply') renderSupply();
-      if (id === 'market') renderStocks();
-      if (id === 'analytics') updateCharts();
+    function switchPanel(id){
+      document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+      document.getElementById('panel-'+id)?.classList.add('active');
+      document.querySelectorAll(`.nav-btn[data-panel="${id}"]`).forEach(b=>b.classList.add('active'));
+      if(id==='machines')renderMachines();if(id==='upgrades')renderUpgrades();if(id==='marketing')renderMarketing();
+      if(id==='supply')renderSupply();if(id==='market')renderStocks();if(id==='analytics')updateCharts();
     }
-
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-      btn.addEventListener('click', () => switchPanel(btn.dataset.panel));
-    });
-    const mobileTabs = document.getElementById('mobile-tabs');
-    document.querySelectorAll('.sidebar .nav-btn').forEach(btn => {
-      const c = btn.cloneNode(true);
-      c.addEventListener('click', () => switchPanel(btn.dataset.panel));
-      mobileTabs.appendChild(c);
-    });
-
-    document.getElementById('produce-btn').addEventListener('click', produceManual);
-    document.getElementById('clearance-btn').addEventListener('click', startClearance);
-    document.getElementById('prestige-btn').addEventListener('click', doPrestige);
-    document.getElementById('save-btn').addEventListener('click', () => { saveGame(); toast('Saved!'); });
-    document.getElementById('reset-btn').addEventListener('click', () => {
-      if (confirm('Delete ALL progress and start completely fresh?')) {
-        localStorage.removeItem(SAVE_KEY);
-        location.reload();
-      }
-    });
-    document.getElementById('export-btn').addEventListener('click', () => {
-      saveGame();
-      const blob = new Blob([localStorage.getItem(SAVE_KEY)], { type: 'application/json' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'pencil-factory-save.json';
-      a.click();
-    });
-    document.getElementById('import-btn').addEventListener('click', () => document.getElementById('import-file').click());
-    document.getElementById('import-file').addEventListener('change', e => {
-      const f = e.target.files[0];
-      if (!f) return;
-      const r = new FileReader();
-      r.onload = () => {
-        try {
-          localStorage.setItem(SAVE_KEY, r.result);
-          location.reload();
-        } catch (err) { toast('Import failed'); }
-      };
-      r.readAsText(f);
-    });
-
-    document.getElementById('buy-materials-btn').addEventListener('click', () => buyMaterials(false));
-    document.getElementById('buy-bulk-btn').addEventListener('click', () => buyMaterials(true));
-
-    const priceInput = document.getElementById('asking-price');
-    const priceSlider = document.getElementById('price-slider');
-    priceInput.addEventListener('input', () => setAskingPrice(priceInput.value));
-    priceSlider.addEventListener('input', () => setAskingPrice(priceSlider.value / 100));
-
-    document.addEventListener('keydown', e => {
-      if (e.code === 'Space' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'BUTTON') {
-        e.preventDefault();
-        produceManual();
-      }
-    });
-
-    setInterval(saveGame, 10000);
-
-    // BOOT
-    const loaded = loadGame();
-    if (!loaded) {
-      state.cash = 40;
-      state.pencils = 0;
-      state.materials = 280;
-    }
-    setAskingPrice(state.askingPrice || 1);
-    initCharts();
-    renderAll();
-    requestAnimationFrame(gameLoop);
-    logEvent('Factory online. Demand starts low — invest in Marketing!');
+    document.querySelectorAll('.nav-btn').forEach(btn=>{btn.addEventListener('click',()=>switchPanel(btn.dataset.panel));});
+    const mobileTabs=document.getElementById('mobile-tabs');
+    document.querySelectorAll('.sidebar .nav-btn').forEach(btn=>{const c=btn.cloneNode(true);c.addEventListener('click',()=>switchPanel(btn.dataset.panel));mobileTabs.appendChild(c);});
+    document.getElementById('produce-btn').addEventListener('click',produceManual);
+    document.getElementById('clearance-btn').addEventListener('click',startClearance);
+    document.getElementById('prestige-btn').addEventListener('click',doPrestige);
+    document.getElementById('save-btn').addEventListener('click',()=>{saveGame();toast('Saved!');});
+    document.getElementById('reset-btn').addEventListener('click',()=>{if(confirm('Delete ALL progress?')){localStorage.removeItem(SAVE_KEY);location.reload();}});
+    document.getElementById('export-btn').addEventListener('click',()=>{saveGame();const blob=new Blob([localStorage.getItem(SAVE_KEY)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='pencil-factory-save.json';a.click();});
+    document.getElementById('import-btn').addEventListener('click',()=>document.getElementById('import-file').click());
+    document.getElementById('import-file').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{localStorage.setItem(SAVE_KEY,r.result);location.reload();}catch(err){toast('Import failed');}};r.readAsText(f);});
+    document.getElementById('buy-materials-btn').addEventListener('click',()=>buyMaterials(false));
+    document.getElementById('buy-bulk-btn').addEventListener('click',()=>buyMaterials(true));
+    const priceInput=document.getElementById('asking-price');const priceSlider=document.getElementById('price-slider');
+    priceInput.addEventListener('input',()=>setAskingPrice(priceInput.value));
+    priceSlider.addEventListener('input',()=>setAskingPrice(priceSlider.value/100));
+    document.addEventListener('keydown',e=>{if(e.code==='Space'&&e.target.tagName!=='INPUT'&&e.target.tagName!=='BUTTON'){e.preventDefault();produceManual();}});
+    setInterval(saveGame,10000);
+    const loaded=loadGame();
+    if(!loaded){state.cash=45;state.pencils=0;state.materials=350;state.askingPrice=0.95;}
+    setAskingPrice(state.askingPrice||0.95);initCharts();renderAll();requestAnimationFrame(gameLoop);
+    logEvent('Factory online. Click the pencil and buy Local Ads early!');
   </script>
 </body>
 </html>
